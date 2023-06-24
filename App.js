@@ -1,25 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/stack';
-import register_screen from './screens/register_screen';
-import login_screen from './screens/login_screen';
-import newuser_screen from './screens/newuser_screen';
-import loading_screen from './screens/loading_screen';
-import start_screen from './screens/start_screen';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoadingScreen from './screens/LoadingScreen';
+import WelcomeScreen from './screens/FirstUse/WelcomeScreen';
+import RegisterScreen from './screens/FirstUse/RegisterScreen';
+import LoginScreen from './screens/FirstUse/LoginScreen';
+import HomeScreen from './screens/Main/HomeScreen';
+import ProfileScreen from './screens/Main/ProfileScreen';
+import MapScreen from './screens/Main/MapScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Simulating an asynchronous login check
+  useEffect(() => {
+    // Replace this with your actual login check logic
+    setTimeout(() => {
+      // Simulating a successful login
+
+      //comment the next line to see the welcome screen
+      setIsLoggedIn(true);
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="start_scren">
-        <Stack.Screen name="start_screen" component={start_screen} />
-        <Stack.Screen name="register_screen" component={register_screen} />
-        <Stack.Screen name="login_screen" component={login_screen} />
-        <Stack.Screen name="newuser_screen" component={newuser_screen} />
-        <Stack.Screen name="loading_screen" component={loading_screen} />
+      <Stack.Navigator>
+        {isLoggedIn ? (
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <Stack.Screen
+            name="Welcome"
+            component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
+        )}
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
