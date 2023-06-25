@@ -11,9 +11,12 @@ import ProfileScreen from './screens/Main/ProfileScreen';
 import MapScreen from './screens/Main/MapScreen';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
+import { useFonts } from 'expo-font';
+
 
 const Stack = createStackNavigator();
 
+ 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

@@ -2,6 +2,8 @@ import React from 'react';
 import { View, ImageBackground, StyleSheet } from 'react-native';
 import { Avatar, Text, Button } from '@ui-kitten/components';
 
+
+
 const ProfileScreen = () => {
   return (
     <View style={styles.container}>
@@ -25,7 +27,10 @@ const ProfileScreen = () => {
         </Text>
 
         <Button appearance='outline' style={styles.editButton}>Edit Profile</Button>
+
+        
       </View>
+      
     </View>
   );
 };
@@ -57,6 +62,8 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     marginBottom: 8,
+    fontFamily: 'JetBrainsMono-Bold'
+    
   },
   description: {
     marginBottom: 16,
