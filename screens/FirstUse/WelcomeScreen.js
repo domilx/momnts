@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Button, Layout } from '@ui-kitten/components';
 
 const WelcomeScreen = ({ navigation }) => {
   const handleBeginPress = () => {
@@ -9,11 +10,13 @@ const WelcomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the App!</Text>
-      <Text style={styles.subtitle}>Get started with our amazing features.</Text>
-      <TouchableOpacity style={styles.button} onPress={handleBeginPress}>
-        <Text style={styles.buttonText}>Begin</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>MOMENTS</Text>
+      <Text style={styles.subtitle}>Get started by creating an account.</Text>
+
+      <Button style={{marginTop: 20}} onPress={handleBeginPress} appearance='outline'>
+       GET STARTED
+      </Button>
+
     </View>
   );
 };
@@ -21,22 +24,22 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#EBECF0',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 45,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#708090',
     marginBottom: 20,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#708090',
     textAlign: 'center',
   },
   button: {

@@ -15,9 +15,15 @@
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
+    "@tamagui/babel-plugin": "^1.35.12",
+    "@tamagui/shorthands": "^1.35.12",
+    "@tamagui/themes": "^1.35.12",
+    "@types/react": "~18.0.27",
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "expo": "~48.0.18",
+    "expo-linear-gradient": "~12.1.2",
     "expo-status-bar": "~1.4.4",
     "link": "^1.5.1",
     "native-base": "^3.4.28",
@@ -32,7 +38,8 @@
     "react-native-screens": "^3.22.0",
     "react-native-svg": "13.4.0",
     "react-native-vector-icons": "^9.2.0",
-    "react-navigation-stack": "^2.10.4"
+    "react-navigation-stack": "^2.10.4",
+    "tamagui": "^1.35.12"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,6 +12,8 @@ import MapScreen from './screens/Main/MapScreen';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 import { useFonts } from 'expo-font';
+import { TamaguiProvider } from 'tamagui'
+import config from './tamagui.config'
 
 
 const Stack = createStackNavigator();
@@ -30,7 +32,7 @@ const App = () => {
       // Simulating a successful login
 
       //comment the next line to see the welcome screen
-      setIsLoggedIn(true);
+      setIsLoggedIn(false);
       setIsLoading(false);
     }, 2000);
   }, []);
@@ -40,6 +42,7 @@ const App = () => {
   }
 
   return (
+  <TamaguiProvider config={config}>
   <ApplicationProvider {...eva} theme={eva.light}>
     <NavigationContainer>
       <Stack.Navigator>
@@ -61,6 +64,7 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
     </ApplicationProvider>
+    </TamaguiProvider>
   );
 };
 

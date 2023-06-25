@@ -1,109 +1,178 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { Button, Input, Layout, Divider, Toggle, Icon, IconElement } from '@ui-kitten/components';
 
-const RegisterScreen = ({ navigation }) => {
+
+//Trust with modern nice font it will look better
+//Slso when the keyboard comes up it hides the text input and the button
+
+const LoginScreen = ({ navigation }) => {
+
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
-    //// Perform registration using Firebase authentication
+  
+  const handleLogin = () => {
+    // Perform login using Firebase authentication
     //firebase
     //  .auth()
-    //  .createUserWithEmailAndPassword(email, password)
+    //  .signInWithEmailAndPassword(email, password)
     //  .then((userCredential) => {
-    //    // Registration successful
-    //    console.log('Registered successfully!', userCredential.user);
+    //    // Login successful
+    //    console.log('Logged in successfully!', userCredential.user);
     //  })
     //  .catch((error) => {
-    //    // Registration failed
-    //    console.log('Registration error:', error);
+    //    // Login failed
+    //    console.log('Login error:', error);
     //  });
-  console.log('Registered successfully!');
+
+    console.log('Logged in successfully!');
   };
 
-  const handleLoginPress = () => {
-    // Navigate to the Login screen
-    navigation.navigate('Login');
+  
+  const handleRegisterPress = () => {
+    // Navigate to the Register screen
+    navigation.navigate('Register');
   };
+
+  const DividerWithText = ({ text }) => {
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16 }}>
+        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+        <Text style={{ marginHorizontal: 10 }}>{text}</Text>
+        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+      </View>
+    );
+  };
+  
+  const renderPasswordCaption = (): React.ReactElement => {
+    return (
+      <View style={styles.captionContainer}>
+
+        <Text style={styles.captionText}>
+          Should contain at least 8 symbols
+        </Text>
+      </View>
+    );
+  };
+
+  const renderUsernameCaption = (): React.ReactElement => {
+    return (
+      <View style={styles.captionContainer}>
+
+        <Text style={styles.captionText}>
+          This username is already taken
+        </Text>
+      </View>
+    );
+  };
+
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Register</Text>
-      <Text style={styles.subtitle}>Create a new account</Text>
+      <View style={{ backgroundColor: "#EBECF0",  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 
-      <TextInput
-        label="Email"
+
+      <View style={styles.header}>
+      <Text
+        style={styles.title}
+        category='h1'
+      >
+          MOMENTS
+      </Text>
+
+      <Input
+      style={styles.email}
+        label='Username'
+        placeholder='Please enter your Username'
         value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
-      <TextInput
-        label="Password"
-        value={password}
-        onChangeText={setPassword}
         secureTextEntry
-        style={styles.input}
+        caption={renderUsernameCaption}
+        onChangeText={setEmail}
       />
+      
+      <Input
+      style={styles.email}
+        label='Email'
+        placeholder='Please enter your Email'
+        value={email}
+        secureTextEntry
+        onChangeText={setEmail}
+      />
+     <Input
+      style={styles.password}
+        label='Password'
+        placeholder='Please enter your password'
+        value={password}
+        caption={renderPasswordCaption}
+        secureTextEntry
+        onChangeText={setPassword}
+      />
+      </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
+        <Button appearance='outline'  style={{ position: 'absolute', bottom: 70, left: 20, right: 20 }} onPress={handleLogin}>Register</Button>
 
-      <TouchableOpacity style={styles.loginButton} onPress={handleLoginPress}>
-        <Text style={styles.loginButtonText}>Login</Text>
-      </TouchableOpacity>
-    </View>
+        <Text style={{ position: 'absolute', bottom: 40, left: 20, right: 20 }}>
+          
+          Already have an account? <Text style={{ color: 'blue' }} onPress={handleRegisterPress}>Login Here</Text>
+        </Text>
+        
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
   },
+
   title: {
-    fontSize: 24,
+    fontSize: 45,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#708090',
     marginBottom: 20,
     textAlign: 'center',
   },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+
+  header: {
+    position: 'absolute',
+    top: 200,
+    left: 0,
+    right: 0,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  input: {
-    width: '100%',
-    marginTop: 20,
+
+  email: {
+    width: '90%',
+    margin: 8,
+    maxWidth: 400,
   },
-  button: {
-    backgroundColor: 'blue',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-    marginTop: 20,
+
+  password: {
+    width: '90%',
+    margin: 8,
+    maxWidth: 400,
   },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+  captionContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  loginButton: {
-    marginTop: 10,
+  captionIcon: {
+    width: 10,
+    height: 10,
+    marginRight: 5,
   },
-  loginButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+  captionText: {
+    fontSize: 12,
+    fontWeight: '400',
+    fontFamily: 'opensans-regular',
+    color: '#8F9BB3',
   },
 });
 
-export default RegisterScreen;
+export default LoginScreen;

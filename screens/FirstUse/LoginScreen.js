@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
-import { Button, Input, Layout, Divider, Toggle, Icon, IconElement } from '@ui-kitten/components';
+import { Input, Button, Layout, Divider, Toggle, Icon, IconElement } from '@ui-kitten/components';
 
 
 //Trust with modern nice font it will look better
@@ -46,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
     );
   };
   
-  const renderCaption = (): React.ReactElement => {
+  const renderPasswordCaption = (): React.ReactElement => {
     return (
       <View style={styles.captionContainer}>
 
@@ -56,15 +56,31 @@ const LoginScreen = ({ navigation }) => {
       </View>
     );
   };
+
+  const renderUsernameCaption = (): React.ReactElement => {
+    return (
+      <View style={styles.captionContainer}>
+
+        <Text style={styles.captionText}>
+          This username is already taken
+        </Text>
+      </View>
+    );
+  };
+
+
   return (
       <View style={{ backgroundColor: "#EBECF0",  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 
+
+      <View style={styles.header}>
       <Text
-        style={styles.text}
+        style={styles.title}
         category='h1'
       >
           MOMENTS
       </Text>
+
       
       
       <Input
@@ -75,23 +91,22 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
         onChangeText={setEmail}
       />
-
      <Input
       style={styles.password}
         label='Password'
         placeholder='Please enter your password'
         value={password}
-        caption={renderCaption}
+        caption={renderPasswordCaption}
         secureTextEntry
         onChangeText={setPassword}
       />
-        <DividerWithText text="div test" />
+      </View>
 
         <Button appearance='outline'  style={{ position: 'absolute', bottom: 70, left: 20, right: 20 }} onPress={handleLogin}>Login</Button>
 
         <Text style={{ position: 'absolute', bottom: 40, left: 20, right: 20 }}>
           
-          Don't have an account? <Text style={{ color: 'blue' }} onPress={handleRegisterPress}>Register here</Text>
+          Don't have an account? <Text style={{ color: 'blue' }} onPress={handleRegisterPress}>Register Here</Text>
         </Text>
         
       </View>
@@ -101,6 +116,24 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  title: {
+    fontSize: 45,
+    fontWeight: 'bold',
+    color: '#708090',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+
+  header: {
+    position: 'absolute',
+    top: 200,
+    left: 0,
+    right: 0,
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
   },
