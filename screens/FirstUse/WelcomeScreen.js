@@ -9,13 +9,15 @@ const WelcomeScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View  style={styles.container}>
       <Text style={styles.title}>MOMENTS</Text>
-      <Text style={styles.subtitle}>Get started by creating an account.</Text>
+      <Text style={styles.subtitle}>Tap the screen to get started</Text>
 
-      <Button style={{marginTop: 20}} onPress={handleBeginPress} appearance='outline'>
-       GET STARTED
-      </Button>
+      <Text style={{fontWeight: 'bold', textAlign: 'center', color: '#7A807C', position: 'absolute', bottom: 40, left: 20, right: 20 }}>domi & Nathan™</Text>
+
+
+
+      
 
     </View>
   );
@@ -24,7 +26,7 @@ const WelcomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EBECF0',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -32,14 +34,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 45,
     fontWeight: 'bold',
-    color: '#708090',
-    marginBottom: 20,
+    color: '#D6E0D9',
+    
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: 'bold',
-    color: '#708090',
+    color: '#7A807C',
     textAlign: 'center',
   },
   button: {
