@@ -9,12 +9,16 @@ import LoginScreen from './screens/FirstUse/LoginScreen';
 import HomeScreen from './screens/Main/HomeScreen';
 import ProfileScreen from './screens/Main/ProfileScreen';
 import MapScreen from './screens/Main/MapScreen';
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider } from '@ui-kitten/components';
 
 const Stack = createStackNavigator();
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  
 
   // Simulating an asynchronous login check
   useEffect(() => {
@@ -33,6 +37,7 @@ const App = () => {
   }
 
   return (
+  <ApplicationProvider {...eva} theme={eva.light}>
     <NavigationContainer>
       <Stack.Navigator>
         {isLoggedIn ? (
@@ -52,6 +57,7 @@ const App = () => {
         <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    </ApplicationProvider>
   );
 };
 

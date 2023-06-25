@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import { Button, Input, Layout, Divider, Toggle, Icon, IconElement } from '@ui-kitten/components';
 
+
+//Trust with modern nice font it will look better
+//Slso when the keyboard comes up it hides the text input and the button
 
 const LoginScreen = ({ navigation }) => {
+
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  
   const handleLogin = () => {
     // Perform login using Firebase authentication
     //firebase
@@ -24,90 +30,107 @@ const LoginScreen = ({ navigation }) => {
     console.log('Logged in successfully!');
   };
 
+  
   const handleRegisterPress = () => {
     // Navigate to the Register screen
     navigation.navigate('Register');
   };
 
+  const DividerWithText = ({ text }) => {
+    return (
+      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16 }}>
+        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+        <Text style={{ marginHorizontal: 10 }}>{text}</Text>
+        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+      </View>
+    );
+  };
+  
+  const renderCaption = (): React.ReactElement => {
+    return (
+      <View style={styles.captionContainer}>
+
+        <Text style={styles.captionText}>
+          Should contain at least 8 symbols
+        </Text>
+      </View>
+    );
+  };
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <Text style={styles.subtitle}>Sign in to your account</Text>
+      <View style={{ backgroundColor: "#EBECF0",  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 
-      <TextInput
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        style={styles.input}
-      />
-      <TextInput
-        label="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
-
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.registerButton}
-        onPress={handleRegisterPress}
+      <Text
+        style={styles.text}
+        category='h1'
       >
-        <Text style={styles.registerButtonText}>Register</Text>
-      </TouchableOpacity>
-    </View>
+          MOMENTS
+      </Text>
+      
+      
+      <Input
+      style={styles.email}
+        label='Email'
+        placeholder='Please enter your Email'
+        value={email}
+        secureTextEntry
+        onChangeText={setEmail}
+      />
+
+     <Input
+      style={styles.password}
+        label='Password'
+        placeholder='Please enter your password'
+        value={password}
+        caption={renderCaption}
+        secureTextEntry
+        onChangeText={setPassword}
+      />
+        <DividerWithText text="div test" />
+
+        <Button appearance='outline'  style={{ position: 'absolute', bottom: 70, left: 20, right: 20 }} onPress={handleLogin}>Login</Button>
+
+        <Text style={{ position: 'absolute', bottom: 40, left: 20, right: 20 }}>
+          
+          Don't have an account? <Text style={{ color: 'blue' }} onPress={handleRegisterPress}>Register here</Text>
+        </Text>
+        
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 20,
-    textAlign: 'center',
+
+  email: {
+    width: '90%',
+    margin: 8,
+    maxWidth: 400,
   },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+
+  password: {
+    width: '90%',
+    margin: 8,
+    maxWidth: 400,
   },
-  input: {
-    width: '100%',
-    marginTop: 20,
+  captionContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  button: {
-    backgroundColor: 'blue',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 8,
-    marginTop: 20,
+  captionIcon: {
+    width: 10,
+    height: 10,
+    marginRight: 5,
   },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
-  },
-  registerButton: {
-    marginTop: 10,
-  },
-  registerButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+  captionText: {
+    fontSize: 12,
+    fontWeight: '400',
+    fontFamily: 'opensans-regular',
+    color: '#8F9BB3',
   },
 });
 
