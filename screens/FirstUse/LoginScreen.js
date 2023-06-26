@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
-import { Input, Button, Layout, Divider, Toggle, Icon, IconElement } from '@ui-kitten/components';
-
+import React, { useState } from "react";
+import {
+  View,
+  div,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
+import {
+  Input,
+  Button,
+  Layout,
+  Divider,
+  Toggle,
+  Icon,
+  IconElement,
+} from "@ui-kitten/components";
 
 //Trust with modern nice font it will look better
 //Slso when the keyboard comes up it hides the text input and the button
 
 const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  
   const handleLogin = () => {
     // Perform login using Firebase authentication
     //firebase
@@ -27,25 +39,14 @@ const LoginScreen = ({ navigation }) => {
     //    console.log('Login error:', error);
     //  });
 
-    console.log('Logged in successfully!');
+    console.log("Logged in successfully!");
   };
 
-  
   const handleRegisterPress = () => {
     // Navigate to the Register screen
-    navigation.navigate('Register');
+    navigation.navigate("Register");
   };
 
-  const DividerWithText = ({ text }) => {
-    return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16 }}>
-        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
-        <Text style={{ marginHorizontal: 10 }}>{text}</Text>
-        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
-      </View>
-    );
-  };
-  
   const renderPasswordCaption = (): React.ReactElement => {
     return (
       <View style={styles.captionContainer}>
@@ -68,22 +69,11 @@ const LoginScreen = ({ navigation }) => {
     );
   };
 
-
   return (
-      <View style={{ backgroundColor: "#EBECF0",  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-
-
-      <View style={styles.header}>
-      <Text
-        style={styles.title}
-        category='h1'
-      >
-          MOMENTS
-      </Text>
-
-      
-      
-      <Input
+    <View style={styles.container}>
+      <View style={styles.titleView}>
+        <Text style={styles.title}>Login</Text>
+        <Input
       style={styles.email}
         label='Email'
         placeholder='Please enter your Email'
@@ -102,68 +92,61 @@ const LoginScreen = ({ navigation }) => {
       />
       </View>
 
-        <Button appearance='outline'  style={{ position: 'absolute', bottom: 70, left: 20, right: 20 }} onPress={handleLogin}>Login</Button>
 
-        <Text style={{ position: 'absolute', bottom: 40, left: 20, right: 20 }}>
-          
-          Don't have an account? <Text style={{ color: 'blue' }} onPress={handleRegisterPress}>Register Here</Text>
-        </Text>
-        
-      </View>
+      <Text
+        style={{
+          fontWeight: "bold",
+          textAlign: "center",
+          color: "#7A807C",
+          position: "absolute",
+          bottom: 40,
+          left: 20,
+          right: 20,
+        }}
+      >
+        domi & Nathan™
+      </Text>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'black',
   },
-
+  email: {
+    paddingTop: 50,
+    width: '94%',
+    margin: 8,
+    maxWidth: 400,
+    fontSize: 20,
+  },
+  password: {
+    width: '94%',
+    margin: 8,
+    maxWidth: 400,
+    fontSize: 20,
+  },
+  titleView: {
+    flex: 1,
+    justifyContent: 'left',
+    alignItems: 'left',
+    paddingHorizontal: 20,
+    paddingTop: 80,
+  },
   title: {
     fontSize: 45,
     fontWeight: 'bold',
-    color: '#708090',
-    marginBottom: 20,
-    textAlign: 'center',
+    color: '#D6E0D9',
+    
+    textAlign: 'left',
   },
-
-  header: {
-    position: 'absolute',
-    top: 200,
-    left: 0,
-    right: 0,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  email: {
-    width: '90%',
-    margin: 8,
-    maxWidth: 400,
-  },
-
-  password: {
-    width: '90%',
-    margin: 8,
-    maxWidth: 400,
-  },
-  captionContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  captionIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 5,
-  },
-  captionText: {
+  subtitle: {
     fontSize: 12,
-    fontWeight: '400',
-    fontFamily: 'opensans-regular',
-    color: '#8F9BB3',
+    fontWeight: 'bold',
+    color: '#7A807C',
+    textAlign: 'center',
   },
 });
 

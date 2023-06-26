@@ -59,8 +59,8 @@ const App = () => {
             options={{ headerShown: false }}
           />
         )}
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen} />
+        <Stack.Screen name="Register" options={{ headerShown: false }} component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </ApplicationProvider>
