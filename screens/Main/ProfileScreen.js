@@ -19,6 +19,7 @@ const ProfileScreen = ({ navigation }) => {
         />
         <Text style={styles.username}>Nathan Aruna</Text>
         <Text style={styles.value}>@nate282</Text> 
+        
       </View>
       
       <View style={styles.infoContainer}>
@@ -31,7 +32,7 @@ const ProfileScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>  Settings  </Text>
       </TouchableOpacity>
       </View>
-
+      <View style={styles.divider} />
         <View style={styles.infoItem}>
         <Text style={styles.label}>Current Journey:</Text>
         <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
@@ -44,7 +45,6 @@ const ProfileScreen = ({ navigation }) => {
         <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
           <Text style={styles.text}>1.2M 🗺️</Text>
         </View>
-        
         </View>
         <View style={styles.infoItem}>
           <Text style={styles.label}>Bio:</Text>
@@ -55,9 +55,7 @@ const ProfileScreen = ({ navigation }) => {
       </View>
 
 
-      <TouchableOpacity onPres={handleUserLogOut} style={styles.button}>
-        <Text style={styles.buttonText}>LogOut</Text>
-      </TouchableOpacity>
+      
     </View>
     
   );
@@ -69,6 +67,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#000000',
     
+  },
+  divider: {
+    height: 0.3,
+    backgroundColor: '#D6E0D9',
+    marginVertical: 10,
   },
   header: {
     alignItems: 'center',

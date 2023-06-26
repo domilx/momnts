@@ -83,7 +83,7 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setPassword}
       />
      <Text style={{fontWeight: "bold", textAlign: "left", color: "#7A807C", position: "absolute", bottom: 10, left: 10, right: 20,}}>
-        Already have an account? <Text  onPress={handleRegisterPress} style={{fontWeight: "bold", textAlign: "right", color: "#D6E0D9", position: "absolute", bottom: 10, left: 20, right: 0,}}> Create One</Text>
+        Already have an account? <Text  onPress={handleRegisterPress} style={{fontWeight: "bold", textAlign: "right", color: "#D6E0D9", position: "absolute", bottom: 10, left: 20, right: 0,}}> Login</Text>
       </Text>
 
       </View>

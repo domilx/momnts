@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,  StyleSheet } from 'react-native';
+import { View,  StyleSheet, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, Card, Layout, Text, Avatar } from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,30 +9,15 @@ import MapScreen from './MapScreen';
 const Tab = createBottomTabNavigator();
 
 
-const Header = (props: ViewProps): React.ReactElement => (
-  <View {...props}>
-   <View style={styles.container}>
-  <View style={styles.userInfo}>
-    <Avatar source={require('./profile-image.jpg')} />
-    <View style={styles.textContainer}>
-      <Text style={styles.userInfo} category='h6'>
-        Username
-      </Text>
-      <Text category='s1'>
-        Location (currently on a journey)
-      </Text>
-    </View>
-  </View>
-< /View>
-  </View>
-);
-
 
 const HomeScreen = () => {
   return (
     
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        tabBarStyle: {
+          backgroundColor: 'black',
+        },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
@@ -49,7 +34,7 @@ const HomeScreen = () => {
       })}
       
       tabBarOptions={{
-        activeTintColor: 'blue',
+        activeTintColor: '#D6E0D9',
         inactiveTintColor: 'gray',
         tabBarStyle: {
           backgroundColor: 'black',
@@ -70,15 +55,22 @@ const HomeScreen = () => {
 
 const Home = () => {
   return (
-    
     <View style={styles.screenContainer}>
-    
-    <Card style={styles.card} header={Header}>
-      <Text>
-        Hey this is the past nathan filling in random text so that you can ignore the fact the the whole page breaks when there is not enough content. Anyways other peoples journey pictures and point update will go here
-      </Text>
-    </Card>
+    <View style={styles.header}>
+      <Image source={require('./profile-image.jpg')} style={styles.avatar} />
+      <View style={styles.userInfo}>
+        <Text style={styles.username}>Nathn Aruna</Text>
+        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
+          <Text style={styles.badgeText}>New York, USA 📍</Text>
+        </View>
+        
+      
+      </View>
     </View>
+    <View style={styles.divider} />
+    <Text>Home</Text>
+    </View>
+    
   );
 };
 
@@ -90,11 +82,14 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     paddingBottom: 5,
   },
+  divider: {
+    height: 0.3,
+    backgroundColor: '#D6E0D9',
+    marginVertical: 10,
+  },
   screenContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:"#000000"
+    backgroundColor:"#000000",
   },
   screenText: {
     fontSize: 24,
@@ -108,15 +103,50 @@ const styles = StyleSheet.create({
     marginTop: 100, 
     backgroundColor:"#000000"
   },
-  userInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    color: '#D6E0D9'
-  },
+ 
   textContainer: {
     marginLeft: 8,
     color: "#D6E0D9" // Set the desired margin between the avatar and the text
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    padding: 10,
+    marginTop: 60,
+    
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    resizeMode: 'cover',
+  },
+  userInfo: {
+    marginLeft: 10,
+  },
+  username: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: "#D6E0D9"
+  },
+  status: {
+ 
+  },
+  badge: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+    
+  },
+  badgeText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+  },
 });
+
 
 export default HomeScreen;
