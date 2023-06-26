@@ -1,75 +1,144 @@
 import React from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
-import { Avatar, Text, Button } from '@ui-kitten/components';
+import { View, ImageBackground, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Avatar, Text, Button,  } from '@ui-kitten/components';
 
 
+const ProfileScreen = ({ navigation }) => {
 
-const ProfileScreen = () => {
+  const handleUserLogOut = () => {
+    // Navigate to the Login screen
+    navigation.navigate('Login');
+  };
+  
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={styles.header}
-        source={require('./background-image.jpg')}
-      >
-        <Avatar style={styles.avatar} source={require('./profile-image.jpg')} />
-        <Text style={styles.name} category="h4">
-          Daddy Nathan
-        </Text>
-      </ImageBackground>
-
-      <View style={styles.content}>
-        <Text style={styles.sectionTitle} category="h6">
-          About Me
-        </Text>
-        <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-          facilisi. Sed ultrices sagittis neque a iaculis.
-        </Text>
-
-        <Button appearance='outline' style={styles.editButton}>Edit Profile</Button>
-
-        
+      <View style={styles.header}>
+        <Image
+          style={styles.avatar}
+          source={require('./profile-image.jpg')} // Replace with the URL of the user's avatar
+        />
+        <Text style={styles.username}>Nathan Aruna</Text>
+        <Text style={styles.value}>@nate282</Text> 
       </View>
       
+      <View style={styles.infoContainer}>
+      <View style={styles.buttonGroup}>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Edit Profile</Text>
+      </TouchableOpacity>
+      <View style={{paddingHorizontal: 5}}></View> 
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>  Settings  </Text>
+      </TouchableOpacity>
+      </View>
+
+        <View style={styles.infoItem}>
+        <Text style={styles.label}>Current Journey:</Text>
+        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
+          <Text style={styles.text}>New York, USA 📍</Text>
+        </View> 
+        </View>
+        <View style={styles.infoItem}>
+        
+          <Text style={styles.label}>Journey Points:</Text>
+        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
+          <Text style={styles.text}>1.2M 🗺️</Text>
+        </View>
+        
+        </View>
+        <View style={styles.infoItem}>
+          <Text style={styles.label}>Bio:</Text>
+          <Text style={styles.value}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+          </Text>
+        </View>
+      </View>
+
+
+      <TouchableOpacity onPres={handleUserLogOut} style={styles.button}>
+        <Text style={styles.buttonText}>LogOut</Text>
+      </TouchableOpacity>
     </View>
+    
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F9FC',
+    alignItems: 'center',
+    backgroundColor: '#000000',
+    
   },
   header: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 24,
-    paddingHorizontal: 16,
+    marginBottom: 20,
+    marginTop: 100,
   },
   avatar: {
     width: 120,
     height: 120,
-    marginBottom: 16,
+    borderRadius: 60,
+    marginBottom: 10,
   },
-  name: {
-    color: 'white',
+  username: {
+    fontSize: 24,
     fontWeight: 'bold',
+    color: "#D6E0D9"
   },
-  content: {
-    flex: 1,
-    padding: 16,
-  },
-  sectionTitle: {
-    marginBottom: 8,
-    fontFamily: 'JetBrainsMono-Bold'
+  infoContainer: {
+    marginVertical: 30,
+    
     
   },
-  description: {
-    marginBottom: 16,
+  infoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    
   },
-  editButton: {
-    alignSelf: 'center',
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 10,
+    color: "#D6E0D9"
+  },
+  value: {
+    fontSize: 16,
+    color: "#7A807C",
+    fontWeight: 'bold',
+  },
+  button: {
+    backgroundColor: '#B7C0BA',
+    paddingVertical: 10,
+    paddingHorizontal: 41,
+    borderRadius: 5,
+    marginTop: 10,
+    marginBottom: 10
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  badge: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+    
+  },
+  text: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
   },
 });
 

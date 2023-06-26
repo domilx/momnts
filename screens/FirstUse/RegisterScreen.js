@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
-import { Button, Input, Layout, Divider, Toggle, Icon, IconElement } from '@ui-kitten/components';
+import React, { useState } from "react";
+import { View, div, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { Input, Button, Layout, Divider, Toggle, Icon, IconElement } from "@ui-kitten/components";
 
 
-//Trust with modern nice font it will look better
-//Slso when the keyboard comes up it hides the text input and the button
 
 const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  
   const handleLogin = () => {
     // Perform login using Firebase authentication
     //firebase
@@ -27,25 +22,14 @@ const LoginScreen = ({ navigation }) => {
     //    console.log('Login error:', error);
     //  });
 
-    console.log('Logged in successfully!');
+    console.log("Logged in successfully!");
   };
 
-  
   const handleRegisterPress = () => {
     // Navigate to the Register screen
-    navigation.navigate('Register');
+    navigation.navigate("Login");
   };
 
-  const DividerWithText = ({ text }) => {
-    return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16 }}>
-        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
-        <Text style={{ marginHorizontal: 10 }}>{text}</Text>
-        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
-      </View>
-    );
-  };
-  
   const renderPasswordCaption = (): React.ReactElement => {
     return (
       <View style={styles.captionContainer}>
@@ -57,46 +41,27 @@ const LoginScreen = ({ navigation }) => {
     );
   };
 
-  const renderUsernameCaption = (): React.ReactElement => {
+  const renderEmailCaption = (): React.ReactElement => {
     return (
       <View style={styles.captionContainer}>
 
         <Text style={styles.captionText}>
-          This username is already taken
+          This is not a valid email
         </Text>
       </View>
     );
   };
 
-
   return (
-      <View style={{ backgroundColor: "#EBECF0",  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-
-
-      <View style={styles.header}>
-      <Text
-        style={styles.title}
-        category='h1'
-      >
-          MOMENTS
-      </Text>
-
-      <Input
+    <View style={styles.container}>
+      <View style={styles.titleView}>
+        <Text style={styles.title}>Register</Text>
+        <Input
       style={styles.email}
         label='Username'
-        placeholder='Please enter your Username'
+        placeholder='Please enter your username'
         value={email}
-        secureTextEntry
-        caption={renderUsernameCaption}
-        onChangeText={setEmail}
-      />
-      
-      <Input
-      style={styles.email}
-        label='Email'
-        placeholder='Please enter your Email'
-        value={email}
-        secureTextEntry
+        caption={renderEmailCaption}
         onChangeText={setEmail}
       />
      <Input
@@ -108,70 +73,112 @@ const LoginScreen = ({ navigation }) => {
         secureTextEntry
         onChangeText={setPassword}
       />
+      <Input
+      style={styles.password}
+        label='Password'
+        placeholder='Please enter your password'
+        value={password}
+        caption={renderPasswordCaption}
+        secureTextEntry
+        onChangeText={setPassword}
+      />
+     <Text style={{fontWeight: "bold", textAlign: "left", color: "#7A807C", position: "absolute", bottom: 10, left: 10, right: 20,}}>
+        Already have an account? <Text  onPress={handleRegisterPress} style={{fontWeight: "bold", textAlign: "right", color: "#D6E0D9", position: "absolute", bottom: 10, left: 20, right: 0,}}> Create One</Text>
+      </Text>
+
       </View>
 
-        <Button appearance='outline'  style={{ position: 'absolute', bottom: 70, left: 20, right: 20 }} onPress={handleLogin}>Register</Button>
+      
 
-        <Text style={{ position: 'absolute', bottom: 40, left: 20, right: 20 }}>
-          
-          Already have an account? <Text style={{ color: 'blue' }} onPress={handleRegisterPress}>Login Here</Text>
-        </Text>
-        
-      </View>
+      <TouchableOpacity style={styles.buttonContainer} onPress={handleLogin}>
+      <Text style={styles.buttonText}>Register</Text>
+    </TouchableOpacity>
+
+      <Text
+        style={{
+          fontWeight: "bold",
+          textAlign: "center",
+          color: "#7A807C",
+          position: "absolute",
+          bottom: 40,
+          left: 20,
+          right: 20,
+        }}
+      >
+        domi & Nathan™
+      </Text>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    backgroundColor: '#D6E0D9',
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 100,
+  },
+  
+  buttonText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: 'black',
+    paddingHorizontal: 15
+
+  },
+
+  
+  captionContainer: {
+    display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center',
+    
+  },
+  captionText: {
+    fontSize: 12,
+    fontWeight: '400',
+    fontWeight: 'bold',
+    color: "#7A807C"
+  },
+  email: {
+    paddingTop: 50,
+    width: '97%',
+    margin: 8,
+    maxWidth: 400,
+    fontSize: 20,
+  },
+  password: {
+    width: '97%',
+    margin: 8,
+    maxWidth: 400,
+    fontSize: 20,
+  },
+  titleView: {
+    flex: 1,
+    paddingTop: 80,
   },
 
   title: {
     fontSize: 45,
     fontWeight: 'bold',
-    color: '#708090',
-    marginBottom: 20,
+    color: '#D6E0D9',
+    paddingLeft: 8,
+    
+    textAlign: 'left',
+  },
+  subtitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#7A807C',
     textAlign: 'center',
   },
-
-  header: {
-    position: 'absolute',
-    top: 200,
-    left: 0,
-    right: 0,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  email: {
-    width: '90%',
-    margin: 8,
-    maxWidth: 400,
-  },
-
-  password: {
-    width: '90%',
-    margin: 8,
-    maxWidth: 400,
-  },
-  captionContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  captionIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 5,
-  },
-  captionText: {
-    fontSize: 12,
-    fontWeight: '400',
-    color: '#8F9BB3',
-  },
+  
 });
 
 export default LoginScreen;

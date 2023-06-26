@@ -7,13 +7,15 @@ import ProfileScreen from './ProfileScreen';
 import MapScreen from './MapScreen';
 
 const Tab = createBottomTabNavigator();
+
+
 const Header = (props: ViewProps): React.ReactElement => (
   <View {...props}>
    <View style={styles.container}>
   <View style={styles.userInfo}>
     <Avatar source={require('./profile-image.jpg')} />
     <View style={styles.textContainer}>
-      <Text category='h6'>
+      <Text style={styles.userInfo} category='h6'>
         Username
       </Text>
       <Text category='s1'>
@@ -25,29 +27,10 @@ const Header = (props: ViewProps): React.ReactElement => (
   </View>
 );
 
-const Footer = (props: ViewProps): React.ReactElement => (
-  <View
-    {...props}
-    // eslint-disable-next-line react/prop-types
-    style={[props.style, styles.footerContainer]}
-  >
-    <Button
-      style={styles.footerControl}
-      size='small'
-      status='basic'
-    >
-      CANCEL
-    </Button>
-    <Button
-      style={styles.footerControl}
-      size='small'
-    >
-      ACCEPT
-    </Button>
-  </View>
-);
+
 const HomeScreen = () => {
   return (
+    
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
@@ -64,29 +47,33 @@ const HomeScreen = () => {
           return <Icon name={iconName} size={size} color={color} />;
         },
       })}
+      
       tabBarOptions={{
         activeTintColor: 'blue',
         inactiveTintColor: 'gray',
-        style: styles.tabBar,
+        tabBarStyle: {
+          backgroundColor: 'black',
+          borderTopColor: 'gray',
+          borderTopWidth: 1,
+          paddingBottom: 5,
+        },
+      
+        
       }}
     >
-      <Tab.Screen name="Journeys" component={MapScreen} />
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Journeys" options={{ headerShown: false }} component={MapScreen} />
+      <Tab.Screen name="Home" options={{ headerShown: false }} component={Home} />
+      <Tab.Screen name="Profile" options={{ headerShown: false }}component={ProfileScreen} />
     </Tab.Navigator>
   );
 };
 
 const Home = () => {
   return (
+    
     <View style={styles.screenContainer}>
-     
-
-    <Card
-      style={styles.card}
-      header={Header}
-      
-    >
+    
+    <Card style={styles.card} header={Header}>
       <Text>
         Hey this is the past nathan filling in random text so that you can ignore the fact the the whole page breaks when there is not enough content. Anyways other peoples journey pictures and point update will go here
       </Text>
@@ -107,24 +94,28 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor:"#000000"
   },
   screenText: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#D6E0D9',
   },
   card: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginTop: 0, 
+    marginTop: 100, 
+    backgroundColor:"#000000"
   },
   userInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    color: '#D6E0D9'
   },
   textContainer: {
-    marginLeft: 8, // Set the desired margin between the avatar and the text
+    marginLeft: 8,
+    color: "#D6E0D9" // Set the desired margin between the avatar and the text
   },
 });
 

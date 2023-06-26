@@ -42,7 +42,6 @@ const App = () => {
   }
 
   return (
-  <TamaguiProvider config={config}>
   <ApplicationProvider {...eva} theme={eva.light}>
     <NavigationContainer>
       <Stack.Navigator>
@@ -64,7 +63,6 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
     </ApplicationProvider>
-    </TamaguiProvider>
   );
 };
 
