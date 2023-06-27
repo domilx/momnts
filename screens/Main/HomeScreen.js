@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,  StyleSheet, Image } from 'react-native';
+import { View,  StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, Card, Layout, Text, Avatar } from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -63,27 +63,34 @@ const Home = () => {
         <Text style={styles.username}>Nathn Aruna</Text>
         <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
           <Text style={styles.badgeText}>New York, USA 📍</Text>
-    </View>
-    </View>
+        </View>
+      </View>
     </View>
     <View style={styles.divider} />
 
+    <View style={styles.tabContainer}>
+
+    <TouchableOpacity >
+      <Text style={styles.tabtext}>My Friends</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity >
+      <Text style={styles.tabtext}>Top Journeys</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity >
+      <Text style={styles.tabtext}>Discovery</Text>
+    </TouchableOpacity>
+    </View>
 
     </View>
-    
-    
-    
+  
   );
 };
 
 
 const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: 'black',
-    borderTopColor: 'gray',
-    borderTopWidth: 1,
-    paddingBottom: 5,
-  },
+  
   divider: {
     height: 0.3,
     backgroundColor: '#D6E0D9',
@@ -93,30 +100,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor:"#000000",
   },
-  screenText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#D6E0D9',
-  },
-  card: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
-    marginTop: 100, 
-    backgroundColor:"#000000"
-  },
 
-  topnav: {
-    row: 3,
-    fontSize: 16,
-    color: "#7A807C",
-    fontWeight: 'bold',
+  tabContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
  
-  textContainer: {
-    marginLeft: 8,
-    color: "#D6E0D9" // Set the desired margin between the avatar and the text
-  },
+ 
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -132,16 +123,19 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   userInfo: {
-    marginLeft: 10,
+    marginLeft: 15,
   },
   username: {
     fontSize: 24,
     fontWeight: 'bold',
     color: "#D6E0D9"
   },
-  status: {
- 
+  tabtext: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: "#7A807C"
   },
+ 
   badge: {
     paddingVertical: 4,
     paddingHorizontal: 8,

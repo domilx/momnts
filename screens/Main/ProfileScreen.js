@@ -47,10 +47,19 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         </View>
         <View style={styles.infoItem}>
-          <Text style={styles.label}>Bio:</Text>
-          <Text style={styles.value}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-          </Text>
+          <Text style={styles.label}>Badges</Text>
+        
+        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
+          <Text style={styles.text}>Canada 🇨🇦</Text>
+        </View> 
+        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
+          <Text style={styles.text}>France 🇫🇷</Text>
+        </View> 
+        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
+          <Text style={styles.text}>India 🇮🇳</Text>
+        </View> 
+        
+          
         </View>
       </View>
 

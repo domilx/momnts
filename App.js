@@ -1,22 +1,27 @@
-import React, { useState, useEffect, Suspense } from 'react';
-import { View, Text } from 'react-native';
+import React, { useState, useEffect, Suspense, useRef } from 'react';
+import { Text, View, Button, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { ApplicationProvider } from '@ui-kitten/components';
+import { useFonts } from 'expo-font';
+import * as eva from '@eva-design/eva';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
+
+//screens
 import LoadingScreen from './screens/LoadingScreen';
-import WelcomeScreen from './screens/FirstUse/WelcomeScreen';
-import RegisterScreen from './screens/FirstUse/RegisterScreen';
-import LoginScreen from './screens/FirstUse/LoginScreen';
+import WelcomeScreen from './screens/Unguarded/WelcomeScreen';
+import RegisterScreen from './screens/Unguarded/RegisterScreen';
+import LoginScreen from './screens/Unguarded/LoginScreen';
 import HomeScreen from './screens/Main/HomeScreen';
 import ProfileScreen from './screens/Main/ProfileScreen';
 import MapScreen from './screens/Main/MapScreen';
-import * as eva from '@eva-design/eva';
-import { ApplicationProvider } from '@ui-kitten/components';
-import { useFonts } from 'expo-font';
-import { TamaguiProvider } from 'tamagui'
-import config from './tamagui.config'
+
 
 
 const Stack = createStackNavigator();
+
+
 
  
 const App = () => {
