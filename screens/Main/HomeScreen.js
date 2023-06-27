@@ -22,11 +22,11 @@ const HomeScreen = () => {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'planet-outline';
+            iconName = focused ? 'planet' : 'planet-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'Journeys') {
-            iconName = focused ? 'map' : 'earth-outline';
+            iconName = focused ? 'earth' : 'earth-outline';
           }
 
           return <Icon name={iconName} size={size} color={color} />;
@@ -55,6 +55,7 @@ const HomeScreen = () => {
 
 const Home = () => {
   return (
+
     <View style={styles.screenContainer}>
     <View style={styles.header}>
       <Image source={require('./profile-image.jpg')} style={styles.avatar} />
@@ -62,14 +63,15 @@ const Home = () => {
         <Text style={styles.username}>Nathn Aruna</Text>
         <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
           <Text style={styles.badgeText}>New York, USA 📍</Text>
-        </View>
-        
-      
-      </View>
+    </View>
+    </View>
     </View>
     <View style={styles.divider} />
-    <Text>Home</Text>
+
+
     </View>
+    
+    
     
   );
 };
@@ -102,6 +104,13 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     marginTop: 100, 
     backgroundColor:"#000000"
+  },
+
+  topnav: {
+    row: 3,
+    fontSize: 16,
+    color: "#7A807C",
+    fontWeight: 'bold',
   },
  
   textContainer: {
