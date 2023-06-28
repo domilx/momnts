@@ -16,19 +16,16 @@ import LoginScreen from './screens/Unguarded/LoginScreen';
 import HomeScreen from './screens/Main/HomeScreen';
 import ProfileScreen from './screens/Main/ProfileScreen';
 import MapScreen from './screens/Main/MapScreen';
-
-
+import SettingsScreen from './screens/Main/SettingScreen';
+import EditProfileScreen from './screens/Main/EditProfileScreen';
 
 const Stack = createStackNavigator();
-
-
 
  
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  
 
   // Simulating an asynchronous login check
   useEffect(() => {
@@ -47,24 +44,25 @@ const App = () => {
   }
 
   return (
+    
   <ApplicationProvider {...eva} theme={eva.light}>
     <NavigationContainer>
+      
       <Stack.Navigator>
         {isLoggedIn ? (
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+
         ) : (
-          <Stack.Screen
-            name="Welcome"
-            component={WelcomeScreen}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }}/>
         )}
+
         <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginScreen} />
         <Stack.Screen name="Register" options={{ headerShown: false }} component={RegisterScreen} />
+        <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
+
+
+
       </Stack.Navigator>
     </NavigationContainer>
     </ApplicationProvider>

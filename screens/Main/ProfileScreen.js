@@ -1,13 +1,18 @@
 import React from 'react';
 import { View, ImageBackground, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Text, Button,  } from '@ui-kitten/components';
+import { useNavigation } from '@react-navigation/native';
 
 
-const ProfileScreen = ({ navigation }) => {
 
-  const handleUserLogOut = () => {
+const ProfileScreen = () => {
+
+  const navigation = useNavigation();
+
+
+  const handleSettings = () => {
     // Navigate to the Login screen
-    navigation.navigate('Login');
+    navigation.navigate('Settings');
   };
   
   return (
@@ -24,14 +29,18 @@ const ProfileScreen = ({ navigation }) => {
       
       <View style={styles.infoContainer}>
       <View style={styles.buttonGroup}>
-      <TouchableOpacity style={styles.button}>
+
+      <TouchableOpacity  style={styles.button}>
         <Text style={styles.buttonText}>Edit Profile</Text>
       </TouchableOpacity>
+
       <View style={{paddingHorizontal: 5}}></View> 
-      <TouchableOpacity style={styles.button}>
+
+      <TouchableOpacity onPress={handleSettings} style={styles.button}>
         <Text style={styles.buttonText}>  Settings  </Text>
       </TouchableOpacity>
       </View>
+
       <View style={styles.divider} />
         <View style={styles.infoItem}>
         <Text style={styles.label}>Current Journey:</Text>
@@ -47,17 +56,9 @@ const ProfileScreen = ({ navigation }) => {
         </View>
         </View>
         <View style={styles.infoItem}>
-          <Text style={styles.label}>Badges</Text>
+          <Text style={styles.label}>Badges:</Text>
         
-        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
-          <Text style={styles.text}>Canada 🇨🇦</Text>
-        </View> 
-        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
-          <Text style={styles.text}>France 🇫🇷</Text>
-        </View> 
-        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
-          <Text style={styles.text}>India 🇮🇳</Text>
-        </View> 
+      
         
           
         </View>
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    backgroundColor: '#B7C0BA',
+    backgroundColor: '#D6E0D9',
     paddingVertical: 10,
     paddingHorizontal: 41,
     borderRadius: 5,
@@ -129,8 +130,8 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#000000',
+    fontSize: 17,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -154,4 +155,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+  export default ProfileScreen;
