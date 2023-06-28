@@ -60,6 +60,7 @@ const App = () => {
         <Stack.Screen name="Register" options={{ headerShown: false }} component={RegisterScreen} />
         <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false }}/>
 
 
 

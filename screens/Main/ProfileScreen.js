@@ -14,7 +14,11 @@ const ProfileScreen = () => {
     // Navigate to the Login screen
     navigation.navigate('Settings');
   };
-  
+
+  const handleEditProfile = () => {
+    navigation.navigate('EditProfile');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -30,7 +34,7 @@ const ProfileScreen = () => {
       <View style={styles.infoContainer}>
       <View style={styles.buttonGroup}>
 
-      <TouchableOpacity  style={styles.button}>
+      <TouchableOpacity onPress={handleEditProfile} style={styles.button}>
         <Text style={styles.buttonText}>Edit Profile</Text>
       </TouchableOpacity>
 
