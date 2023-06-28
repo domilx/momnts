@@ -70,9 +70,10 @@ const Home = () => {
   const renderChip = useCallback(
     (tabName, label) => {
       return (
+      
         <Chip
           key={tabName}
-          style={[styles.chip, selectedTab === tabName && styles.selectedChip]}
+          style={[styles.chip, {fontWeight: "bold"}, selectedTab === tabName && styles.selectedChip]}
           onPress={() => handleTabPress(tabName)}
         >
           {label}
@@ -94,7 +95,7 @@ const Home = () => {
         <Image source={require('./profile-image.jpg')} style={styles.avatar} />
         <View style={styles.userInfo}>
           <Text style={[styles.username, { color: theme['color-basic-100'] }]}>Nathn Aruna</Text>
-          <View style={[styles.badge, { backgroundColor: theme['color-basic-800'] }]}>
+          <View style={[styles.badge, { backgroundColor:"#7A807C" }]}>
             <Text style={[styles.badgeText, { color: theme['color-basic-100'] }]}>New York, USA 📍</Text>
           </View>
         </View>
@@ -136,10 +137,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   chip: {
-    marginHorizontal: 5,
+    marginHorizontal: 6,
+    backgroundColor: '#7A807C',
+    
   },
   selectedChip: {
     backgroundColor: '#D6E0D9',
+    fontWeight: 'bold',
   },
   header: {
     flexDirection: 'row',
@@ -166,9 +170,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderRadius: 20,
     alignSelf: 'flex-start',
+    
   },
   badgeText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'center',
   },

@@ -1,158 +1,137 @@
-import React from 'react';
-import { View, ImageBackground, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Avatar, Text, Button,  } from '@ui-kitten/components';
+import React, { useState } from "react";
+import { View, div, Text, TextInput, StyleSheet, TouchableOpacity, Image, Switch, TouchableWithoutFeedback } from "react-native";
+import { Input, Button, Layout, Divider, Toggle, Icon, IconElement,  } from "@ui-kitten/components";
 import { useNavigation } from '@react-navigation/native';
 
 
 
 const EditProfileScreen = () => {
-
   const navigation = useNavigation();
 
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [bio, setBio] = useState('');
 
-  const handleSettings = () => {
-    // Navigate to the Login screen
-    navigation.navigate('Settings');
+  const handleSave = () => {
+    // Perform save action with the updated profile data
+    console.log('Saving profile...');
   };
+
+
+  const handleReturn = () => {
+    navigation.goBack();
+  };
+
   
+
   return (
     <View style={styles.container}>
+      
+    <View style={styles.titleView}>
+      <Text style={styles.title}>Edit Profile</Text>
+
+
       <View style={styles.header}>
-        <Image
-          style={styles.avatar}
-          source={require('./profile-image.jpg')} // Replace with the URL of the user's avatar
-        />
-        <Text style={styles.username}>Nathan Aruna</Text>
-        <Text style={styles.value}>@nate282</Text> 
-        
-      </View>
-      
-      <View style={styles.infoContainer}>
-      <View style={styles.buttonGroup}>
-
-      <TouchableOpacity  style={styles.button}>
-        <Text style={styles.buttonText}>Edit Profile</Text>
-      </TouchableOpacity>
-
-      <View style={{paddingHorizontal: 5}}></View> 
-
-      <TouchableOpacity onPress={handleSettings} style={styles.button}>
-        <Text style={styles.buttonText}>  Settings  </Text>
-      </TouchableOpacity>
-      </View>
-
-      <View style={styles.divider} />
-        <View style={styles.infoItem}>
-        <Text style={styles.label}>Current Journey:</Text>
+      <Image source={require('./profile-image.jpg')} style={styles.avatar} />
+      <View style={styles.userInfo}>
+        <Text style={styles.username}>Nathn Aruna</Text>
         <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
-          <Text style={styles.text}>New York, USA 📍</Text>
-        </View> 
-        </View>
-        <View style={styles.infoItem}>
-        
-          <Text style={styles.label}>Journey Points:</Text>
-        <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
-          <Text style={styles.text}>1.2M 🗺️</Text>
-        </View>
-        </View>
-        <View style={styles.infoItem}>
-          <Text style={styles.label}>Badges:</Text>
-        
-      
-        
-          
         </View>
       </View>
-
-
+    </View>
       
+    <Input style={styles.email} label='Display Name' placeholder='Please enter your display name'  />
+    <Input style={styles.password} label='About Me' placeholder='Please enter your password'  secureTextEntry />
+    </View>
+
+     
+     
+    <TouchableOpacity onPress={handleReturn} style={styles.buttonContainer} >
+      <Text style={styles.buttonText}>Return</Text>
+    </TouchableOpacity>
+
+    <Text style={{fontWeight: "bold", textAlign: "center", color: "#7A807C", position: "absolute", bottom: 40, left: 20, right: 20}}>
+      domi & Nathan™
+    </Text>
+
     </View>
     
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#000000',
-    
-  },
-  divider: {
-    height: 0.3,
+  buttonContainer: {
     backgroundColor: '#D6E0D9',
-    marginVertical: 10,
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 70,
+  },
+
+  email: {
+    paddingTop: 20,
+    width: '97%',
+    margin: 8,
+    maxWidth: 400,
+    fontSize: 20,
   },
   header: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    marginTop: 100,
+    backgroundColor: 'black',
+    padding: 10,
+    marginTop: 30,
+    
   },
   avatar: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    marginBottom: 10,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    resizeMode: 'cover',
+  },
+  userInfo: {
+    marginLeft: 15,
   },
   username: {
     fontSize: 24,
     fontWeight: 'bold',
     color: "#D6E0D9"
   },
-  infoContainer: {
-    marginVertical: 30,
-    
-    
+  password: {
+    width: '97%',
+    margin: 8,
+    maxWidth: 400,
+    fontSize: 20,
   },
-  infoItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-    
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginRight: 10,
-    color: "#D6E0D9"
-  },
-  value: {
-    fontSize: 16,
-    color: "#7A807C",
-    fontWeight: 'bold',
-  },
-  button: {
-    backgroundColor: '#D6E0D9',
-    paddingVertical: 10,
-    paddingHorizontal: 41,
-    borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10
-  },
+ 
   buttonText: {
     color: '#000000',
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
-  buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+    paddingHorizontal: 15
+
   },
-  badge: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderRadius: 20,
-    alignSelf: 'flex-start',
-    
+  titleView: {
+    flex: 1,
+    paddingTop: 80,
   },
-  text: {
-    fontSize: 14,
+
+  title: {
+    fontSize: 45,
     fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
+    color: '#D6E0D9',
+    paddingLeft: 8,
+    textAlign: 'left',
   },
+
+
+  
+  
 });
 
-  export default EditProfileScreen;
+export default EditProfileScreen;

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 100,
+    marginBottom: 70,
   },
   sectionContainer: {
     flexDirection: 'row',
