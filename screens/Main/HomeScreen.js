@@ -94,7 +94,7 @@ const Home = () => {
       <View style={styles.header}>
         <Image source={require('./profile-image.jpg')} style={styles.avatar} />
         <View style={styles.userInfo}>
-          <Text style={[styles.username, { color: theme['color-basic-100'] }]}>Nathn Aruna</Text>
+          <Text style={[styles.username, { color: theme['color-basic-100'] }]}>Nathan Aruna</Text>
           <View style={[styles.badge, { backgroundColor:"#7A807C" }]}>
             <Text style={[styles.badgeText, { color: theme['color-basic-100'] }]}>New York, USA 📍</Text>
           </View>
