@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { View, div, Text, TextInput, StyleSheet, TouchableOpacity, Image, Switch, TouchableWithoutFeedback } from "react-native";
-import { Input, Button, Layout, Divider, Toggle, Icon, IconElement,  } from "@ui-kitten/components";
+import { Input, Button, Layout, Divider, Toggle, IconElement,  } from "@ui-kitten/components";
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 
 
@@ -27,10 +28,20 @@ const EditProfileScreen = () => {
   return (
     <View style={styles.container}>
       
-    <View style={styles.titleView}>
-      <Text style={styles.title}>Edit Profile</Text>
-
-
+      
+      <View style={styles.titleView}>
+      <View style={styles.top}>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleReturn}
+          >
+            <Icon name="arrowleft" size={30} color="white" />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.title}>Settings</Text>
+        <Text style={styles.space}>.</Text>
+      </View>
       <View style={styles.header}>
       <Image source={require('./profile-image.jpg')} style={styles.avatar} />
       <View style={styles.userInfo}>
@@ -44,12 +55,6 @@ const EditProfileScreen = () => {
     <Input style={styles.password} label='About Me' placeholder='Please enter your password'  secureTextEntry />
     </View>
 
-     
-     
-    <TouchableOpacity onPress={handleReturn} style={styles.buttonContainer} >
-      <Text style={styles.buttonText}>Return</Text>
-    </TouchableOpacity>
-
     <Text style={{fontWeight: "bold", textAlign: "center", color: "#7A807C", position: "absolute", bottom: 40, left: 20, right: 20}}>
       domi & Nathan™
     </Text>
@@ -60,6 +65,37 @@ const EditProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#000000',
+  },
+  space: {
+    width: '34%',
+    fontWeight: 'bold',
+    alignItems: 'flex-end',
+    color: '#000000',
+  },
+
+  top: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    paddingBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#FFFFFF',
+  },
+  iconContainer: {
+    flex: 1,
+    alignItems: 'flex-begin',
+  },
   buttonContainer: {
     backgroundColor: '#D6E0D9',
     borderRadius: 8,
@@ -110,28 +146,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  container: {
-    flex: 1,
-    backgroundColor: 'black',
-    paddingHorizontal: 15
-
-  },
   titleView: {
     flex: 1,
-    paddingTop: 80,
   },
-
-  title: {
-    fontSize: 45,
-    fontWeight: 'bold',
-    color: '#D6E0D9',
-    paddingLeft: 8,
-    textAlign: 'left',
-  },
-
-
-  
-  
 });
 
 export default EditProfileScreen;

@@ -24,7 +24,7 @@ const HomeScreen = () => {
             iconName = focused ? 'planet' : 'planet-outline';
           } else if (route.name === 'Profile') {
             iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'Journeys') {
+          } else if (route.name === 'Map') {
             iconName = focused ? 'earth' : 'earth-outline';
           }
 
@@ -42,7 +42,7 @@ const HomeScreen = () => {
         },
       }}
     >
-      <Tab.Screen name="Journeys" options={{ headerShown: false }} component={MapScreen} />
+      <Tab.Screen name="Map" options={{ headerShown: false }} component={MapScreen} />
       <Tab.Screen name="Home" options={{ headerShown: false }} component={Home} />
       <Tab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen} />
     </Tab.Navigator>
@@ -70,10 +70,10 @@ const Home = () => {
   const renderChip = useCallback(
     (tabName, label) => {
       return (
-      
+
         <Chip
           key={tabName}
-          style={[styles.chip,  selectedTab === tabName && styles.selectedChip]}
+          style={[styles.chip, { fontWeight: "bold" }, selectedTab === tabName && styles.selectedChip]}
           onPress={() => handleTabPress(tabName)}
         >
           <Text style={{fontWeight: "bold", color: "#000000"}}>{label}</Text>
@@ -91,11 +91,12 @@ const Home = () => {
 
   return (
     <View style={styles.screenContainer}>
+      <Text style={styles.title} > Moments </Text>
       <View style={styles.header}>
         <Image source={require('./profile-image.jpg')} style={styles.avatar} />
         <View style={styles.userInfo}>
           <Text style={[styles.username, { color: theme['color-basic-100'] }]}>Nathan Aruna</Text>
-          <View style={[styles.badge, { backgroundColor:"#7A807C" }]}>
+          <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
             <Text style={[styles.badgeText, { color: theme['color-basic-100'] }]}>New York, USA 📍</Text>
           </View>
         </View>
@@ -120,6 +121,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    textAlign: 'center',
+    paddingTop: 50,
+    color: '#FFFFFF',
   },
   container: {
     flex: 1,
@@ -139,7 +143,7 @@ const styles = StyleSheet.create({
   chip: {
     marginHorizontal: 6,
     backgroundColor: '#7A807C',
-    
+
   },
   selectedChip: {
     backgroundColor: '#D6E0D9',
@@ -150,7 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     padding: 10,
-    marginTop: 60,
+    marginTop: 10,
   },
   avatar: {
     width: 60,
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderRadius: 20,
     alignSelf: 'flex-start',
-    
+
   },
   badgeText: {
     fontSize: 12,
