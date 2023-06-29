@@ -91,7 +91,6 @@ const Home = () => {
 
   return (
     <View style={styles.screenContainer}>
-      <Text style={styles.title} > Moments </Text>
       <View style={styles.header}>
         <Image source={require('./profile-image.jpg')} style={styles.avatar} />
         <View style={styles.userInfo}>
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     padding: 10,
-    marginTop: 10,
+    marginTop: 50,
   },
   avatar: {
     width: 60,

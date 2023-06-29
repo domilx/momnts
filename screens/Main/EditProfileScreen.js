@@ -39,8 +39,9 @@ const EditProfileScreen = () => {
             <Icon name="arrowleft" size={30} color="white" />
           </TouchableOpacity>
         </View>
+        
         <Text style={styles.title}>Settings</Text>
-        <Text style={styles.space}>.</Text>
+        
       </View>
       <View style={styles.header}>
       <Image source={require('./profile-image.jpg')} style={styles.avatar} />
@@ -88,9 +89,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    flex: 1,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   iconContainer: {
     flex: 1,

@@ -27,7 +27,6 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.top}>
         <Text style={styles.space}>.</Text>
-        <Text style={styles.title}>Profile</Text>
         <View style={styles.iconContainer}>
           <TouchableOpacity
             activeOpacity={1}
@@ -37,6 +36,8 @@ const ProfileScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
+
+
       <View style={styles.header}>
         <Image
           style={styles.avatar}
@@ -46,20 +47,26 @@ const ProfileScreen = () => {
           activeOpacity={1}
           onPress={handleEditProfile}
         >
-          <Text style={styles.username}>Nathan Aruna  <Icon name="pencil" size={20} color="white" /> </Text>
-          <Text style={styles.value}>@nate282</Text></TouchableOpacity>
+          <View style={styles.header}>
+          <View style={styles.namesIcon}>
+          <Text style={styles.username}>Nathan Aruna </Text> 
+          <Icon name="pencil" size={20} color="white" />
+          </View>
+          <Text style={styles.value}>@nate282</Text>
+          </View>
+          </TouchableOpacity>
       </View>
 
       <View style={styles.infoContainer}>
         <View style={styles.divider} />
         <View style={styles.infoItem}>
-          <Text style={styles.label}>Current Journey:</Text>
+          <Text style={styles.label}>Current Journey:     </Text>
           <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
             <Text style={styles.text}>New York, USA 📍</Text>
           </View>
         </View>
         <View style={styles.infoItem}>
-          <Text style={styles.label}>Journey Points:</Text>
+          <Text style={styles.label}>Journey Points:     </Text>
           <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
             <Text style={styles.text}>1.2M 🗺️</Text>
           </View>
@@ -90,7 +97,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingTop: 50,
   },
   title: {
@@ -110,9 +117,21 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: "center",
-    marginBottom: 20,
-    marginTop: 10,
+    justifyContent: "center",
+    marginBottom: 10,
+    marginTop: 5,
+    paddingHorizontal: 10,
+    
   },
+
+  namesIcon: {
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    
+  },
+
+
   avatar: {
     width: 120,
     height: 120,
@@ -125,12 +144,13 @@ const styles = StyleSheet.create({
     color: "#D6E0D9",
   },
   infoContainer: {
-    marginVertical: 30,
+    marginVertical: 10,
   },
   infoItem: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
+    stretch: "true",
   },
   label: {
     fontSize: 16,
