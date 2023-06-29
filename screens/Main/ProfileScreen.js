@@ -1,21 +1,13 @@
 import React from "react";
-import {
-  View,
-  ImageBackground,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import { Avatar, Text, Button } from "@ui-kitten/components";
+import { View, Image, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import { Text, Button } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
 
   const handleSettings = () => {
-    // Navigate to the Login screen
     navigation.navigate("Settings");
   };
 
@@ -25,48 +17,38 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.container}>
+
+       <TouchableOpacity style={{marginTop: 20, marginLeft: 300}} activeOpacity={1} onPress={handleSettings}>
+          <Icon name="dots-horizontal" size={40} color="white" />
+        </TouchableOpacity>
       <View style={styles.top}>
-        <Text style={styles.space}>.</Text>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={handleSettings}
-          >
-            <Icon name="dots-horizontal" size={40} color="white" />
-          </TouchableOpacity>
-        </View>
+        
+       
       </View>
 
-
       <View style={styles.header}>
-        <Image
-          style={styles.avatar}
-          source={require("./profile-image.jpg")} // Replace with the URL of the user's avatar
-        />
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={handleEditProfile}
-        >
+        <Image style={styles.avatar} source={require("./profile-image.jpg")} />
+        <TouchableOpacity activeOpacity={1} onPress={handleEditProfile}>
           <View style={styles.header}>
-          <View style={styles.namesIcon}>
-          <Text style={styles.username}>Nathan Aruna </Text> 
-          <Icon name="pencil" size={20} color="white" />
+            <View style={styles.namesIcon}>
+              <Text style={styles.username}> Nathan Aruna </Text>
+              <Icon name="pencil" size={20} color="white" />
+            </View>
+            <Text style={styles.value}>@nate282</Text>
           </View>
-          <Text style={styles.value}>@nate282</Text>
-          </View>
-          </TouchableOpacity>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.infoContainer}>
         <View style={styles.divider} />
         <View style={styles.infoItem}>
-          <Text style={styles.label}>Current Journey:     </Text>
+          <Text style={[styles.label, styles.maxWidth]}>Current Journey:</Text>
           <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
-            <Text style={styles.text}>New York, USA 📍</Text>
+            <Text style={styles.text}>   New York, USA 📍    </Text>
           </View>
         </View>
         <View style={styles.infoItem}>
-          <Text style={styles.label}>Journey Points:     </Text>
+          <Text style={[styles.label, styles.maxWidth]}>Journey Points:</Text>
           <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
             <Text style={styles.text}>1.2M 🗺️</Text>
           </View>
@@ -82,38 +64,24 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: "#000000",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
   },
-  space: {
-    width: '40%',
-    fontWeight: 'bold',
-    alignItems: 'flex-begin',
-    color: '#000000',
-  },
-
   top: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
     paddingHorizontal: 10,
     paddingTop: 50,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#FFFFFF',
-  },
-  iconContainer: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
-  divider: {
-    height: 0.3,
-    backgroundColor: "#D6E0D9",
-    marginVertical: 10,
+  space: {
+    width: "40%",
+    fontWeight: "bold",
+    alignItems: "flex-start",
+    color: "#000000",
   },
   header: {
     alignItems: "center",
@@ -121,17 +89,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 5,
     paddingHorizontal: 10,
-    
   },
-
   namesIcon: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
-    
   },
-
-
   avatar: {
     width: 120,
     height: 120,
@@ -150,7 +113,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    stretch: "true",
+    maxWidth: '90%',
+  },
+  divider: {
+    height: 0.3,
+    backgroundColor: "#D6E0D9",
+    marginVertical: 10,
   },
   label: {
     fontSize: 16,
@@ -163,36 +131,21 @@ const styles = StyleSheet.create({
     color: "#7A807C",
     fontWeight: "bold",
   },
-  button: {
-    backgroundColor: "#D6E0D9",
-    paddingVertical: 10,
-    paddingHorizontal: 41,
-    borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  buttonText: {
-    color: "#000000",
-    fontSize: 17,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  buttonGroup: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   badge: {
     paddingVertical: 4,
     paddingHorizontal: 8,
     borderRadius: 20,
     alignSelf: "flex-start",
+    maxWidth: '90%',
   },
   text: {
     fontSize: 14,
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center",
+  },
+  maxWidth: {
+    maxWidth: '90%',
   },
 });
 

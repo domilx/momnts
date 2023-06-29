@@ -1,25 +1,21 @@
 import React, { useState } from "react";
-import { View, div, Text, TextInput, StyleSheet, TouchableOpacity, Switch, TouchableWithoutFeedback } from "react-native";
-import { Input, Button, Layout, Divider, Toggle, IconElement,  } from "@ui-kitten/components";
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, StyleSheet, Switch } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
-
-
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
 
-  const [notificationsEnabled, setNotificationsEnabled] = React.useState(false);
-  const [darkModeEnabled, setDarkModeEnabled] = React.useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
 
   const toggleNotifications = () => {
-    setNotificationsEnabled((prev) => !prev);
+    setNotificationsEnabled(prevState => !prevState);
   };
 
   const toggleDarkMode = () => {
-    setDarkModeEnabled((prev) => !prev);
+    setDarkModeEnabled(prevState => !prevState);
   };
-
 
   const handleReturn = () => {
     navigation.goBack();
@@ -27,48 +23,43 @@ const SettingsScreen = () => {
 
   return (
     <View style={styles.container}>
-      
       <View style={styles.titleView}>
-      <View style={styles.top}>
-        <View style={styles.iconContainer}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={handleReturn}
-          >
+        <View style={styles.top}>
+          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
             <Icon name="arrowleft" size={30} color="white" />
           </TouchableOpacity>
+          <Text style={styles.title}>Settings</Text>
         </View>
-        <Text style={styles.title}>Settings</Text>
-        <Text style={styles.space}>.</Text>
-      </View>
 
         <View style={styles.toggleContainer}>
-        <Text style={styles.sectionHeading}>Notifications</Text>
-        <Switch
-          trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-          thumbColor={notificationsEnabled ? '#7A807C' : '#7A807C'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleNotifications}
-          value={notificationsEnabled}
-        />
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>Notifications</Text>
+            <Switch
+              trackColor={{ false: '#7A807C', true: '#81b0ff' }}
+              thumbColor={notificationsEnabled ? '#7A807C' : '#7A807C'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleNotifications}
+              value={notificationsEnabled}
+            />
+          </View>
 
-        <Text style={styles.sectionHeading}>Display Location</Text>
-        <Switch
-          trackColor={{ false: '##7A807C', true: '#81b0ff' }}
-          thumbColor={darkModeEnabled ? '#7A807C' : '#7A807C'}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleDarkMode}
-          value={darkModeEnabled}
-        />
-     </View>
-     </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>Display Location</Text>
+            <Switch
+              trackColor={{ false: '#7A807C', true: '#81b0ff' }}
+              thumbColor={darkModeEnabled ? '#7A807C' : '#7A807C'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleDarkMode}
+              value={darkModeEnabled}
+            />
+          </View>
+        </View>
+      </View>
 
-    <Text style={{fontWeight: "bold", textAlign: "center", color: "#7A807C", position: "absolute", bottom: 40, left: 20, right: 20}}>
-      domi & Nathan™
-    </Text>
-
+      <Text style={styles.footerText}>
+        domi & Nathan™
+      </Text>
     </View>
-    
   );
 };
 
@@ -77,14 +68,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#000000',
+    
   },
-  space: {
-    width: '37%',
-    fontWeight: 'bold',
-    alignItems: 'flex-end',
-    color: '#000000',
-  },
-
   top: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -99,18 +84,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#FFFFFF',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    paddingRight: 20,
+   
   },
   iconContainer: {
-    flex: 1,
-    alignItems: 'flex-begin',
+    alignItems: 'flex-start',
   },
-  buttonContainer: {
-    backgroundColor: '#D6E0D9',
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 70,
+  toggleContainer: {
+    marginTop: 30,
+    marginHorizontal: 20,
   },
   sectionContainer: {
     flexDirection: 'row',
@@ -118,33 +102,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  buttonText: {
-    color: '#000000',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  titleView: {
-    flex: 1,
-  },
-
   sectionHeading: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#D6E0D9',
-
   },
-  toggleContainer: {
-    marginLeft: 10,
-    margintop: 30,
-
+  footerText: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#7A807C',
+    position: 'absolute',
+    bottom: 40,
+    left: 20,
+    right: 20,
   },
-  
-  
 });
 
 export default SettingsScreen;

@@ -176,9 +176,10 @@ const styles = StyleSheet.create({
 
   },
   badgeText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
   },
 });
 
