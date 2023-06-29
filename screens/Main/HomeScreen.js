@@ -73,10 +73,10 @@ const Home = () => {
       
         <Chip
           key={tabName}
-          style={[styles.chip, {fontWeight: "bold"}, selectedTab === tabName && styles.selectedChip]}
+          style={[styles.chip,  selectedTab === tabName && styles.selectedChip]}
           onPress={() => handleTabPress(tabName)}
         >
-          {label}
+          <Text style={{fontWeight: "bold", color: "#000000"}}>{label}</Text>
         </Chip>
       );
     },
