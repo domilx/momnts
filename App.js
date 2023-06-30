@@ -1,3 +1,4 @@
+//imports
 import React, { useState, useEffect, Suspense, useRef } from 'react';
 import { Text, View, Button, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';

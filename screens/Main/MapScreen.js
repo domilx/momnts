@@ -4,6 +4,7 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 
 const MapScreen = () => {
+
   const [location, setLocation] = useState(null);
   const [path, setPath] = useState([]);
 
@@ -11,7 +12,7 @@ const MapScreen = () => {
     const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        console.log('Location permission denied');
+        console.log('Blud really denied location perms');
         return;
       }
 
@@ -31,32 +32,26 @@ const MapScreen = () => {
   return (
 
     <View style={styles.container}>
+
       {location && (
-        <MapView
-          style={styles.map}
+
+        <MapView style={styles.map}
           initialRegion={{
             latitude: location.latitude,
             longitude: location.longitude,
             latitudeDelta: 0.4,
             longitudeDelta: 0.4,
-          }}
-        >
-          <Polyline
-            coordinates={path}
-            strokeColor="#000000" // this shit if for line colour
-            strokeWidth={3} // this shi is for the thickness
-          />
+          }}>
+
+          <Polyline coordinates={path} strokeColor="#000000" strokeWidth={3}/>
+
           <Marker
             coordinate={{
               latitude: location.latitude,
               longitude: location.longitude,
-            }}
-            
-          >
-            <Image
-              source={require('./profile-image.jpg')} //im thuggin but you must be buggin if you think I'm gonna wait 1 seconds for this to update
-              style={styles.avatar}
-            />
+            }}>
+
+            <Image source={require('./profile-image.jpg')} style={styles.avatar}/>
 
           </Marker>
         </MapView>
@@ -79,11 +74,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-  },
-  caption: {
-    marginTop: 4,
-    fontSize: 12,
-    fontWeight: 'bold',
   },
 });
 
