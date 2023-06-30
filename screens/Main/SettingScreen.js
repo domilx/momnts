@@ -71,7 +71,7 @@ const SettingsScreen = () => {
             <Text style={styles.sectionHeading}>Display Location</Text>
             <Switch
               trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={darkModeEnabled ? '#D6E0D9' : '#D6E0D9'}
+              thumbColor={locationEnabled ? '#D6E0D9' : '#D6E0D9'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleLocation}
               value={locationEnabled}
@@ -84,7 +84,7 @@ const SettingsScreen = () => {
             <Text style={styles.sectionHeading}>AR Features</Text>
             <Switch
               trackColor={{ false: '#7A807C', true: '#00FF00' }}
-              thumbColor={darkModeEnabled ? '#7D6E0D9' : '#D2E0D9'}
+              thumbColor={ArEnabled ? '#7D6E0D9' : '#D2E0D9'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleAR}
               value={ArEnabled}
@@ -106,7 +106,7 @@ const SettingsScreen = () => {
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeading}>Help</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
+            <Icon name="question" size={30} color="white" />
           </TouchableOpacity>
         </View>
 
@@ -115,7 +115,7 @@ const SettingsScreen = () => {
        <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeading}>Share Moments</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
+            <Icon name="link" size={30} color="white" />
           </TouchableOpacity>
         </View>
 
@@ -124,7 +124,7 @@ const SettingsScreen = () => {
        <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeading}>Rate Moments</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
+            <Icon name="star" size={30} color="white" />
           </TouchableOpacity>
         </View>
 

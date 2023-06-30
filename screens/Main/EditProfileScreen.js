@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "react-native";
+import { Input } from "@ui-kitten/components";
+
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -55,23 +57,18 @@ const EditProfileScreen = () => {
           <View style={styles.settingChunk}> 
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Notifications</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={notificationsEnabled ? '#D6E0D9' : '#D6E0D9'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleNotifications}
-              value={notificationsEnabled}
-            />
+            <Text style={styles.sectionHeading}>About Me</Text>
+            <Input style={styles.email}  placeholder='Character Limit of 45'   />
+
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Display Location</Text>
+            <Text style={styles.sectionHeading}>Display Badges</Text>
             <Switch
               trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={darkModeEnabled ? '#D6E0D9' : '#D6E0D9'}
+              thumbColor={locationEnabled ? '#D6E0D9' : '#D6E0D9'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleLocation}
               value={locationEnabled}
@@ -81,10 +78,10 @@ const EditProfileScreen = () => {
           <View style={styles.divider} />
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>AR Features</Text>
+            <Text style={styles.sectionHeading}>Public Profile</Text>
             <Switch
               trackColor={{ false: '#7A807C', true: '#00FF00' }}
-              thumbColor={darkModeEnabled ? '#7D6E0D9' : '#D2E0D9'}
+              thumbColor={ArEnabled ? '#7D6E0D9' : '#D2E0D9'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleAR}
               value={ArEnabled}
