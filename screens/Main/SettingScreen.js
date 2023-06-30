@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
+
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -31,29 +32,87 @@ const SettingsScreen = () => {
           <Text style={styles.title}>Settings</Text>
         </View>
 
-        <View style={styles.toggleContainer}>
+        <View style={styles.divider} />
+
+
+        <ScrollView style={styles.toggleContainer}>
+
+          <View style={styles.settingChunk}> 
+
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>Notifications</Text>
             <Switch
               trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={notificationsEnabled ? '#7A807C' : '#7A807C'}
+              thumbColor={notificationsEnabled ? '#D6E0D9' : '#D6E0D9'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleNotifications}
               value={notificationsEnabled}
             />
           </View>
 
+          <View style={styles.divider} />
+
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>Display Location</Text>
             <Switch
               trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={darkModeEnabled ? '#7A807C' : '#7A807C'}
+              thumbColor={darkModeEnabled ? '#D6E0D9' : '#D6E0D9'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleDarkMode}
               value={darkModeEnabled}
             />
           </View>
-        </View>
+
+          <View style={styles.divider} />
+
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>AR Features</Text>
+            <Switch
+              trackColor={{ false: '#7A807C', true: '#00FF00' }}
+              thumbColor={darkModeEnabled ? '#7D6E0D9' : '#D2E0D9'}
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleDarkMode}
+              value={darkModeEnabled}
+            />
+          </View>
+          </View>
+
+
+
+  <View style={styles.settingChunk}> 
+
+<View style={styles.sectionContainer}>
+  <Text style={styles.sectionHeading}>About Us</Text>
+  <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
+            <Icon name="arrowright" size={30} color="white" />
+          </TouchableOpacity>
+</View>
+
+<View style={styles.divider} />
+
+<View style={styles.sectionContainer}>
+  <Text style={styles.sectionHeading}>Privacy</Text>
+  <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
+            <Icon name="arrowright" size={30} color="white" />
+          </TouchableOpacity>
+</View>
+
+<View style={styles.divider} />
+
+<View style={styles.sectionContainer}>
+  <Text style={styles.sectionHeading}>Rate Moments</Text>
+  <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
+            <Icon name="arrowright" size={30} color="white" />
+          </TouchableOpacity>
+</View>
+</View>
+
+
+          <TouchableOpacity style={styles.buttonContainer} >
+      <Text style={styles.buttonText}>Logout</Text>
+    </TouchableOpacity>
+
+        </ScrollView>
       </View>
 
       <Text style={styles.footerText}>
@@ -70,6 +129,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     
   },
+
+
+  buttonText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
   top: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -89,6 +156,21 @@ const styles = StyleSheet.create({
     paddingRight: 20,
    
   },
+
+  settingChunk: {
+    marginTop: 20,
+    marginBottom: 20
+
+  },
+
+  buttonContainer: {
+    backgroundColor: '#D6E0D9',
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 100,
+  },
   iconContainer: {
     alignItems: 'flex-start',
   },
@@ -100,12 +182,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
   },
   sectionHeading: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#D6E0D9',
+  },
+  settingsTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#D6E0D9",
   },
   footerText: {
     fontWeight: 'bold',
@@ -115,6 +201,11 @@ const styles = StyleSheet.create({
     bottom: 40,
     left: 20,
     right: 20,
+  },
+  divider: {
+    height: 0.3,
+    backgroundColor: "#D6E0D9",
+    marginVertical: 10,
   },
 });
 
