@@ -1,37 +1,26 @@
 import React from 'react';
 import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 
-const WelcomeScreen = ({ navigation }) => {
+const LoadingScreen = ({ navigation }) => {
   
-
   return (
-    <TouchableOpacity
-      style={styles.container}
-      activeOpacity={1}
-     
-    >
+    <TouchableOpacity style={styles.container} activeOpacity={1}>
+
       <View>
         <Text style={styles.title}>MOMENTS</Text>
-        <Text style={styles.subtitle}>Loading... <ActivityIndicator size="small" color="#D6E0D9" /></Text>
+        <Text style={styles.subtitle}>Loading... <ActivityIndicator size="small" color="#D6E0D9"/></Text>
       </View>
-      <Text
-        style={{
-          fontWeight: 'bold',
-          textAlign: 'center',
-          color: '#7A807C',
-          position: 'absolute',
-          bottom: 40,
-          left: 20,
-          right: 20,
-        }}
-      >
+      
+      <Text style={styles.companyName}>
         domi & Nathan™
       </Text>
+
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     backgroundColor: 'black',
@@ -44,7 +33,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#D6E0D9',
     textAlign: 'center',
-     
   },
   subtitle: {
     fontSize: 22,
@@ -52,6 +40,15 @@ const styles = StyleSheet.create({
     color: '#7A807C',
     textAlign: 'center',
   },
+  companyName: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#7A807C',
+    position: 'absolute',
+    bottom: 40,
+    left: 20,
+    right: 20,
+  }
 });
 
-export default WelcomeScreen;
+export default LoadingScreen;
