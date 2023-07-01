@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image } from "react-native";
 import { Input } from "@ui-kitten/components";
 
 import { useNavigation } from "@react-navigation/native";
@@ -56,23 +56,22 @@ const EditProfileScreen = () => {
 
           <View style={styles.settingChunk}> 
 
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>About Me</Text>
-            <Input style={styles.email}  placeholder='Character Limit of 45'   />
 
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>
+              <Image source={require('./profile-image.jpg')} style={styles.avatar} />
+            </Text>
+            <Text style={styles.sectionHeading}>Change Profile Picture</Text>
+            <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
+            <Icon name="upload" size={30} color="white" />
+          </TouchableOpacity>
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Display Badges</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={locationEnabled ? '#D6E0D9' : '#D6E0D9'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleLocation}
-              value={locationEnabled}
-            />
+            <Text style={styles.sectionHeading}>About Me</Text>
+            <Input style={styles.email}  placeholder='Character Limit of 45'   />
           </View>
 
           <View style={styles.divider} />
@@ -92,9 +91,9 @@ const EditProfileScreen = () => {
         <View style={styles.settingChunk}> 
 
          <View style={styles.sectionContainer}>
-           <Text style={styles.sectionHeading}>About Us</Text>
+           <Text style={styles.sectionHeading}>Share Profile</Text>
            <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
+            <Icon name="link" size={30} color="white" />
            </TouchableOpacity>
          </View>
 
@@ -121,7 +120,7 @@ const EditProfileScreen = () => {
        <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeading}>Rate Moments</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
+            <Icon name="star" size={30} color="white" />
           </TouchableOpacity>
         </View>
 
@@ -147,6 +146,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#000000',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    padding: 10,
+    marginTop: 50,
   },
   buttonText: {
     color: '#000000',
@@ -174,6 +180,12 @@ const styles = StyleSheet.create({
   settingChunk: {
     marginTop: 20,
     marginBottom: 20
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    resizeMode: 'cover',
   },
   buttonContainer: {
     backgroundColor: '#D6E0D9',

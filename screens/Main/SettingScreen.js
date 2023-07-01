@@ -83,8 +83,8 @@ const SettingsScreen = () => {
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>AR Features</Text>
             <Switch
-              trackColor={{ false: '#7A807C', true: '#00FF00' }}
-              thumbColor={ArEnabled ? '#7D6E0D9' : '#D2E0D9'}
+              trackColor={{ false: '#7A807C', true: '#B7C0BA' }}
+              thumbColor={ArEnabled ? '#FFF' : '#FFF'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleAR}
               value={ArEnabled}

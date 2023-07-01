@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 10,
-    marginTop: 5,
     paddingHorizontal: 10,
   },
   namesIcon: {
