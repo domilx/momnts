@@ -90,6 +90,24 @@ const SettingsScreen = () => {
               value={ArEnabled}
             />
           </View>
+
+          <View style={styles.divider} />
+
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>Blocked Users</Text>
+            <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
+            <Icon name="arrowright" size={30} color="white" />
+           </TouchableOpacity>
+          </View>
+
+          <View style={styles.divider} />
+
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionHeading}>Danger Zone</Text>
+            <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
+            <Icon name="arrowright" size={30} color="white" />
+           </TouchableOpacity>
+          </View>
         </View>
 
         <View style={styles.settingChunk}> 
@@ -97,7 +115,7 @@ const SettingsScreen = () => {
          <View style={styles.sectionContainer}>
            <Text style={styles.sectionHeading}>About Us</Text>
            <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
+            <Icon name="info" size={30} color="white" />
            </TouchableOpacity>
          </View>
 
@@ -106,7 +124,7 @@ const SettingsScreen = () => {
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionHeading}>Help</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="question" size={30} color="white" />
+            <Icon name="questioncircle" size={30} color="white" />
           </TouchableOpacity>
         </View>
 

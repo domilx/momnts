@@ -91,19 +91,15 @@ const EditProfileScreen = () => {
         <View style={styles.settingChunk}> 
 
          <View style={styles.sectionContainer}>
-           <Text style={styles.sectionHeading}>Share Profile</Text>
-           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="link" size={30} color="white" />
-           </TouchableOpacity>
+         <Text style={styles.sectionHeading}>Full Name</Text>
+            <Input style={styles.email}  placeholder='Character Limit of 45'   />
          </View>
 
         <View style={styles.divider} />
 
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Help</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
-          </TouchableOpacity>
+        <Text style={styles.sectionHeading}>Username</Text>
+            <Input style={styles.email}  placeholder='Character Limit of 45'   />
         </View>
 
         <View style={styles.divider} />
