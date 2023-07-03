@@ -18,7 +18,7 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
 
-       <TouchableOpacity style={{marginTop: 20, marginLeft: 300}} activeOpacity={1} onPress={handleSettings}>
+       <TouchableOpacity style={{marginTop: 40, marginLeft: 300}} activeOpacity={1} onPress={handleSettings}>
           <Icon name="dots-horizontal" size={40} color="white" />
         </TouchableOpacity>
       <View style={styles.top}>
@@ -39,24 +39,7 @@ const ProfileScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.infoContainer}>
-        <View style={styles.divider} />
-        <View style={styles.infoItem}>
-          <Text style={[styles.label, styles.maxWidth]}>Current Journey:</Text>
-          <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
-            <Text style={styles.text}>   New York, USA 📍    </Text>
-          </View>
-        </View>
-        <View style={styles.infoItem}>
-          <Text style={[styles.label, styles.maxWidth]}>Journey Points:</Text>
-          <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
-            <Text style={styles.text}>1.2M 🗺️</Text>
-          </View>
-        </View>
-        <View style={styles.infoItem}>
-          <Text style={styles.label}>Badges:</Text>
-        </View>
-      </View>
+      
     </View>
   );
 };
@@ -66,8 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#000000",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    
   },
   top: {
     flexDirection: "row",
@@ -146,6 +128,7 @@ const styles = StyleSheet.create({
   maxWidth: {
     maxWidth: '90%',
   },
+  
 });
 
 export default ProfileScreen;

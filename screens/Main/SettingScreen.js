@@ -100,14 +100,7 @@ const SettingsScreen = () => {
            </TouchableOpacity>
           </View>
 
-          <View style={styles.divider} />
-
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Danger Zone</Text>
-            <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
-           </TouchableOpacity>
-          </View>
+          
         </View>
 
         <View style={styles.settingChunk}> 
