@@ -73,7 +73,7 @@ const MapScreen = () => {
 
       <View style={styles.controlPanelBottom}>
         <TouchableOpacity>
-      <Icon name="location-arrow" size={40} color="black" />
+      <Icon name="arrow-top-right-thin-circle-outline" size={40} color="black" />
       </TouchableOpacity>
 
         

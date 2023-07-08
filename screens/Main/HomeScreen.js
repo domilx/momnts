@@ -34,6 +34,8 @@ const HomeScreen = () => {
       tabBarOptions={{
         activeTintColor: '#D6E0D9',
         inactiveTintColor: 'gray',
+        fontWeight: "bold",
+
         tabBarStyle: {
           backgroundColor: 'black',
           borderTopColor: 'gray',

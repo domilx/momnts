@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
-const SettingsScreen = () => {
+const BlockedUsersScreen = () => {
   const navigation = useNavigation();
 
   //Default states
@@ -35,8 +35,7 @@ const SettingsScreen = () => {
   };
 
   const handleBlockedUsers = () => {
-    navigation.navigate("BlockedUsers");
-
+    navigation
   }
 
 
@@ -50,7 +49,7 @@ const SettingsScreen = () => {
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
             <Icon name="arrowleft" size={30} color="white" />
           </TouchableOpacity>
-          <Text style={styles.title}>Settings</Text>
+          <Text style={styles.title}>Blocked Users</Text>
         </View>
 
         <View style={styles.divider} />
@@ -59,13 +58,12 @@ const SettingsScreen = () => {
         <ScrollView style={styles.toggleContainer}>
 
           <View style={styles.settingChunk}> 
-        <View style={styles.sectionContainer}>
-
-        <Text style={styles.chunkTitle}>General</Text>
-        </View>
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Notifications</Text>
+          <Image source={require('../profile-image.jpg')} style={styles.avatar} />
+            <Text style={styles.sectionHeading}>
+             Blocked User 1
+            </Text>
             <Switch
               trackColor={{ false: '#7A807C', true: '#81b0ff' }}
               thumbColor={notificationsEnabled ? '#D6E0D9' : '#D6E0D9'}
@@ -78,115 +76,30 @@ const SettingsScreen = () => {
           <View style={styles.divider} />
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Display Location</Text>
+          <Image source={require('../profile-image.jpg')} style={styles.avatar} />
+            <Text style={styles.sectionHeading}>
+             Blocked User 2
+            </Text>
             <Switch
               trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={locationEnabled ? '#D6E0D9' : '#D6E0D9'}
+              thumbColor={notificationsEnabled ? '#D6E0D9' : '#D6E0D9'}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleLocation}
-              value={locationEnabled}
+              onValueChange={toggleNotifications}
+              value={notificationsEnabled}
             />
           </View>
 
-          <View style={styles.divider} />
 
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>AR Features</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#B7C0BA' }}
-              thumbColor={ArEnabled ? '#FFF' : '#FFF'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleAR}
-              value={ArEnabled}
-            />
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Blocked Users</Text>
-            <TouchableOpacity activeOpacity={1} onPress={handleBlockedUsers} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="gray" />
-           </TouchableOpacity>
-          </View>
-
-          
-        </View>
-
-        <View style={styles.settingChunk}> 
-
-        <View style={styles.sectionContainer}>
-
-<Text style={styles.chunkTitle}>Info</Text>
-</View>
-
-         <View style={styles.sectionContainer}>
-          
-
-           <Text style={styles.sectionHeading}>About Us</Text>
-           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-           <Icon name="arrowright" size={30} color="gray" />
-
-           </TouchableOpacity>
          </View>
 
-        <View style={styles.divider} />
-
-        <View style={styles.sectionContainer}>
-
-          <Text style={styles.sectionHeading}>Help</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-          <Icon name="arrowright" size={30} color="gray" />
-
-          </TouchableOpacity>
-        </View>
-        
-
-        
-
-        <View style={styles.divider} />
-
-        <View style={styles.settingChunk}> 
-        <View style={styles.sectionContainer}>
-
-<Text style={styles.chunkTitle}>Help Us </Text>
-</View>
-
-       <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Share Moments</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="link" size={30} color="gray" />
-          </TouchableOpacity>
-        </View>
-
-
-        
-
-        <View style={styles.divider} />
-
-       <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Rate Moments</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="star" size={30} color="gray" />
-          </TouchableOpacity>
-        </View>
-
-       </View>
-              </View>
-
-
-
-      <TouchableOpacity style={styles.buttonContainer} >
-        <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
+  
 
     </ScrollView>
+   </View>
 
     <Text style={styles.footerText}>
         domi & Nathan™
     </Text>
-   </View>
-
     </View>
   );
 };
@@ -220,6 +133,12 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     paddingRight: 20,
   },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    resizeMode: 'cover',
+  },
   settingChunk: {
     marginTop: 20,
     marginBottom: 20
@@ -230,7 +149,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: 100,
   },
   iconContainer: {
     alignItems: 'flex-start',
@@ -249,11 +168,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#D6E0D9',
   },
-  chunkTitle : {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: 'gray',
-  },
   footerText: {
     fontWeight: 'bold',
     textAlign: 'center',
@@ -270,4 +184,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingsScreen;
+export default BlockedUsersScreen;
