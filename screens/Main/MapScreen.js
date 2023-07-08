@@ -117,8 +117,7 @@ const styles = StyleSheet.create({
     left: 16,
     right: 16,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    
   },
   controlButton: {
     backgroundColor: "black",

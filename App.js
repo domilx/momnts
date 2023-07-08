@@ -20,6 +20,8 @@ import MapScreen from './screens/Main/MapScreen';
 import SettingsScreen from './screens/Main/SettingScreen';
 import EditProfileScreen from './screens/Main/EditProfileScreen';
 import BlockedUsersScreen from './screens/Main/Settings/BlockedUsersScreen';
+import AboutUsScreen from './screens/Main/Settings/AboutUsScreen';
+import HelpScreen from './screens/Main/Settings/HelpScreen';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +66,10 @@ const App = () => {
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="BlockedUsers" component={BlockedUsersScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Help" component={HelpScreen} options={{ headerShown: false }}/>
+
+
 
 
 

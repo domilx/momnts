@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 
-const SettingsScreen = () => {
+const HelpScreen = () => {
   const navigation = useNavigation();
 
   //Default states
@@ -39,16 +39,6 @@ const SettingsScreen = () => {
 
   }
 
-  const handleAboutUs = () => {
-    navigation.navigate("AboutUs");
-
-  }
-
-  const handleHelp = () => {
-    navigation.navigate("Help");
-
-  }
-
 
   return (
 
@@ -58,9 +48,9 @@ const SettingsScreen = () => {
 
         <View style={styles.top}>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowleft" size={30} color="#D6E0D9" />
+            <Icon name="arrowleft" size={30} color="white" />
           </TouchableOpacity>
-          <Text style={styles.title}>Settings</Text>
+          <Text style={styles.title}>Help</Text>
         </View>
 
         <View style={styles.divider} />
@@ -134,7 +124,7 @@ const SettingsScreen = () => {
           
 
            <Text style={styles.sectionHeading}>About Us</Text>
-           <TouchableOpacity activeOpacity={1} onPress={handleAboutUs} style={styles.iconContainer}>
+           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
            <Icon name="arrowright" size={30} color="gray" />
 
            </TouchableOpacity>
@@ -145,7 +135,7 @@ const SettingsScreen = () => {
         <View style={styles.sectionContainer}>
 
           <Text style={styles.sectionHeading}>Help</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleHelp} style={styles.iconContainer}>
+          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
           <Icon name="arrowright" size={30} color="gray" />
 
           </TouchableOpacity>
@@ -225,7 +215,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#D6E0D9',
+    color: '#FFFFFF',
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingRight: 20,
@@ -280,4 +270,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingsScreen;
+export default HelpScreen;

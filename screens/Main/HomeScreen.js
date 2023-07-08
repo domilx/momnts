@@ -34,19 +34,20 @@ const HomeScreen = () => {
       tabBarOptions={{
         activeTintColor: '#D6E0D9',
         inactiveTintColor: 'gray',
-        fontWeight: "bold",
 
         tabBarStyle: {
           backgroundColor: 'black',
           borderTopColor: 'gray',
           borderTopWidth: 1,
           paddingBottom: 5,
+          fontWeight: "bold",
+
         },
       }}
     >
       <Tab.Screen name="Map" options={{ headerShown: false }} component={MapScreen} />
       <Tab.Screen name="Home" options={{ headerShown: false }} component={Home} />
-      <Tab.Screen name="Profile" options={{ headerShown: false }} component={ProfileScreen} />
+      <Tab.Screen name="Profile" options={{ headerShown: false,  }} component={ProfileScreen} />
     </Tab.Navigator>
   );
 };
