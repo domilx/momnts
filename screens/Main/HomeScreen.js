@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, Card, Layout, Text, Avatar, useTheme } from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -7,6 +7,7 @@ import { Chip } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import MapScreen from './MapScreen';
 import ProfileScreen from './ProfileScreen';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -57,6 +58,15 @@ const Home = () => {
   const navigation = useNavigation();
   const theme = useTheme();
 
+  
+  const handleFriends = () => {
+      //open modal 
+  }
+  
+  const handleProfile = () => {
+    navigation.navigate('Profile');
+}
+
   const handleTabPress = useCallback(tabName => {
     setSelectedTab(tabName);
   }, []);
@@ -95,13 +105,23 @@ const Home = () => {
   return (
     <View style={styles.screenContainer}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={handleProfile}>
         <Image source={require('./profile-image.jpg')} style={styles.avatar} />
+        </TouchableOpacity>
         <View style={styles.userInfo}>
+        <TouchableOpacity onPress={handleProfile}>
           <Text style={[styles.username, { color: theme['color-basic-100'] }]}>Nathan Aruna</Text>
+          </TouchableOpacity>
           <View style={[styles.badge, { backgroundColor: "#7A807C" }]}>
             <Text style={[styles.badgeText, { color: theme['color-basic-100'] }]}>New York, USA 📍</Text>
           </View>
         </View>
+
+        <TouchableOpacity>
+        <Icon name="people" onPress={handleFriends} style={{left: 100}} size={30} color="#D6E0D9" />
+        </TouchableOpacity>
+
+
       </View>
       <View style={styles.divider} />
       <View style={styles.container}>
@@ -125,7 +145,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     paddingTop: 50,
-    color: '#FFFFFF',
+    color: '#D6E0D9',
   },
   container: {
     flex: 1,
@@ -181,7 +201,7 @@ const styles = StyleSheet.create({
   badgeText: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#D6E0D9",
     textAlign: "center",
   },
 });
