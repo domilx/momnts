@@ -71,7 +71,7 @@ const EditProfileScreen = () => {
 
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>About Me</Text>
-            <Input style={styles.email}  placeholder='Character Limit of 45'   />
+            <Input style={styles.email}  placeholder='Character Limit of 45   '   />
           </View>
 
           <View style={styles.divider} />
@@ -92,34 +92,23 @@ const EditProfileScreen = () => {
 
          <View style={styles.sectionContainer}>
          <Text style={styles.sectionHeading}>Full Name</Text>
-            <Input style={styles.email}  placeholder='Character Limit of 45'   />
+            <Input style={styles.email}  placeholder='Character Limit of 45   '   />
          </View>
 
         <View style={styles.divider} />
 
         <View style={styles.sectionContainer}>
         <Text style={styles.sectionHeading}>Username</Text>
-            <Input style={styles.email}  placeholder='Character Limit of 45'   />
+            <Input style={styles.email}  placeholder='Character Limit of 45   '/>
         </View>
 
         <View style={styles.divider} />
 
-       <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Share Moments</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="white" />
-          </TouchableOpacity>
+        <View style={styles.sectionContainer}>
+        <Text style={styles.sectionHeading}>My Website</Text>
+            <Input style={styles.email}  placeholder='https://momentsapp.ca'   />
         </View>
-
-        <View style={styles.divider} />
-
-       <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Rate Moments</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="star" size={30} color="white" />
-          </TouchableOpacity>
-        </View>
-
+       
        </View>
 
 
