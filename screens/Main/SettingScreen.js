@@ -240,7 +240,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
   },
   iconContainer: {
     alignItems: 'flex-start',

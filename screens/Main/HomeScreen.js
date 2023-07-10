@@ -109,6 +109,7 @@ const Home = () => {
   ];
 
   return (
+    
     <View style={styles.screenContainer}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleProfile}>
@@ -151,11 +152,11 @@ const Home = () => {
       </Modal>
 
         <TouchableOpacity>
-        <Icon name="people" onPress={toggleFriends} style={{left: 100}} size={30} color="#D6E0D9" />
+        <Icon name="people" onPress={toggleFriends} style={{left: 70}} size={30} color="#D6E0D9" />
         </TouchableOpacity>
 
         <TouchableOpacity>
-        <Icon name="search" onPress={handleSearch} style={{left: 30}} size={30} color="#D6E0D9" />
+        <Icon name="search" onPress={handleSearch}  size={30} color="#D6E0D9" />
         </TouchableOpacity>
 
 
@@ -172,6 +173,7 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  
   divider: {
     height: 0.3,
     backgroundColor: '#D6E0D9',
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'top',
-    padding: 20,
+    padding: 10,
   },
   screenContainer: {
     flex: 1,
@@ -198,9 +200,10 @@ const styles = StyleSheet.create({
   chipsContainer: {
     flexDirection: 'row',
     marginBottom: 20,
+    marginHorizontal: 10,
   },
   chip: {
-    marginHorizontal: 6,
+    marginHorizontal: 2,
     backgroundColor: '#7A807C',
 
   },
@@ -214,6 +217,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     padding: 10,
     marginTop: 50,
+    marginHorizontal: 10,
   },
   avatar: {
     width: 60,
