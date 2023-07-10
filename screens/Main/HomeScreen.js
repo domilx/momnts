@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Modal } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button, Card, Layout, Text, Avatar, useTheme } from '@ui-kitten/components';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -58,14 +58,20 @@ const Home = () => {
   const navigation = useNavigation();
   const theme = useTheme();
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const toggleFriends = () => {
+    setModalVisible(!modalVisible);
+  };
   
-  const handleFriends = () => {
-      //open modal 
-  }
   
   const handleProfile = () => {
     navigation.navigate('Profile');
-}
+  }
+
+  const handleSearch = () => {
+    navigation.navigate('Search');
+  }
 
   const handleTabPress = useCallback(tabName => {
     setSelectedTab(tabName);
@@ -117,8 +123,39 @@ const Home = () => {
           </View>
         </View>
 
+        <Modal
+        visible={modalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={toggleFriends}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)'
+        }}>
+          <View style={{
+            backgroundColor: '#7A807C',
+            borderRadius: 10,
+            padding: 20,
+            width: '80%',
+            alignItems: 'center',
+            elevation: 5 // Android only: Adds a shadow effect
+          }}>
+            <Text style={{color: "#D6E0D9", fontWeight: "bold", fontSize: 20}}>Friends List Will Go Here</Text>
+            <Icon name="close" onPress={toggleFriends}size={30} color="#D6E0D9" />
+
+          </View>
+        </View>
+      </Modal>
+
         <TouchableOpacity>
-        <Icon name="people" onPress={handleFriends} style={{left: 100}} size={30} color="#D6E0D9" />
+        <Icon name="people" onPress={toggleFriends} style={{left: 100}} size={30} color="#D6E0D9" />
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+        <Icon name="search" onPress={handleSearch} style={{left: 30}} size={30} color="#D6E0D9" />
         </TouchableOpacity>
 
 
