@@ -76,6 +76,10 @@ const MapScreen = () => {
       <Icon name="arrow-top-right-thin-circle-outline" size={40} color="black" />
       </TouchableOpacity>
 
+      <TouchableOpacity style={styles.controlButton} onPress={handleControlButtonPress}>
+          <Text style={styles.controlButtonText}>add to your journey test</Text>
+        </TouchableOpacity>
+
         
       </View>
 

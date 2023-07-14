@@ -7,6 +7,7 @@ import { Chip } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import MapScreen from './MapScreen';
 import ProfileScreen from './ProfileScreen';
+import { Camera, CameraType } from 'expo-camera';
 
 
 const Tab = createBottomTabNavigator();
@@ -58,10 +59,26 @@ const Home = () => {
   const navigation = useNavigation();
   const theme = useTheme();
 
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalFriendsVisible, setFriendsModalVisible] = useState(false);
+  const [modalCreateVisible, setCreateModalVisible] = useState(false);
+
+  const [type, setType] = useState(CameraType.back);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
+
+ 
+
+  function toggleCameraType() {
+    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+  }
+
+
 
   const toggleFriends = () => {
-    setModalVisible(!modalVisible);
+    setFriendsModalVisible(!modalFriendsVisible);
+  };
+
+  const toggleCreate = () => {
+    setCreateModalVisible(!modalCreateVisible);
   };
   
   
@@ -95,7 +112,7 @@ const Home = () => {
           style={[styles.chip, { fontWeight: "bold" }, selectedTab === tabName && styles.selectedChip]}
           onPress={() => handleTabPress(tabName)}
         >
-          <Text style={{fontWeight: "bold", color: "#000000"}}>{label}</Text>
+          <Text style={{fontWeight: "bold", color: "#000000", fontSize: 13 }}>{label}</Text>
         </Chip>
       );
     },
@@ -124,8 +141,35 @@ const Home = () => {
           </View>
         </View>
 
-        <Modal
-        visible={modalVisible}
+       
+
+        <TouchableOpacity>
+        <Icon name="people" onPress={toggleFriends} style={{left: 100}} size={30} color="#D6E0D9" />
+        </TouchableOpacity>
+
+        <TouchableOpacity>
+        <Icon name="search" onPress={handleSearch} style={{left: 30}} size={30} color="#D6E0D9" />
+        </TouchableOpacity>
+
+
+
+
+
+      </View>
+      <View style={styles.divider} />
+      <View style={styles.container}>
+        <View style={styles.chipsContainer}>
+          {tabs.map(tab => renderChip(tab.name, tab.label))}
+        </View>
+        <Text style={[styles.title, { color: theme['color-basic-100'] }]}>{selectedTab}</Text>
+      </View>
+
+
+
+
+
+      <Modal
+        visible={modalFriendsVisible}
         animationType="slide"
         transparent={true}
         onRequestClose={toggleFriends}
@@ -151,23 +195,49 @@ const Home = () => {
         </View>
       </Modal>
 
-        <TouchableOpacity>
-        <Icon name="people" onPress={toggleFriends} style={{left: 70}} size={30} color="#D6E0D9" />
-        </TouchableOpacity>
-
-        <TouchableOpacity>
-        <Icon name="search" onPress={handleSearch}  size={30} color="#D6E0D9" />
-        </TouchableOpacity>
 
 
-      </View>
-      <View style={styles.divider} />
-      <View style={styles.container}>
-        <View style={styles.chipsContainer}>
-          {tabs.map(tab => renderChip(tab.name, tab.label))}
+      <Modal
+        visible={modalCreateVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={toggleCreate}
+      >
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)'
+        }}>
+          <View style={{
+            backgroundColor: '#7A807C',
+            borderRadius: 10,
+            padding: 20,
+            width: '80%',
+            alignItems: 'center',
+            elevation: 5 // Android only: Adds a shadow effect
+          }}>
+            <Text style={{color: "#D6E0D9", fontWeight: "bold", fontSize: 20}}>Create</Text>
+            <Camera style={styles.camera} type={type}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+            <Text style={styles.text}>Flip Camera</Text>
+          </TouchableOpacity>
         </View>
-        <Text style={[styles.title, { color: theme['color-basic-100'] }]}>{selectedTab}</Text>
-      </View>
+      </Camera>
+            <Icon name="close" onPress={toggleCreate}size={30} color="#D6E0D9" />
+
+          </View>
+        </View>
+      </Modal>
+
+
+
+
+      <View style={styles.createButton}>
+      <Icon name="create" onPress={toggleCreate}size={30} color="#D6E0D9" />
+
+    </View>
     </View>
   );
 };
@@ -178,6 +248,13 @@ const styles = StyleSheet.create({
     height: 0.3,
     backgroundColor: '#D6E0D9',
     marginVertical: 10,
+  },
+  createButton: {
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 40,
+    left: 20,
+    right: 20,
   },
   title: {
     fontSize: 24,
@@ -220,8 +297,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   avatar: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     borderRadius: 30,
     resizeMode: 'cover',
   },
@@ -229,7 +306,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   username: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   badge: {
@@ -240,7 +317,7 @@ const styles = StyleSheet.create({
 
   },
   badgeText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#D6E0D9",
     textAlign: "center",
