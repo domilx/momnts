@@ -38,6 +38,7 @@ const ProfileScreen = () => {
           </View>
         </TouchableOpacity>
       </View>
+      
 
       
     </View>

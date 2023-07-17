@@ -7,37 +7,31 @@ import Icon from 'react-native-vector-icons/AntDesign';
 const HelpScreen = () => {
   const navigation = useNavigation();
 
-  //Default states
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [locationEnabled, setLocationEnabled] = useState(false);
-  const [ArEnabled, setArEnabled] = useState(false);
-
+  const AccordionItem = ({ title, content }) => {
+    const [expanded, setExpanded] = useState(false);
   
+    const toggleAccordion = () => {
+      setExpanded(!expanded);
+    };
   
-//Handle Notification Selection
-  const toggleNotifications = () => {
-    setNotificationsEnabled(prevState => !prevState);
-  };
+    return (
+      <View style={styles.itemContainer}>
+        <TouchableOpacity onPress={toggleAccordion} style={styles.itemHeader}>
+          
+          <Text style={styles.itemHeaderText}>{title}</Text>
+          
+        </TouchableOpacity>
+        
 
-//Handle Location Selection
-  const toggleLocation = () => {
-    setLocationEnabled(prevState => !prevState);
-  };
-
-//Handle Ar Selection
-  const toggleAR = () => {
-    setArEnabled(prevState => !prevState);
+        {expanded && <Text style={styles.itemContentText}>{content}</Text>}
+      </View>
+    );
   };
 
   //return to profile page 
   const handleReturn = () => {
     navigation.goBack();
   };
-
-  const handleBlockedUsers = () => {
-    navigation.navigate("BlockedUsers");
-
-  }
 
 
   return (
@@ -61,53 +55,39 @@ const HelpScreen = () => {
           <View style={styles.settingChunk}> 
         <View style={styles.sectionContainer}>
 
-        <Text style={styles.chunkTitle}>General</Text>
         </View>
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Notifications</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={notificationsEnabled ? '#D6E0D9' : '#D6E0D9'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleNotifications}
-              value={notificationsEnabled}
-            />
+            
+          <AccordionItem
+        title="How can I change my password?"
+        content="Answer to question 1asdasdasdadgfdgslkhgadflasgflshkdbfaskhsufgsadfouhabsvfhjasgfblkasjhfashvbcjvbpakeurhshfb"
+      />
+      
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Display Location</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={locationEnabled ? '#D6E0D9' : '#D6E0D9'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleLocation}
-              value={locationEnabled}
-            />
+          <AccordionItem
+        title="How can I change my email?"
+        content="Answer to question 1asdasdasdadgfdgslkhgadflasgflshkdbfaskhsufgsadfouhabsvfhjasgfblkasjhfashvbcjvbpakeurhshfb"
+      />
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>AR Features</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#B7C0BA' }}
-              thumbColor={ArEnabled ? '#FFF' : '#FFF'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleAR}
-              value={ArEnabled}
-            />
+          <AccordionItem
+        title="How can I change my username?"
+        content="Answer to question 1asdasdasdadgfdgslkhgadflasgflshkdbfaskhsufgsadfouhabsvfhjasgfblkasjhfashvbcjvbpakeurhshfb"
+      />
           </View>
 
           <View style={styles.divider} />
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Blocked Users</Text>
-            <TouchableOpacity activeOpacity={1} onPress={handleBlockedUsers} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="gray" />
-           </TouchableOpacity>
+            
           </View>
 
           
@@ -117,69 +97,14 @@ const HelpScreen = () => {
 
         <View style={styles.sectionContainer}>
 
-<Text style={styles.chunkTitle}>Info</Text>
-</View>
 
-         <View style={styles.sectionContainer}>
-          
-
-           <Text style={styles.sectionHeading}>About Us</Text>
-           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-           <Icon name="arrowright" size={30} color="gray" />
-
-           </TouchableOpacity>
-         </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.sectionContainer}>
-
-          <Text style={styles.sectionHeading}>Help</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-          <Icon name="arrowright" size={30} color="gray" />
-
-          </TouchableOpacity>
-        </View>
-        
-
-        
-
-        <View style={styles.divider} />
-
-        <View style={styles.settingChunk}> 
-        <View style={styles.sectionContainer}>
-
-<Text style={styles.chunkTitle}>Help Us </Text>
-</View>
-
-       <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Share Moments</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="link" size={30} color="gray" />
-          </TouchableOpacity>
-        </View>
-
-
-        
-
-        <View style={styles.divider} />
-
-       <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Rate Moments</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="star" size={30} color="gray" />
-          </TouchableOpacity>
-        </View>
 
        </View>
               </View>
 
 
 
-      <TouchableOpacity style={styles.buttonContainer} >
-        <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
-
+      
     </ScrollView>
 
     <Text style={styles.footerText}>
@@ -201,6 +126,23 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  itemContainer: {
+    marginBottom: 8,
+  },
+  itemHeader: {
+    backgroundColor: '#f0f0f0',
+    padding: 8,
+    borderRadius: 4,
+  },
+  itemHeaderText: {
+    fontWeight: 'bold',
+  },
+  itemContentText: {
+    marginTop: 4,
+    backgroundColor: '#f8f8f8',
+    padding: 8,
+    borderRadius: 4,
   },
   top: {
     flexDirection: 'row',

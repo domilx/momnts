@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import MapScreen from './MapScreen';
 import ProfileScreen from './ProfileScreen';
 import { Camera, CameraType } from 'expo-camera';
-
+import CameraView from './Video-Interfaces/CameraView';
 
 const Tab = createBottomTabNavigator();
 
@@ -79,6 +79,11 @@ const Home = () => {
 
   const toggleCreate = () => {
     setCreateModalVisible(!modalCreateVisible);
+  };
+
+  const toggleCreateTest = () => {
+    navigation.navigate('CameraView');
+
   };
   
   
@@ -217,15 +222,8 @@ const Home = () => {
             alignItems: 'center',
             elevation: 5 // Android only: Adds a shadow effect
           }}>
-            <Text style={{color: "#D6E0D9", fontWeight: "bold", fontSize: 20}}>Create</Text>
-            <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
-            <Icon name="close" onPress={toggleCreate}size={30} color="#D6E0D9" />
+           <CameraView/>
+           <Icon name="close" onPress={toggleCreate} style={{left: 30}} size={30} color="#D6E0D9" />
 
           </View>
         </View>
@@ -235,7 +233,7 @@ const Home = () => {
 
 
       <View style={styles.createButton}>
-      <Icon name="create" onPress={toggleCreate}size={30} color="#D6E0D9" />
+      <Icon name="create" onPress={toggleCreateTest}size={30} color="#D6E0D9" />
 
     </View>
     </View>
