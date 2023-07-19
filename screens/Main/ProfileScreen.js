@@ -23,11 +23,11 @@ const ProfileScreen = () => {
     <View style={styles.container}>
 
       <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.returnIcon}>
-            <Icon name="arrow-left-thin" size={40} color="#D6E0D9" />
+            <Icon name="arrow-left-thin" size={30} color="#D6E0D9" />
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.settingsIcon} activeOpacity={0.8} onPress={handleSettings}>
-        <Icon name="dots-horizontal" size={40} color="white" />
+        <Icon name="dots-horizontal" size={30} color="#D6E0D9" />
       </TouchableOpacity>
 
       <View style={styles.header}>
@@ -42,10 +42,28 @@ const ProfileScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.divider} />
+      <View style={styles.rowContainer}>
+      <View style={styles.column}>
+        <Text style={styles.number}>123</Text>
+        <Text style={styles.label}>Followers</Text>
+      </View>
+      <View style={styles.verticaldivider} />
+      <View style={styles.column}>
+        <Text style={styles.number}>2</Text>
+        <Text style={styles.label}>Journeys</Text>
+      </View>
+      <View style={styles.verticaldivider} />
+      <View style={styles.column}>
+        <Text style={styles.number}>123</Text>
+        <Text style={styles.label}>Following</Text>
+      </View>
+    </View>
 
+    <View style={styles.divider} />
+
+      <Text style={{color: '#D6E0D9', fontWeight: 'bold', fontSize: 20, marginTop: 100}}>user post and content</Text>
       {/* Additional profile info can be added here */}
-      <Text style={styles.username}>user post and info here</Text>
+    
 
     </View>
     
@@ -105,6 +123,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#D6E0D9",
     marginVertical: 10,
     width: "90%",
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  column: {
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  number: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: "#D6E0D9"
+  },
+  label: {
+    fontSize: 14,
+    color: '#7A807C',
+    fontWeight: 'bold',
+  },
+  verticaldivider: {
+    width: 1,
+    height: 40,
+    backgroundColor: '#D6E0D9',
+    marginHorizontal: 10,
   },
 });
 

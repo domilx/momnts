@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
 const SettingsScreen = () => {
@@ -58,7 +58,7 @@ const SettingsScreen = () => {
 
         <View style={styles.top}>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowleft" size={30} color="#D6E0D9" />
+          <Icon name="arrow-left-thin" size={30} color="#D6E0D9" />
           </TouchableOpacity>
           <Text style={styles.title}>Settings</Text>
         </View>
@@ -116,7 +116,7 @@ const SettingsScreen = () => {
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>Blocked Users</Text>
             <TouchableOpacity activeOpacity={1} onPress={handleBlockedUsers} style={styles.iconContainer}>
-            <Icon name="arrowright" size={30} color="gray" />
+            <Icon name="arrow-right-thin" size={30} color="gray" />
            </TouchableOpacity>
           </View>
 
@@ -135,7 +135,7 @@ const SettingsScreen = () => {
 
            <Text style={styles.sectionHeading}>About Us</Text>
            <TouchableOpacity activeOpacity={1} onPress={handleAboutUs} style={styles.iconContainer}>
-           <Icon name="arrowright" size={30} color="gray" />
+           <Icon name="arrow-right-thin" size={30} color="gray" />
 
            </TouchableOpacity>
          </View>
@@ -146,7 +146,7 @@ const SettingsScreen = () => {
 
           <Text style={styles.sectionHeading}>Help</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleHelp} style={styles.iconContainer}>
-          <Icon name="arrowright" size={30} color="gray" />
+          <Icon name="arrow-right-thin" size={30} color="gray" />
 
           </TouchableOpacity>
         </View>
