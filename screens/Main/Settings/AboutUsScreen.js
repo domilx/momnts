@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
 const AboutUsScreen = () => {
@@ -48,7 +48,7 @@ const AboutUsScreen = () => {
 
         <View style={styles.top}>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowleft" size={30} color="#D6E0D9" />
+            <Icon name="arrow-left-thin" size={30} color="#D6E0D9" />
           </TouchableOpacity>
           <Text style={styles.title}>About Us</Text>
         </View>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, Image, Text, TouchableOpacity } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker, Polyline, Callout  } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,17 @@ const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [path, setPath] = useState([]);
   const navigation = useNavigation();
+  const [isFocused, setIsFocused] = useState(false);
+
+
+  const handleMarkerPress = () => {
+    setIsFocused(true);
+  };
+
+  const handleCalloutPress = () => {
+    setIsFocused(false);
+  };
+
 
   useEffect(() => {
     const getLocation = async () => {
@@ -40,6 +51,7 @@ const MapScreen = () => {
     <View style={styles.container}>
       <MapView
         style={styles.map}
+        showsCompass={false}
         initialRegion={{
           latitude: location?.latitude || 0,
           longitude: location?.longitude || 0,
@@ -51,12 +63,20 @@ const MapScreen = () => {
 
         {location && (
           <Marker
+            onPress={handleMarkerPress}
+            title="You are here"
+            description="Tap for more details"
             coordinate={{
               latitude: location.latitude,
               longitude: location.longitude,
             }}
           >
-            <Image source={require('./profile-image.jpg')} style={styles.avatar} />
+  {isFocused && (
+            <Callout onPress={handleCalloutPress}>
+              <Text>You are here</Text>
+            </Callout>
+          )}
+               
           </Marker>
         )}
       </MapView>
