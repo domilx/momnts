@@ -3,13 +3,13 @@ import { View, StyleSheet, Dimensions, Image, Text, TouchableOpacity } from 'rea
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
+import CustomBottomNav from './CustomBottomNav';
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [path, setPath] = useState([]);
   const navigation = useNavigation();
-
 
   useEffect(() => {
     const getLocation = async () => {
@@ -32,13 +32,8 @@ const MapScreen = () => {
     getLocation();
   }, []);
 
-  const handleControlButtonPress = () => {
-    // Handle control button press
-    console.log('Control button pressed');
-  };
-
   const handleProfile = () => {
-    navigation.navigate("Profile");
+    navigation.navigate('Profile');
   };
 
   return (
@@ -67,29 +62,14 @@ const MapScreen = () => {
       </MapView>
 
       <View style={styles.controlPanelTop}>
-        <TouchableOpacity  onPress={handleProfile}>
+        <TouchableOpacity onPress={handleProfile}>
           <Image source={require('./profile-image.jpg')} style={styles.Profile} />
         </TouchableOpacity>
       </View>
-      
-
       <View style={styles.controlPanelBottom}>
-        <TouchableOpacity>
-      <Icon name="arrow-top-right-thin-circle-outline" size={40} color="black" />
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.controlButton} onPress={handleControlButtonPress}>
-          <Text style={styles.controlButtonText}>add to your journey test</Text>
-        </TouchableOpacity>
-
-        
+      <CustomBottomNav />
       </View>
-
-
     </View>
-
-
-    
   );
 };
 
@@ -113,7 +93,7 @@ const styles = StyleSheet.create({
     height: 64,
     borderRadius: 32,
     borderWidth: 2,
-    borderColor: "grey",
+    borderColor: 'grey',
     borderRadius: 50,
   },
   controlPanelTop: {
@@ -123,28 +103,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   controlPanelBottom: {
     position: 'absolute',
-    bottom: 16,
-    left: 16,
-    right: 16,
-    flexDirection: 'row',
-    
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   controlButton: {
-    backgroundColor: "black",
+    backgroundColor: 'black',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
     marginLeft: 7,
-    marginRight:7
+    marginRight: 7,
   },
   controlButtonText: {
     color: '#D6E0D9',
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 });
 
