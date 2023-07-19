@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image, TextInput } from "react-native";
 import { Input } from "@ui-kitten/components";
 
 import { useNavigation } from "@react-navigation/native";
@@ -9,30 +9,17 @@ import Icon from 'react-native-vector-icons/AntDesign';
 const EditProfileScreen = () => {
   const navigation = useNavigation();
 
-  //Default states
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [locationEnabled, setLocationEnabled] = useState(false);
-  const [ArEnabled, setArEnabled] = useState(false);
-
-  
-  
-//Handle Notification Selection
-  const toggleNotifications = () => {
-    setNotificationsEnabled(prevState => !prevState);
-  };
-
-//Handle Location Selection
-  const toggleLocation = () => {
-    setLocationEnabled(prevState => !prevState);
-  };
-
-//Handle Ar Selection
-  const toggleAR = () => {
-    setArEnabled(prevState => !prevState);
-  };
 
   const handleReturn = () => {
     navigation.goBack();
+  };
+
+  const [searchText, setSearchText] = useState('');
+
+  const handleSearch = (text) => {
+    setSearchText(text);
+    // Implement your search logic here.
+    // You can use this function to filter data or perform API calls based on the search text.
   };
 
 
@@ -46,7 +33,17 @@ const EditProfileScreen = () => {
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
             <Icon name="arrowleft" size={30} color="white" />
           </TouchableOpacity>
-          <Text style={styles.title}><Input style={{minWidth: 250}}  placeholder='Search....'/></Text>
+          <TextInput
+        style={styles.input}
+        paddingLeft={30}
+        placeholder="Search"
+        placeholderTextColor="#D6E0D9"
+        value={searchText}
+        onChangeText={handleSearch}
+        autoCapitalize="none"
+        autoCorrect={false}
+        width="90%"
+      />
         </View>
 
         <View style={styles.divider} />
@@ -78,11 +75,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 50,
   },
-  buttonText: {
-    color: '#000000',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+ 
   top: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -101,41 +94,14 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     paddingRight: 20,
   },
-  settingChunk: {
-    marginTop: 20,
-    marginBottom: 20
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    resizeMode: 'cover',
-  },
-  buttonContainer: {
-    backgroundColor: '#D6E0D9',
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 100,
-  },
+  
+  
   iconContainer: {
     alignItems: 'flex-start',
   },
-  toggleContainer: {
-    marginTop: 30,
-    marginHorizontal: 20,
-  },
-  sectionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  sectionHeading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#D6E0D9',
-  },
+  
+  
+  
   footerText: {
     fontWeight: 'bold',
     textAlign: 'center',

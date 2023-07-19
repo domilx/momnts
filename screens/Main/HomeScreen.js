@@ -55,6 +55,7 @@ const HomeScreen = () => {
 };
 
 const Home = () => {
+
   const [selectedTab, setSelectedTab] = useState('Discovery');
   const navigation = useNavigation();
   const theme = useTheme();
@@ -71,8 +72,6 @@ const Home = () => {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
-
-
   const toggleFriends = () => {
     setFriendsModalVisible(!modalFriendsVisible);
   };
@@ -83,7 +82,6 @@ const Home = () => {
 
   const toggleCreateTest = () => {
     navigation.navigate('CameraView');
-
   };
   
   
@@ -99,6 +97,7 @@ const Home = () => {
     setSelectedTab(tabName);
   }, []);
 
+
   useEffect(() => {
     navigation.setOptions({
       headerStyle: {
@@ -107,6 +106,8 @@ const Home = () => {
       headerTintColor: theme['color-basic-100'],
     });
   }, [navigation, theme]);
+
+
 
   const renderChip = useCallback(
     (tabName, label) => {
@@ -123,6 +124,7 @@ const Home = () => {
     },
     [handleTabPress, selectedTab]
   );
+
 
   const tabs = [
     { name: 'Discovery', label: 'Discovery' },
@@ -146,31 +148,27 @@ const Home = () => {
           </View>
         </View>
 
-       
-
         <TouchableOpacity>
-        <Icon name="people" onPress={toggleFriends} style={{left: 100}} size={30} color="#D6E0D9" />
+        <Icon name="people" onPress={toggleFriends} style={{left: 110}} size={30} color="#D6E0D9" />
         </TouchableOpacity>
 
         <TouchableOpacity>
         <Icon name="search" onPress={handleSearch} style={{left: 30}} size={30} color="#D6E0D9" />
         </TouchableOpacity>
 
-
-
-
-
       </View>
+
+      <View style={{justifyContent: 'center', alignItems: 'center'}}>
       <View style={styles.divider} />
+      </View>
+
+
       <View style={styles.container}>
         <View style={styles.chipsContainer}>
           {tabs.map(tab => renderChip(tab.name, tab.label))}
         </View>
         <Text style={[styles.title, { color: theme['color-basic-100'] }]}>{selectedTab}</Text>
       </View>
-
-
-
 
 
       <Modal
@@ -199,7 +197,6 @@ const Home = () => {
           </View>
         </View>
       </Modal>
-
 
 
       <Modal
@@ -233,7 +230,7 @@ const Home = () => {
 
 
       <View style={styles.createButton}>
-      <Icon name="create" onPress={toggleCreateTest}size={30} color="#D6E0D9" />
+      <Icon name="camera" onPress={toggleCreateTest} size={40} color="#D6E0D9" />
 
     </View>
     </View>
@@ -244,8 +241,10 @@ const styles = StyleSheet.create({
   
   divider: {
     height: 0.3,
-    backgroundColor: '#D6E0D9',
+    backgroundColor: "#D6E0D9",
     marginVertical: 10,
+    width: "90%",
+    
   },
   createButton: {
     position: 'absolute',

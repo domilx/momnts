@@ -15,8 +15,16 @@ const ProfileScreen = () => {
     navigation.navigate("EditProfile");
   };
 
+  const handleReturn = () => {
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
+
+      <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.returnIcon}>
+            <Icon name="arrow-left-thin" size={40} color="#D6E0D9" />
+      </TouchableOpacity>
       
       <TouchableOpacity style={styles.settingsIcon} activeOpacity={0.8} onPress={handleSettings}>
         <Icon name="dots-horizontal" size={40} color="white" />
@@ -53,15 +61,21 @@ const styles = StyleSheet.create({
   },
   settingsIcon: {
     position: "absolute",
-    top: 50,
+    top: 52,
     right: 20,
+    zIndex: 1,
+  },
+  returnIcon: {
+    position: "absolute",
+    top: 52,
+    left: 20,
     zIndex: 1,
   },
   header: {
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
-    paddingTop: 70,
+    paddingTop: 80,
   },
   namesIcon: {
     flexDirection: "row",
