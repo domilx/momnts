@@ -3,10 +3,13 @@ import { View, StyleSheet, Dimensions, Image, Text, TouchableOpacity } from 'rea
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from "@react-navigation/native";
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [path, setPath] = useState([]);
+  const navigation = useNavigation();
+
 
   useEffect(() => {
     const getLocation = async () => {
@@ -32,6 +35,10 @@ const MapScreen = () => {
   const handleControlButtonPress = () => {
     // Handle control button press
     console.log('Control button pressed');
+  };
+
+  const handleProfile = () => {
+    navigation.navigate("Profile");
   };
 
   return (
@@ -60,16 +67,11 @@ const MapScreen = () => {
       </MapView>
 
       <View style={styles.controlPanelTop}>
-        <TouchableOpacity style={styles.controlButton} onPress={handleControlButtonPress}>
-          <Text style={styles.controlButtonText}>Places</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.controlButton} onPress={handleControlButtonPress}>
-          <Text style={styles.controlButtonText}>Journeys</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.controlButton} onPress={handleControlButtonPress}>
-          <Text style={styles.controlButtonText}>Friends</Text>
+        <TouchableOpacity  onPress={handleProfile}>
+          <Image source={require('./profile-image.jpg')} style={styles.Profile} />
         </TouchableOpacity>
       </View>
+      
 
       <View style={styles.controlPanelBottom}>
         <TouchableOpacity>
@@ -106,14 +108,22 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
   },
+  Profile: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    borderWidth: 2,
+    borderColor: "grey",
+    borderRadius: 50,
+  },
   controlPanelTop: {
     position: 'absolute',
-    top: 50,
-    left: 16,
-    right: 16,
+    top: 60,
+    right: 30,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   controlPanelBottom: {
     position: 'absolute',

@@ -14,7 +14,6 @@ import LoadingScreen from "./screens/LoadingScreen";
 import WelcomeScreen from "./screens/Unguarded/WelcomeScreen";
 import RegisterScreen from "./screens/Unguarded/RegisterScreen";
 import LoginScreen from "./screens/Unguarded/LoginScreen";
-import HomeScreen from "./screens/Main/HomeScreen";
 import ProfileScreen from "./screens/Main/ProfileScreen";
 import MapScreen from "./screens/Main/MapScreen";
 import SettingsScreen from "./screens/Main/SettingScreen";
@@ -53,8 +52,8 @@ const App = () => {
         <Stack.Navigator>
           {isLoggedIn ? (
             <Stack.Screen
-              name="Home"
-              component={HomeScreen}
+              name="MapScreen"
+              component={MapScreen}
               options={{ headerShown: false }}
             />
           ) : (
