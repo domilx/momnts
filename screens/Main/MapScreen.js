@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Dimensions, Image, Text, TouchableOpacity } from 'react-native';
-import MapView, { Marker, Polyline, Callout  } from 'react-native-maps';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, StyleSheet, Dimensions, Image, Text, TouchableOpacity, Animated } from 'react-native';
+import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -12,15 +12,7 @@ const MapScreen = () => {
   const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
 
-
-  const handleMarkerPress = () => {
-    setIsFocused(true);
-  };
-
-  const handleCalloutPress = () => {
-    setIsFocused(false);
-  };
-
+  const slideAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const getLocation = async () => {
@@ -42,6 +34,28 @@ const MapScreen = () => {
 
     getLocation();
   }, []);
+
+  const handleMarkerPress = () => {
+    setIsFocused(true);
+    slideToTop();
+  };
+
+  const handleCalloutPress = () => {
+    setIsFocused(false);
+  };
+
+  const slideToTop = () => {
+    Animated.timing(slideAnim, {
+      toValue: 1,
+      duration: 500, // Adjust the duration as needed
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const translateY = slideAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -100], // Adjust the starting and ending positions for the slide
+  });
 
   const handleProfile = () => {
     navigation.navigate('Profile');
@@ -71,12 +85,11 @@ const MapScreen = () => {
               longitude: location.longitude,
             }}
           >
-  {isFocused && (
-            <Callout onPress={handleCalloutPress}>
-              <Text>You are here</Text>
-            </Callout>
-          )}
-               
+            {isFocused && (
+              <Callout onPress={handleCalloutPress}>
+                <Text>You are here</Text>
+              </Callout>
+            )}
           </Marker>
         )}
       </MapView>
@@ -86,9 +99,9 @@ const MapScreen = () => {
           <Image source={require('./profile-image.jpg')} style={styles.Profile} />
         </TouchableOpacity>
       </View>
-      <View style={styles.controlPanelBottom}>
-      <CustomBottomNav />
-      </View>
+      <Animated.View style={[styles.controlPanelBottom, { transform: [{ translateY }] }]}>
+        <CustomBottomNav />
+      </Animated.View>
     </View>
   );
 };
