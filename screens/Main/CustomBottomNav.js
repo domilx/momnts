@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Text} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
+import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
 const CustomBottomNav = () => {
@@ -14,15 +15,17 @@ const CustomBottomNav = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => handleControlButtonPress} style={styles.navItem}>
-        <Icon name="home" size={25} color="#D6E0D9" />
+        <Icon name="people" size={35} color="#D6E0D9" />
+        <Text style={styles.name}>Friends</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => handleControlButtonPress} style={styles.circleButton}>
-        <Icon name="plus" size={50} color="#D6E0D9" />
+        <MatIcon name="plus" size={70} color="#D6E0D9" />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => handleControlButtonPress} style={styles.navItem}>
-        <Icon name="earth" size={25} color="#D6E0D9" />
+        <Icon name="earth" size={35} color="#D6E0D9" />
+        <Text style={styles.name}>Journeys</Text>
       </TouchableOpacity>
     </View>
   );
@@ -31,14 +34,14 @@ const CustomBottomNav = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 45,
+    height: 90,
     backgroundColor: 'black',
     elevation: 8,
-    borderWidth: 1,
+    borderTopWidth: 2,
     borderColor: '#D6E0D9',
-    borderRadius: 10,
-    marginHorizontal: 6,
-    marginVertical: 30,
+    borderRadius: 0,
+    width: '110%',
+    alignSelf: 'center',
   },
   navItem: {
     flex: 1,
@@ -51,13 +54,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   circleButton: {
-    width: 60,
-    height: 60,
+    width: 90,
+    height: 90,
     borderRadius: 50,
     backgroundColor: 'black', // Choose the color you want for the circle button
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 20, // Adjust the position to control how much the button sticks out
+    bottom: 40, // Adjust the position to control how much the button sticks out
     alignSelf: 'center',
     elevation: 10,
     borderWidth: 2,
