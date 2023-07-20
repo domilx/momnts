@@ -25,7 +25,9 @@ const ProfileScreen = () => {
       <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.returnIcon}>
             <Icon name="arrow-left-thin" size={30} color="#D6E0D9" />
       </TouchableOpacity>
-      
+
+      <Text style={{fontSize: 20, paddingTop: 15, color: "#D6E0D9", fontWeight: "bold", justifyContent: "center",}}>Profile</Text>
+
       <TouchableOpacity style={styles.settingsIcon} activeOpacity={0.8} onPress={handleSettings}>
         <Icon name="dots-horizontal" size={30} color="#D6E0D9" />
       </TouchableOpacity>
@@ -41,6 +43,7 @@ const ProfileScreen = () => {
           </View>
         </TouchableOpacity>
       </View>
+      <View style={styles.divider} />
 
       <View style={styles.rowContainer}>
       <View style={styles.column}>
@@ -59,7 +62,6 @@ const ProfileScreen = () => {
       </View>
     </View>
 
-    <View style={styles.divider} />
 
       <Text style={{color: '#D6E0D9', fontWeight: 'bold', fontSize: 20, marginTop: 100}}>user post and content</Text>
       {/* Additional profile info can be added here */}
