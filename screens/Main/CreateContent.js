@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const createContent = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -14,7 +15,8 @@ const createContent = () => {
 
   return (
     <View style={styles.container}>
-      <Button title="Open Modal" onPress={openModal} />
+    
+      <Ionicons onPress={openModal} name="add-circle-outline" size={50} color="#D6E0D9" />
 
       <Modal visible={modalVisible} transparent animationType="slide">
         <View style={styles.modalContainer}>
@@ -38,8 +40,8 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    height: '100%',
+  
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
