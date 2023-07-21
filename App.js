@@ -23,6 +23,7 @@ import AboutUsScreen from "./screens/Main/Settings/AboutUsScreen";
 import HelpScreen from "./screens/Main/Settings/HelpScreen";
 import SearchScreen from "./screens/Main/SearchScreen";
 import CameraScreen from "./screens/Main/Video-Interfaces/CameraView";
+import FriendsScreen from "./screens/Main/FriendsScreen";
 
 const Stack = createStackNavigator();
 
@@ -112,6 +113,11 @@ const App = () => {
           <Stack.Screen
             name="CameraView"
             component={CameraScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Friends"
+            component={FriendsScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

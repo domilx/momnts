@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, Dimensions, Image, Text, TouchableOpacity, Animated } from 'react-native';
-import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
+import MapView, { Marker, Polyline, Callout, AnimatedRegion  } from 'react-native-maps';
 import * as Location from 'expo-location';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-import CustomBottomNav from './CustomBottomNav';
+import CustomBottomNav from './Components/CustomBottomNav';
+import VerticalButtonMenu from './Components/VerticalButton';
+import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [path, setPath] = useState([]);
   const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
+  const mapRef = useRef(null); // Create mapRef using useRef
 
   const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -61,9 +63,31 @@ const MapScreen = () => {
     navigation.navigate('Profile');
   };
 
+  const handleCenterOnUser = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Location permission denied');
+        return;
+      }
+
+      if (location && mapRef.current) { // Check if mapRef is defined
+        mapRef.current.animateToRegion({
+          latitude: location.latitude,
+          longitude: location.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
+      }
+    } catch (error) {
+      console.log('Error getting user location:', error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         style={styles.map}
         showsCompass={false}
         initialRegion={{
@@ -94,14 +118,22 @@ const MapScreen = () => {
         )}
       </MapView>
 
+
       <View style={styles.controlPanelTop}>
+
         <TouchableOpacity onPress={handleProfile}>
           <Image source={require('./profile-image.jpg')} style={styles.Profile} />
         </TouchableOpacity>
+
+        <MatIcon onPress={handleCenterOnUser}  name="map-marker-left-outline" size={30} color="black" />
+
       </View>
+      
       <Animated.View style={[styles.controlPanelBottom, { transform: [{ translateY }] }]}>
         <CustomBottomNav />
       </Animated.View>
+
+      
     </View>
   );
 };
@@ -133,11 +165,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 60,
     right: 30,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 8,
   },
   controlPanelBottom: {
+    flex: 1,
     position: 'absolute',
     bottom: 0,
     left: 0,

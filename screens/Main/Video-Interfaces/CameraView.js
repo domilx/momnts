@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 
 
-export default function App() {
+export default function CameraView() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const navigation = useNavigation();
@@ -76,3 +76,4 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+

@@ -7,34 +7,44 @@ import { useNavigation } from '@react-navigation/native';
 const CustomBottomNav = () => {
   const navigation = useNavigation();
 
+
   const handleControlButtonPress = () => {
     // Handle control button press
     console.log('Control button pressed');
   };
 
+  const handleFriends = () => {
+    navigation.navigate('Friends');
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => handleControlButtonPress} style={styles.navItem}>
-        <Icon name="people" size={35} color="#D6E0D9" />
+      <TouchableOpacity onPress={handleFriends} style={styles.navItem}>
+        <Icon name="people" size={25} color="#D6E0D9" />
         <Text style={styles.name}>Friends</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => handleControlButtonPress} style={styles.circleButton}>
-        <MatIcon name="plus" size={70} color="#D6E0D9" />
+        <MatIcon name="arrow-up-thin" size={30} color="#D6E0D9" />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => handleControlButtonPress} style={styles.navItem}>
-        <Icon name="earth" size={35} color="#D6E0D9" />
+        <Icon name="earth" size={25} color="#D6E0D9" />
         <Text style={styles.name}>Journeys</Text>
       </TouchableOpacity>
+
     </View>
+        
+
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
-    height: 90,
+    height: 70,
     backgroundColor: 'black',
     elevation: 8,
     borderTopWidth: 2,
@@ -54,13 +64,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   circleButton: {
-    width: 90,
-    height: 90,
+    width: 60,
+    height: 60,
     borderRadius: 50,
     backgroundColor: 'black', // Choose the color you want for the circle button
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 40, // Adjust the position to control how much the button sticks out
+    bottom: 30, // Adjust the position to control how much the button sticks out
     alignSelf: 'center',
     elevation: 10,
     borderWidth: 2,
