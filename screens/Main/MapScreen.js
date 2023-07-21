@@ -46,18 +46,6 @@ const MapScreen = () => {
     setIsFocused(false);
   };
 
-  const slideToTop = () => {
-    Animated.timing(slideAnim, {
-      toValue: 1,
-      duration: 500, // Adjust the duration as needed
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const translateY = slideAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -100], // Adjust the starting and ending positions for the slide
-  });
 
   const handleProfile = () => {
     navigation.navigate('Profile');
@@ -121,15 +109,16 @@ const MapScreen = () => {
 
       <View style={styles.controlPanelTop}>
 
+      <MatIcon onPress={handleCenterOnUser} style={{right: 5}} name="map-marker-left-outline" size={30} color="black" />
+
         <TouchableOpacity onPress={handleProfile}>
           <Image source={require('./profile-image.jpg')} style={styles.Profile} />
         </TouchableOpacity>
 
-        <MatIcon onPress={handleCenterOnUser}  name="map-marker-left-outline" size={30} color="black" />
 
       </View>
       
-      <Animated.View style={[styles.controlPanelBottom, { transform: [{ translateY }] }]}>
+      <Animated.View style={styles.controlPanelBottom}>
         <CustomBottomNav />
       </Animated.View>
 
@@ -163,9 +152,9 @@ const styles = StyleSheet.create({
   },
   controlPanelTop: {
     position: 'absolute',
-    top: 60,
+    top: 40,
     right: 30,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,

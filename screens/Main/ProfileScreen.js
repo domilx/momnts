@@ -3,7 +3,6 @@ import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import CreateContent from "./CreateContent";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -66,7 +65,6 @@ const ProfileScreen = () => {
 
       <Text style={{color: '#D6E0D9', fontWeight: 'bold', fontSize: 20, marginTop: 100}}>user post and content</Text>
       {/* Additional profile info can be added here */}
-    <CreateContent/>
 
     </View>
     
