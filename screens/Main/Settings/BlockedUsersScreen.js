@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Haptics from 'expo-haptics';
 
 
 const BlockedUsersScreen = () => {
@@ -31,12 +32,10 @@ const BlockedUsersScreen = () => {
 
   //return to profile page 
   const handleReturn = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     navigation.goBack();
   };
 
-  const handleBlockedUsers = () => {
-    navigation
-  }
 
 
   return (

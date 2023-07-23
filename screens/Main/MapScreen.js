@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import CustomBottomNav from './Components/CustomBottomNav';
 import VerticalButtonMenu from './Components/VerticalButton';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Haptics from 'expo-haptics';
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
@@ -48,6 +49,7 @@ const MapScreen = () => {
 
 
   const handleProfile = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
     navigation.navigate('Profile');
   };
 
@@ -89,7 +91,6 @@ const MapScreen = () => {
 
         {location && (
           <Marker
-            onPress={handleMarkerPress}
             title="You are here"
             description="Tap for more details"
             coordinate={{

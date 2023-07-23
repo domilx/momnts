@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import * as Haptics from 'expo-haptics';
 
 const BottomNavBar = () => {
   const [isContentVisible, setContentVisible] = useState(false);
@@ -22,6 +22,8 @@ const BottomNavBar = () => {
   };
 
   const handleToggleContent = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+
     Animated.timing(slideUpAnimation, {
       toValue: isContentVisible ? 0 : -slideUpHeight,
       duration: 300,

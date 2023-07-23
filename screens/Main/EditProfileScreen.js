@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image } from "react-native";
 import { Input } from "@ui-kitten/components";
-
+import * as Haptics from 'expo-haptics';
 import { useNavigation } from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 
 const EditProfileScreen = () => {
@@ -32,6 +32,7 @@ const EditProfileScreen = () => {
   };
 
   const handleReturn = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     navigation.goBack();
   };
 
@@ -44,7 +45,7 @@ const EditProfileScreen = () => {
 
         <View style={styles.top}>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrowleft" size={30} color="white" />
+            <Icon name="arrow-left-thin" size={30} color="white" />
           </TouchableOpacity>
           <Text style={styles.title}>Edit Profile</Text>
         </View>
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#FFFFFF',

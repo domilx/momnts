@@ -3,19 +3,23 @@ import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Haptics from 'expo-haptics';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
 
   const handleSettings = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     navigation.navigate("Settings");
   };
 
   const handleEditProfile = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     navigation.navigate("EditProfile");
   };
 
   const handleReturn = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
     navigation.goBack();
   };
 
