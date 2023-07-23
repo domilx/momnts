@@ -5563,6 +5563,11 @@
   "resolved" "https://registry.npmjs.org/expo-graphics/-/expo-graphics-2.0.0.tgz"
   "version" "2.0.0"
 
+"expo-haptics@~12.2.1":
+  "integrity" "sha512-XRZtmIQi901Q4+/cZnVrULRFOqShsgCuSP0SCbVEhnq8sK0OA4jgun12O93Pu5aGvTyoqsAcIArE8tX+8AEqRA=="
+  "resolved" "https://registry.npmjs.org/expo-haptics/-/expo-haptics-12.2.1.tgz"
+  "version" "12.2.1"
+
 "expo-keep-awake@~12.0.1":
   "integrity" "sha512-hqeCnb4033TyuZaXs93zTK7rjVJ3bywXATyMmKmKkLEsH2PKBAl/VmjlCOPQL/2Ncqz6aj7Wo//tjeJTARBD4g=="
   "resolved" "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-12.0.1.tgz"
