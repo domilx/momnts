@@ -1,46 +1,25 @@
 import React, { useState } from "react";
-import { View, div, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Image } from "react-native";
-import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { View, div, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { Input, Button, Layout, Divider, Toggle, Icon, IconElement } from "@ui-kitten/components";
+import { useNavigation } from "@react-navigation/native";
 
 
-const LoginScreen = ({ navigation }) => {
+
+const ProfileCreation = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+  const navigation = useNavigation();
 
-  const handleLogin = () => {
-    // Perform login using Firebase authentication
-    //firebase
-    //  .auth()
-    //  .signInWithEmailAndPassword(email, password)
-    //  .then((userCredential) => {
-    //    // Login successful
-    //    console.log('Logged in successfully!', userCredential.user);
-    //  })
-    //  .catch((error) => {
-    //    // Login failed
-    //    console.log('Login error:', error);
-    //  });
-
-    console.log("Logged in successfully!");
-    
+  const handleLogin = () => {    
   };
-
-  const handleRegisterPress = () => {
-    // Navigate to the Register screen
-    navigation.navigate("Register");
-  };
-
-  
 
   return (
     <View style={styles.container}>
       <View style={styles.titleView}>
+        <Text style={styles.title}>Welcome</Text>
+        <View style={{paddingLeft: 9, paddingTop: 40, paddingRight: 9}}>
 
-        <Text style={styles.title}>Login</Text>
-
-      <View style={{paddingLeft: 9, paddingTop: 40, paddingRight: 9}}>
-      <Text style={styles.label}>Email</Text>
+      <Text style={styles.label}>Username</Text>
       <TextInput
         style={[styles.input, {color: '#D6E0D9'}]}
         placeholder="Enter your email"
@@ -61,24 +40,41 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
         secureTextEntry
       />
+
+      <TextInput
+        style={[styles.input, {color: '#D6E0D9'}]}
+        placeholder="Confirm your password"
+        placeholderTextColor="#7A807C"
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+        secureTextEntry
+      />
+      
+      
+      </View>
+     
       </View>
 
-        <Text style={{fontWeight: "bold", textAlign: "left", color: "#7A807C", position: "absolute", bottom: 10, left: 10, right: 20,}}>
-          Don't have an account? <Text  onPress={handleRegisterPress} style={{fontWeight: "bold", textAlign: "right", color: "#D6E0D9", position: "absolute", bottom: 10, left: 20, right: 0,}}> Create One</Text>
-        </Text>
+      
 
-     </View>
-
-    <TouchableOpacity style={styles.buttonContainer} onPress={handleLogin}>
-      <Text style={styles.buttonText}>Login</Text>
+      <TouchableOpacity style={styles.buttonContainer} onPress={handleLogin}>
+      <Text style={styles.buttonText}>Continue</Text>
     </TouchableOpacity>
 
-    <Text style={{fontWeight: "bold", textAlign: "center", color: "#7A807C", position: "absolute", bottom: 40, left: 20, right: 20}}>
+      <Text
+        style={{
+          fontWeight: "bold",
+          textAlign: "center",
+          color: "#7A807C",
+          position: "absolute",
+          bottom: 40,
+          left: 20,
+          right: 20,
+        }}
+      >
         domi & Nathan™
-    </Text>
-
+      </Text>
     </View>
-    
   );
 };
 
@@ -93,7 +89,6 @@ const styles = StyleSheet.create({
   },
 
   circleButtonContainer: {
-    
 
   },
   iconButton: {
@@ -182,6 +177,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   
+  
 });
 
-export default LoginScreen;
+export default ProfileCreation;

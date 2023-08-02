@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   verticaldivider: {
-    width: 1,
+    width: 0.6,
     height: 40,
     backgroundColor: '#D6E0D9',
     marginHorizontal: 10,

@@ -14,6 +14,7 @@ import LoadingScreen from "./screens/LoadingScreen";
 import WelcomeScreen from "./screens/Unguarded/WelcomeScreen";
 import RegisterScreen from "./screens/Unguarded/RegisterScreen";
 import LoginScreen from "./screens/Unguarded/LoginScreen";
+import ProfileCreationScreen from "./screens/Unguarded/ProfileCreationScreen";
 import ProfileScreen from "./screens/Main/ProfileScreen";
 import MapScreen from "./screens/Main/MapScreen";
 import SettingsScreen from "./screens/Main/SettingScreen";
@@ -38,7 +39,7 @@ const App = () => {
       // Simulating a successful login
 
       //comment the next line to see the welcome screen
-      setIsLoggedIn(true);
+      setIsLoggedIn(false);
       setIsLoading(false);
     }, 2000);
   }, []);
@@ -74,6 +75,11 @@ const App = () => {
             name="Register"
             options={{ headerShown: false }}
             component={RegisterScreen}
+          />
+          <Stack.Screen
+            name="ProfileCreation"
+            options={{ headerShown: false }}
+            component={ProfileCreationScreen}
           />
           <Stack.Screen
             name="Settings"

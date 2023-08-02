@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { View, div, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 import { Input, Button, Layout, Divider, Toggle, Icon, IconElement } from "@ui-kitten/components";
+import { useNavigation } from "@react-navigation/native";
 
 
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigation = useNavigation();
 
   const handleLogin = () => {
     // Perform login using Firebase authentication
@@ -23,67 +25,57 @@ const LoginScreen = ({ navigation }) => {
     //  });
 
     console.log("Logged in successfully!");
+    navigation.navigate("ProfileCreation");
   };
 
-  const handleRegisterPress = () => {
+  const handleloginPress = () => {
     // Navigate to the Register screen
     navigation.navigate("Login");
   };
 
-  const renderPasswordCaption = (): React.ReactElement => {
-    return (
-      <View style={styles.captionContainer}>
-
-        <Text style={styles.captionText}>
-          Should contain at least 8 symbols
-        </Text>
-      </View>
-    );
-  };
-
-  const renderEmailCaption = (): React.ReactElement => {
-    return (
-      <View style={styles.captionContainer}>
-
-        <Text style={styles.captionText}>
-          This is not a valid email
-        </Text>
-      </View>
-    );
-  };
+  
 
   return (
     <View style={styles.container}>
       <View style={styles.titleView}>
         <Text style={styles.title}>Register</Text>
-        <Input
-      style={styles.email}
-        label='Username'
-        placeholder='Please enter your username'
+        <View style={{paddingLeft: 9, paddingTop: 40, paddingRight: 9}}>
+
+      <Text style={styles.label}>Email</Text>
+      <TextInput
+        style={[styles.input, {color: '#D6E0D9'}]}
+        placeholder="Enter your email"
+        placeholderTextColor="#7A807C"
         value={email}
-        caption={renderEmailCaption}
-        onChangeText={setEmail}
+        onChangeText={(text) => setEmail(text)}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        tex
       />
-     <Input
-      style={styles.password}
-        label='Password'
-        placeholder='Please enter your password'
+     
+     <Text style={styles.label}>Password</Text>
+      <TextInput
+        style={[styles.input, {color: '#D6E0D9'}]}
+        placeholder="Enter your password"
+        placeholderTextColor="#7A807C"
         value={password}
-        caption={renderPasswordCaption}
+        onChangeText={(text) => setPassword(text)}
         secureTextEntry
-        onChangeText={setPassword}
       />
-      <Input
-      style={styles.password}
-        label='Password'
-        placeholder='Please enter your password'
+
+      <TextInput
+        style={[styles.input, {color: '#D6E0D9'}]}
+        placeholder="Confirm your password"
+        placeholderTextColor="#7A807C"
         value={password}
-        caption={renderPasswordCaption}
+        onChangeText={(text) => setPassword(text)}
         secureTextEntry
-        onChangeText={setPassword}
       />
+      
+      
+      </View>
      <Text style={{fontWeight: "bold", textAlign: "left", color: "#7A807C", position: "absolute", bottom: 10, left: 10, right: 20,}}>
-        Already have an account? <Text  onPress={handleRegisterPress} style={{fontWeight: "bold", textAlign: "right", color: "#D6E0D9", position: "absolute", bottom: 10, left: 20, right: 0,}}> Login</Text>
+        Already have an account? <Text  onPress={handleloginPress} style={{fontWeight: "bold", textAlign: "right", color: "#D6E0D9", position: "absolute", bottom: 10, left: 20, right: 0,}}> Login</Text>
       </Text>
 
       </View>
@@ -120,6 +112,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 100,
   },
+
+  circleButtonContainer: {
+
+  },
+  iconButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#7A807C"', // Set the background color of the circular button
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+  },
   
   buttonText: {
     color: '#000000',
@@ -131,6 +140,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     paddingHorizontal: 15
 
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#D6E0D9',
+    marginBottom: 5,
+  },
+  input: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#D6E0D9',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
   },
 
   
@@ -178,6 +201,7 @@ const styles = StyleSheet.create({
     color: '#7A807C',
     textAlign: 'center',
   },
+  
   
 });
 
