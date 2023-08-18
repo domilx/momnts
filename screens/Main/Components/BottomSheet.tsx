@@ -10,8 +10,8 @@ import {
   Button,
 } from 'react-native';
 
-const DEFAULT_HEIGHT = 800;
-const VISIBLE_HEIGHT = 70; // height visible by default
+const DEFAULT_HEIGHT = 600;
+const VISIBLE_HEIGHT = 50; // height visible by default
 
 function useAnimatedBottom(show: boolean, height: number = DEFAULT_HEIGHT) {
   const animatedValue = React.useRef(new Animated.Value(VISIBLE_HEIGHT / height)).current;
@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     zIndex: 2,
-    backgroundColor: 'dodgerblue',
-    borderRadius: 16,
+    backgroundColor: 'black',
+    borderRadius: 25,
   },
   buttonsContainer: {
     flexDirection: 'row',
