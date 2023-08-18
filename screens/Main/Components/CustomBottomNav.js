@@ -1,17 +1,30 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Animated } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Animated, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
+import FriendsPost from '../Content-View/FriendPost';
 
 const BottomNavBar = () => {
   const [isContentVisible, setContentVisible] = useState(false);
   const slideUpAnimation = useRef(new Animated.Value(0)).current;
-  const slideUpHeight = 300; // Adjust this value to set the slide-up height
+  const slideUpHeight = 420; // Adjust this value to set the slide-up height
   const navigation = useNavigation();
 
+  const user = {
+    name: 'NathanAruna',
+    avatar: 'https://avatars.githubusercontent.com/u/88948653?v=4', // Replace this with the user's actual avatar URL
+  };
 
+  const post = {
+    content: 'real ahh jitiune hogalatuga caus!',
+  };
+
+  const location = {
+    latitude: 37.78825, // Replace with the actual latitude value
+    longitude: -122.4324, // Replace with the actual longitude value
+  };
   const handleControlButtonPress = () => {
     // Handle control button press
     console.log('Control button pressed');
@@ -51,7 +64,9 @@ const BottomNavBar = () => {
       </TouchableOpacity>
       
       </View>
-
+      <ScrollView style={styles.scroll}>
+       <FriendsPost  user={user} post={post} location={location} />
+     </ScrollView>
         {/* Add your additional content here */}
       </Animated.View>
 
@@ -69,6 +84,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff',
   },
+  scroll: {
+    backgroundColor: 'black',
+    width: '100%',
+    
+   
+
+  },
   contentContainer: {
     position: 'absolute',
     left: 0,
@@ -76,7 +98,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#ccc',
     backgroundColor: '#f9f9f9',
-    height: 370,
+    height: 500,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -109,7 +131,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 155,
+    bottom: 5
   },
   name: {
     fontSize: 10,
@@ -123,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black', // Choose the color you want for the circle button
     justifyContent: 'center',
     alignItems: 'center',
-    bottom: 185, // Adjust the position to control how much the button sticks out
+    bottom: 40, // Adjust the position to control how much the button sticks out
     alignSelf: 'center',
     elevation: 10,
     borderWidth: 2,
