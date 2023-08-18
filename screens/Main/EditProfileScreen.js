@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Switch, ScrollView, Image } from "react-native";
 import { Input } from "@ui-kitten/components";
 import * as Haptics from 'expo-haptics';
 import { useNavigation } from "@react-navigation/native";
@@ -72,7 +72,14 @@ const EditProfileScreen = () => {
 
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionHeading}>About Me</Text>
-            <Input style={styles.email}  placeholder='Character Limit of 45   '   />
+            <TextInput
+             style={[styles.input, {color: '#D6E0D9'}]}
+             placeholder="Tell us about yourself."
+             placeholderTextColor="#7A807C"
+             keyboardType="email-address"
+             autoCapitalize="none"
+             
+      />
           </View>
 
           <View style={styles.divider} />
@@ -93,21 +100,42 @@ const EditProfileScreen = () => {
 
          <View style={styles.sectionContainer}>
          <Text style={styles.sectionHeading}>Full Name</Text>
-            <Input style={styles.email}  placeholder='Character Limit of 45   '   />
-         </View>
+         <TextInput
+             style={[styles.input, {color: '#D6E0D9'}]}
+             placeholder="Whats your name?"
+             placeholderTextColor="#7A807C"
+             keyboardType="email-address"
+             autoCapitalize="none"
+             
+      />         
+      </View>
 
         <View style={styles.divider} />
 
         <View style={styles.sectionContainer}>
         <Text style={styles.sectionHeading}>Username</Text>
-            <Input style={styles.email}  placeholder='Character Limit of 45   '/>
+        <TextInput
+             style={[styles.input, {color: '#D6E0D9'}]}
+             placeholder="Whats your username?"
+             placeholderTextColor="#7A807C"
+             keyboardType="email-address"
+             autoCapitalize="none"
+             
+      />
         </View>
 
         <View style={styles.divider} />
 
         <View style={styles.sectionContainer}>
         <Text style={styles.sectionHeading}>My Website</Text>
-            <Input style={styles.email}  placeholder='https://momentsapp.ca'   />
+        <TextInput
+             style={[styles.input, {color: '#D6E0D9'}]}
+             placeholder="Share your website."
+             placeholderTextColor="#7A807C"
+             keyboardType="email-address"
+             autoCapitalize="none"
+             
+      />
         </View>
        
        </View>
@@ -153,6 +181,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 50,
     paddingBottom: 20,
+  },
+  input: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#D6E0D9',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    width: 220
   },
   title: {
     fontSize: 20,

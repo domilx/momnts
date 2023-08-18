@@ -110,12 +110,17 @@ const MapScreen = () => {
 
       <View style={styles.controlPanelTop}>
 
-      <MatIcon onPress={handleCenterOnUser} style={{right: 5}} name="map-marker-left-outline" size={30} color="black" />
+     
 
         <TouchableOpacity onPress={handleProfile}>
           <Image source={require('./profile-image.jpg')} style={styles.Profile} />
         </TouchableOpacity>
 
+        <View style={styles.buttonContainer}>
+      <Text onPress={handleCenterOnUser} style={{top: 10,  fontSize:28}}> 🚀 </Text>
+      <Text onPress={handleCenterOnUser} style={{top: 10,  fontSize:28}}> 📍 </Text>
+
+      </View>
 
       </View>
       
@@ -133,6 +138,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonContainer: {
+    backgroundColor: 'black',
+    borderRadius: 25,
+    height: '100%'
+
+
   },
   map: {
     width: Dimensions.get('window').width,
@@ -153,9 +165,9 @@ const styles = StyleSheet.create({
   },
   controlPanelTop: {
     position: 'absolute',
-    top: 40,
+    top: 75,
     right: 30,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 8,
