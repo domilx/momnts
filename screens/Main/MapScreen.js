@@ -145,9 +145,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sideNav: {
-    
-    marginTop: 50,
-    marginLeft: 20,
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    zIndex: 1, // Make s
   },
   avatar: {
     width: 70,
