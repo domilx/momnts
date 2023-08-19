@@ -36,7 +36,23 @@ function MapScreen() {
   };
 
   useEffect(() => {
-    // The Location related code should go here, omitted for brevity.
+    const getLocation = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Blud really denied location perms');
+        return;
+      }
+      Location.watchPositionAsync(
+        { accuracy: Location.Accuracy.High, timeInterval: 1000 },
+        (currentLocation) => {
+          const { latitude, longitude } = currentLocation.coords;
+          setLocation(currentLocation.coords);
+          setPath((prevPath) => [...prevPath, { latitude, longitude }]);
+        }
+      );
+    };
+
+    getLocation();
   }, []);
 
   return (
