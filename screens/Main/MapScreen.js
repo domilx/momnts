@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import * as Haptics from 'expo-haptics';
 import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
+import FriendsList from './Content-View/FriendsList';
 
 function MapScreen() {
   const [location, setLocation] = useState(null);
@@ -96,7 +97,7 @@ function MapScreen() {
         <View style={styles.bottomSheetContent}>
           <View style={styles.buttonsContainer}>
             <View style={styles.IconContainer} onPress={handleButtonXPress}>
-              <Icon name="account-group" size={30} color="#D6E0D9" />
+              <Icon name="account-group" size={30} color="#D6E0D9" onPress={handleButtonXPress}/>
               <Button title="Friends" color="#7A807C"  />
             </View>
             <View style={styles.IconContainer} >
@@ -104,7 +105,7 @@ function MapScreen() {
               <Button title="" color="#7A807C"  />
             </View>
             <View style={styles.IconContainer} onPress={handleButtonYPress}>
-              <Icon name="sign-direction" size={30} color="#D6E0D9"  />
+              <Icon name="sign-direction" size={30} color="#D6E0D9"  onPress={handleButtonYPress}/>
               <Button title="Journeys" color="#7A807C"  />
             </View>
           </View>
@@ -112,7 +113,9 @@ function MapScreen() {
             <Text style={{color: "white"}}>noview</Text>
           )}
           {currentView === 'xView' && (
-            <Text style={{color: "white"}}>Button "X" was pressed</Text>
+            <View style={{marginTop: 90}}>
+              <FriendsList />
+            </View>
           )}
           {currentView === 'yView' && (
             <Text style={{color: "white"}}>Button "Y" was pressed</Text>
@@ -150,7 +153,7 @@ const styles = StyleSheet.create({
   sideNav: {
     position: 'absolute',
     top: 50,
-    left: 20,
+    right: 20,
     zIndex: 1, // Make s
   },
   avatar: {
