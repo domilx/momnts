@@ -27,6 +27,7 @@ function MapScreen() {
   };
 
   const handleCenterButtonClick = () => {
+    navigation.navigate("CameraView");
     console.log('Center button was pressed!');
   };
 
@@ -94,17 +95,17 @@ function MapScreen() {
       <BottomSheet show={show} onOuterClick={() => setShow(false)}>
         <View style={styles.bottomSheetContent}>
           <View style={styles.buttonsContainer}>
-            <View style={styles.IconContainer}>
-              <Icon name="account-group" size={30} color="#D6E0D9" onPress={handleButtonXPress}/>
-              <Button title="Friends" color="#7A807C" onPress={handleButtonXPress} />
+            <View style={styles.IconContainer} onPress={handleButtonXPress}>
+              <Icon name="account-group" size={30} color="#D6E0D9" />
+              <Button title="Friends" color="#7A807C"  />
             </View>
-            <View style={styles.IconContainer}>
-              <Icon name="close-circle" size={30} color="#D6E0D9" onPress={handleCenterButtonClick}/>
-              <Button title="" color="#7A807C" onPress={handleCenterButtonClick} />
+            <View style={styles.IconContainer} >
+              <Icon name="plus-circle" size={32} color="#D6E0D9" onPress={handleCenterButtonClick} />
+              <Button title="" color="#7A807C"  />
             </View>
-            <View style={styles.IconContainer}>
-              <Icon name="sign-direction" size={30} color="#D6E0D9" onPress={handleButtonYPress} />
-              <Button title="Journeys" color="#7A807C" onPress={handleButtonYPress} />
+            <View style={styles.IconContainer} onPress={handleButtonYPress}>
+              <Icon name="sign-direction" size={30} color="#D6E0D9"  />
+              <Button title="Journeys" color="#7A807C"  />
             </View>
           </View>
           {currentView === 'noview' && (
@@ -147,8 +148,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sideNav: {
-    marginTop: 50,
-    marginLeft: 20,
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    zIndex: 1, // Make s
   },
   avatar: {
     width: 70,
