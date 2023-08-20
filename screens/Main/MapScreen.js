@@ -85,14 +85,14 @@ function MapScreen() {
         <View style={styles.bottomSheetContent}>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity onPress={handleButtonXPress} style={styles.navItem}>
-              <Icon name="people" size={35} color="#D6E0D9" />
+              <MatIcon name="account-group" size={35} color="#D6E0D9" />
               <Text style={styles.name}>Friends</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleCenterButtonClick} style={styles.circleButton}>
-              <MatIcon name="plus" size={70} color="#D6E0D9" />
+              <MatIcon name="plus" size={40} color="#D6E0D9" />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleButtonYPress} style={styles.navItem}>
-              <Icon name="earth" size={35} color="#D6E0D9" />
+              <MatIcon name="sign-direction" size={35} color="#D6E0D9" />
               <Text style={styles.name}>Journeys</Text>
             </TouchableOpacity>
           </View>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   name: {
-    fontSize: 10,
+    fontSize: 13,
     color: '#D6E0D9',
     fontWeight: 'bold',
   },
@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   circleButton: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     borderRadius: 40,
     backgroundColor: 'black',
     justifyContent: 'center',

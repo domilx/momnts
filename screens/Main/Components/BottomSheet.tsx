@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 const DEFAULT_HEIGHT = 600;
-const VISIBLE_HEIGHT = 45; // height visible by default
+const VISIBLE_HEIGHT = 40; // height visible by default
 
 function useAnimatedBottom(show: boolean, height: number = DEFAULT_HEIGHT) {
   const animatedValue = React.useRef(new Animated.Value(VISIBLE_HEIGHT / height)).current;
