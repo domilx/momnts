@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 const DEFAULT_HEIGHT = 600;
-const VISIBLE_HEIGHT = 50; // height visible by default
+const VISIBLE_HEIGHT = 45; // height visible by default
 
 function useAnimatedBottom(show: boolean, height: number = DEFAULT_HEIGHT) {
   const animatedValue = React.useRef(new Animated.Value(VISIBLE_HEIGHT / height)).current;
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    paddingHorizontal: 50,
+    paddingHorizontal: 60,
     marginTop: 20,
   },
   messageText: {
