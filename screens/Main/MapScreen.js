@@ -7,6 +7,7 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import FriendsList from './Dynamic-Content/FriendsList';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Location from 'expo-location';
+import * as Haptics from 'expo-haptics';
 
 function MapScreen() {
   const [location, setLocation] = useState(null);
@@ -19,16 +20,25 @@ function MapScreen() {
   const handleButtonXPress = () => {
     setCurrentView('xView');
     setShow(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
   };
 
   const handleButtonYPress = () => {
     setCurrentView('yView');
     setShow(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
   };
 
   const handleCenterButtonClick = () => {
     navigation.navigate("CameraView");
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
   };
+
+  const onOuterClick = () => {
+    setShow(false);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    setCurrentView('noview');
+  }
 
   useEffect(() => {
     const getLocation = async () => {
@@ -81,17 +91,17 @@ function MapScreen() {
         )}
       </MapView>
 
-      <BottomSheet show={show} onOuterClick={() => setShow(false)}>
+      <BottomSheet show={show} onOuterClick={onOuterClick}>
         <View style={styles.bottomSheetContent}>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity onPress={handleButtonXPress} style={styles.navItem}>
+            <TouchableOpacity activeOpacity={1}  onPress={handleButtonXPress} style={styles.navItem}>
               <MatIcon name="account-group" size={35} color="#D6E0D9" />
               <Text style={styles.name}>Friends</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleCenterButtonClick} style={styles.circleButton}>
+            <TouchableOpacity activeOpacity={1}  onPress={handleCenterButtonClick} style={styles.circleButton}>
               <MatIcon name="plus" size={40} color="#D6E0D9" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleButtonYPress} style={styles.navItem}>
+            <TouchableOpacity activeOpacity={1}  onPress={handleButtonYPress} style={styles.navItem}>
               <MatIcon name="sign-direction" size={35} color="#D6E0D9" />
               <Text style={styles.name}>Journeys</Text>
             </TouchableOpacity>
@@ -128,9 +138,9 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   avatar: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
     marginBottom: 10,
   },
   bottomSheetContent: {
