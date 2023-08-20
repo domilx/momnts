@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import FriendsPost from './Content-View/FriendPost';
 
 const Friends = () => {
   const user = {

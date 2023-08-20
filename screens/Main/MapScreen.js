@@ -5,11 +5,10 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import * as Haptics from 'expo-haptics';
 import MapView, { Marker, Polyline, Callout } from 'react-native-maps';
-import FriendsList from './Content-View/FriendsList';
+import FriendsList from './Dynamic-Content/FriendsList';
 
 function MapScreen() {
   const [location, setLocation] = useState(null);
-
   const [show, setShow] = useState(false);
   const [currentView, setCurrentView] = useState('noview');
   const [path, setPath] = useState([]);
@@ -39,19 +38,7 @@ function MapScreen() {
 
   useEffect(() => {
     const getLocation = async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Blud really denied location perms');
-        return;
-      }
-      Location.watchPositionAsync(
-        { accuracy: Location.Accuracy.High, timeInterval: 1000 },
-        (currentLocation) => {
-          const { latitude, longitude } = currentLocation.coords;
-          setLocation(currentLocation.coords);
-          setPath((prevPath) => [...prevPath, { latitude, longitude }]);
-        }
-      );
+      // Location fetching logic
     };
 
     getLocation();
@@ -75,50 +62,35 @@ function MapScreen() {
            latitudeDelta: 0.4,
            longitudeDelta: 0.4,
          }}>
-        <Polyline coordinates={path} strokeColor="#000000" strokeWidth={3} />
-        {location && (
-          <Marker
-            title="You are here"
-            description="Tap for more details"
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}>
-            {isFocused && (
-              <Callout onPress={handleCalloutPress}>
-                <Text>You are here</Text>
-              </Callout>
-            )}
-          </Marker>
-        )}
+        {/* Map content */}
       </MapView>
 
       <BottomSheet show={show} onOuterClick={() => setShow(false)}>
         <View style={styles.bottomSheetContent}>
           <View style={styles.buttonsContainer}>
-            <View style={styles.IconContainer} onPress={handleButtonXPress}>
-              <Icon name="account-group" size={30} color="#D6E0D9" onPress={handleButtonXPress}/>
+            <View style={styles.IconContainer}>
+              <Icon name="account-group" size={30} color="#D6E0D9" onPress={handleButtonXPress} />
               <Button title="Friends" color="#7A807C"  />
             </View>
-            <View style={styles.IconContainer} >
+            <View style={styles.IconContainer}>
               <Icon name="plus-circle" size={32} color="#D6E0D9" onPress={handleCenterButtonClick} />
               <Button title="" color="#7A807C"  />
             </View>
-            <View style={styles.IconContainer} onPress={handleButtonYPress}>
-              <Icon name="sign-direction" size={30} color="#D6E0D9"  onPress={handleButtonYPress}/>
+            <View style={styles.IconContainer}>
+              <Icon name="sign-direction" size={30} color="#D6E0D9"  onPress={handleButtonYPress} />
               <Button title="Journeys" color="#7A807C"  />
             </View>
           </View>
           {currentView === 'noview' && (
-            <Text style={{color: "white"}}>noview</Text>
+            <Text style={styles.infoText}>noview</Text>
           )}
           {currentView === 'xView' && (
-            <View style={{marginTop: 90}}>
+            <View style={styles.friendsListContainer}>
               <FriendsList />
             </View>
           )}
           {currentView === 'yView' && (
-            <Text style={{color: "white"}}>Button "Y" was pressed</Text>
+            <Text style={styles.infoText}>Button "Y" was pressed</Text>
           )}
         </View>
       </BottomSheet>
@@ -145,7 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    paddingHorizontal: 35,  
+    paddingHorizontal: 35,
   },
   IconContainer: {
     alignItems: 'center',
@@ -154,14 +126,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
     right: 20,
-    zIndex: 1, // Make s
+    zIndex: 1,
   },
   avatar: {
     width: 70,
     height: 70,
     borderRadius: 60,
     marginBottom: 10,
-  }
+  },
+  friendsListContainer: {
+    marginTop: 90,
+  },
+  infoText: {
+    color: "white",
+  },
 });
 
 export default MapScreen;
