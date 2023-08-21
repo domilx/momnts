@@ -22,7 +22,6 @@ import EditProfileScreen from "./screens/Main/EditProfileScreen";
 import BlockedUsersScreen from "./screens/Main/Settings/BlockedUsersScreen";
 import AboutUsScreen from "./screens/Main/Settings/AboutUsScreen";
 import HelpScreen from "./screens/Main/Settings/HelpScreen";
-import SearchScreen from "./screens/Main/SearchScreen";
 import CameraScreen from "./screens/Main/Video-Interfaces/CameraView";
 import FriendsScreen from "./screens/Main/FriendsScreen";
 
@@ -65,7 +64,6 @@ const App = () => {
               options={{ headerShown: false }}
             />
           )}
-
           <Stack.Screen
             name="Login"
             options={{ headerShown: false }}
@@ -109,11 +107,6 @@ const App = () => {
           <Stack.Screen
             name="Help"
             component={HelpScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Search"
-            component={SearchScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

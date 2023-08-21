@@ -1,13 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, StyleSheet, Dimensions, Image, Text, TouchableOpacity } from 'react-native';
-import { BottomSheet } from './Components/BottomSheet';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from "@react-navigation/native";
 import MapView, { Marker, Polyline } from 'react-native-maps';
-import FriendsList from './Dynamic-Content/FriendsList';
-import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Location from 'expo-location';
+import { useNavigation } from '@react-navigation/native';
+import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
+import { BottomSheet } from './Components/BottomSheet';
+
+
+import ControlPanel from './Components/ControlPanel';
+import ControlPanel2 from './Components/ControlPanel2';
+import FriendsList from './Dynamic-Content/FriendsList';
 
 function MapScreen() {
   const [location, setLocation] = useState(null);
@@ -15,30 +18,30 @@ function MapScreen() {
   const [currentView, setCurrentView] = useState('noview');
   const [path, setPath] = useState([]);
   const navigation = useNavigation();
-  const mapRef = useRef(null); 
+  const mapRef = useRef(null);
 
   const handleButtonXPress = () => {
     setCurrentView('xView');
     setShow(true);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   };
 
   const handleButtonYPress = () => {
     setCurrentView('yView');
     setShow(true);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   };
 
   const handleCenterButtonClick = () => {
-    navigation.navigate("CameraView");
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+    navigation.navigate('CameraView');
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
   };
 
   const onOuterClick = () => {
     setShow(false);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setCurrentView('noview');
-  }
+  };
 
   useEffect(() => {
     const getLocation = async () => {
@@ -66,10 +69,15 @@ function MapScreen() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.sideNav} onPress={() => navigation.navigate("Profile")}>
-        <Image style={styles.avatar} source={require("./profile-image.jpg")} />
-      </TouchableOpacity>
-
+      <View style={styles.topNav}>
+        <ControlPanel2 />
+      </View>
+      <View style={styles.sideNav}>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <Image style={styles.avatar} source={require('./profile-image.jpg')} />
+        </TouchableOpacity>
+        <ControlPanel />
+      </View>
       <MapView
         ref={mapRef}
         style={styles.map}
@@ -79,8 +87,7 @@ function MapScreen() {
           longitude: location?.longitude || 0,
           latitudeDelta: 0.4,
           longitudeDelta: 0.4,
-        }}
-      >
+        }}>
         <Polyline coordinates={path} strokeColor="#000000" strokeWidth={3} />
         {location && (
           <Marker
@@ -90,18 +97,26 @@ function MapScreen() {
           />
         )}
       </MapView>
-
       <BottomSheet show={show} onOuterClick={onOuterClick}>
         <View style={styles.bottomSheetContent}>
           <View style={styles.buttonsContainer}>
-            <TouchableOpacity activeOpacity={1}  onPress={handleButtonXPress} style={styles.navItem}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={handleButtonXPress}
+              style={styles.navItem}>
               <MatIcon name="account-group" size={35} color="#D6E0D9" />
               <Text style={styles.name}>Friends</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}  onPress={handleCenterButtonClick} style={styles.circleButton}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={handleCenterButtonClick}
+              style={styles.circleButton}>
               <MatIcon name="plus" size={40} color="#D6E0D9" />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}  onPress={handleButtonYPress} style={styles.navItem}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={handleButtonYPress}
+              style={styles.navItem}>
               <MatIcon name="sign-direction" size={35} color="#D6E0D9" />
               <Text style={styles.name}>Journeys</Text>
             </TouchableOpacity>
@@ -133,15 +148,26 @@ const styles = StyleSheet.create({
   },
   sideNav: {
     position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
     top: 50,
-    right: 20,
+    right: 10,
+    zIndex: 1,
+  },
+  topNav: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 60,
+    width: '100%',
     zIndex: 1,
   },
   avatar: {
-    width: 50,
-    height: 50,
+    width: 62,
+    height: 62,
     borderRadius: 50,
-    marginBottom: 10,
+    marginBottom: 20,
+    borderWidth: 1.5,
   },
   bottomSheetContent: {
     flex: 1,
@@ -156,7 +182,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   infoText: {
-    color: "white",
+    color: 'white',
   },
   name: {
     fontSize: 13,
@@ -183,7 +209,7 @@ const styles = StyleSheet.create({
   },
   friendsListContainer: {
     marginTop: 90,
-  }
+  },
 });
 
 export default MapScreen;

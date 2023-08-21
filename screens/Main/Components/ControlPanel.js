@@ -6,22 +6,20 @@ import { useNavigation } from '@react-navigation/native';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ControlPanel = () => {
-  
-  const handleProfile = () => {
-    navigation.navigate('Profile');
-  };
+  const navigation = useNavigation();
 
+  const handleSettings = () => {
+    navigation.navigate('Setting');
+  };
 
   return (
 
-      <View >
-
-      <MatIcon onPress={handleCenterOnUser} style={{right: 5}} name="map-marker-left-outline" size={30} color="black" />
-
-        <TouchableOpacity onPress={handleProfile}>
-          <Image source={require('../profile-image.jpg')} style={styles.Profile} />
-        </TouchableOpacity>
-
+      <View  style={styles.container}>
+      <View  style={{marginHorizontal: 10, marginVertical: 10}}>
+      <MatIcon style={{marginBottom: 10}}  name="cog" size={25} color="#D6E0D9" onPress={handleSettings}/>
+      <MatIcon style={{marginBottom: 10}} name="image-multiple" size={25} color="#D6E0D9" />
+      <MatIcon  name="rocket-launch" size={25} color="#D6E0D9" />
+      </View>
 
       </View>
      
@@ -31,8 +29,13 @@ const ControlPanel = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    borderRadius: 25,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     alignItems: 'center',
+    alignContent: 'column',
     justifyContent: 'center',
+    borderWidth: 1,
+    width: "76%",
   },
  
   avatar: {

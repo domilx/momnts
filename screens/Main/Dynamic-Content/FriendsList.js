@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: 'rgba(0, 0, 0, 0$)',
   },
   contentView: {
     marginHorizontal: 18,
