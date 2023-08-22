@@ -13,9 +13,7 @@ const FriendsList = () => {
     return (
       <View style={styles.avatarWithStatusContainer}>
         <Image source={avatarSource} style={styles.avatar} />
-        <View style={styles.emojiContainer}>
-          <Text style={styles.emoji}>{emoji}</Text>
-        </View>
+        
       </View>
     );
   };
@@ -24,8 +22,10 @@ const FriendsList = () => {
     return (
       <View style={styles.friendContainer}>
         <AvatarWithStatus avatarSource={imageSource} emoji={emoji} />
-        <Text style={styles.friendUsername}>{username}</Text>
-        <Icon name="dots-horizontal" size={30} color="#D6E0D9" />
+        <View style={styles.friendTextContainer}>
+          <Text style={styles.friendUsername}>{username}</Text>
+          <Text style={styles.friendActivity}>last seen 4h ago</Text>
+        </View>
         <Icon name="arrow-right-thin" size={30} color="#D6E0D9" />
       </View>
     );
@@ -45,40 +45,20 @@ const FriendsList = () => {
         <ScrollView style={styles.userContainer} >
           <FriendItem
             imageSource={require('../profile-image.jpg')}
-            username="Username1"
-            emoji="🚗"
+            username="Elon Musk"
           />
           <View style={styles.divider} />
           <FriendItem
             imageSource={require('../profile-image.jpg')}
-            username="Username2"
-            emoji="🛩️"
+            username="Jeff Bezos"
           />
           <View style={styles.divider} />
           <FriendItem
             imageSource={require('../profile-image.jpg')}
-            username="Username3"
-            emoji="🛥️"
+            username="Bill Gates"
           />
           <View style={styles.divider} />
-          <FriendItem
-            imageSource={require('../profile-image.jpg')}
-            username="Username4"
-            emoji="🚗"
-          />
-          <View style={styles.divider} />
-          <FriendItem
-            imageSource={require('../profile-image.jpg')}
-            username="Username5"
-            
-            emoji="🚗"
-          />
-          <View style={styles.divider} />
-          <FriendItem
-            imageSource={require('../profile-image.jpg')}
-            username="Username6"
-            emoji="🚗"
-          />
+          {/* Add more FriendItem components here */}
         </ScrollView>
       </View>
     </View>
@@ -96,9 +76,13 @@ const styles = StyleSheet.create({
   },
   friendContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
+    justifyContent: 'space-between',
+  },
+  friendTextContainer: {
+    flex: 1,
+    marginLeft: 10,
   },
   input: {
     height: 40,
@@ -110,7 +94,8 @@ const styles = StyleSheet.create({
     color: '#D6E0D9',
   },
   avatarWithStatusContainer: {
-    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   avatar: {
     width: 60,
@@ -128,10 +113,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#D6E0D9',
   },
+  friendActivity: {
+    fontSize: 10,
+    color: '#7A807C',
+  },
   emojiContainer: {
-    position: 'absolute',
-    bottom: 0,
-    right: -5,
+    marginLeft: 5,
     backgroundColor: 'black',
     borderRadius: 30,
     borderColor: "#D6E0D9",

@@ -19,15 +19,20 @@ function MapScreen() {
   const [path, setPath] = useState([]);
   const navigation = useNavigation();
   const mapRef = useRef(null);
+  const [isComponentVisible, setIsComponentVisible] = useState(true);
+
+  
 
   const handleButtonXPress = () => {
     setCurrentView('xView');
     setShow(true);
+    setIsComponentVisible(false);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   };
 
   const handleButtonYPress = () => {
     setCurrentView('yView');
+    setIsComponentVisible(false);
     setShow(true);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
   };
@@ -39,6 +44,7 @@ function MapScreen() {
 
   const onOuterClick = () => {
     setShow(false);
+    setIsComponentVisible(true);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     setCurrentView('noview');
   };
@@ -70,13 +76,18 @@ function MapScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>
+      {isComponentVisible && (
         <ControlPanel2 />
+      )}
       </View>
       <View style={styles.sideNav}>
+        
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
           <Image style={styles.avatar} source={require('./profile-image.jpg')} />
         </TouchableOpacity>
+        {isComponentVisible && (
         <ControlPanel />
+        )}
       </View>
       <MapView
         ref={mapRef}
@@ -167,7 +178,7 @@ const styles = StyleSheet.create({
     height: 62,
     borderRadius: 50,
     marginBottom: 20,
-    borderWidth: 1.5,
+    borderWidth: 1,
   },
   bottomSheetContent: {
     flex: 1,
