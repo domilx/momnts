@@ -6,13 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const ControlPanel2 = ({ cityName = 'Montreal' }) => {
     const [city, setCity] = useState(cityName);
     const [weatherData, setWeatherData] = useState(null);
-    const [lastFetched, setLastFetched] = useState(null);
-
-    useEffect(() => {
-      setCity(cityName);
-    }, [cityName]);
+    const [localTime, setLocalTime] = useState('');
 
     const fetchInterval = 5400000;  // 90 minutes in milliseconds
+
+    useEffect(() => {
+      setCity(cityName); 
+    }, [cityName]);
 
     const saveWeatherData = async (data) => {
         try {
@@ -37,32 +37,30 @@ const ControlPanel2 = ({ cityName = 'Montreal' }) => {
         getStoredWeatherData();
 
         const fetchWeather = async () => {
-            const currentTime = new Date().getTime();
-
-            if (lastFetched && (currentTime - lastFetched) < fetchInterval) {
-                return;
-            }
-
             try {
                 const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=214bcc7cd373419da76173110232208&q=${city}`);
                 const data = await response.json();
                 saveWeatherData(data);
                 setWeatherData(data);
-                setLastFetched(currentTime);
+
+                // Set the local time directly from the weather API response
+                if (data && data.location && data.location.localtime) {
+                    setLocalTime(data.location.localtime);
+                }
+
             } catch (error) {
                 console.error("Error fetching weather data:", error);
             }
         };
 
         fetchWeather();
-
         const intervalId = setInterval(fetchWeather, fetchInterval);
 
-        return () => clearInterval(intervalId);
+        return () => clearInterval(intervalId); 
     }, [city]);
 
     const getWeatherIcon = () => {
-        if (!weatherData) return 'weather-cloudy'; // default
+        if (!weatherData) return 'weather-cloudy'; 
         const condition = weatherData.current.condition.text.toLowerCase();
         if (condition.includes('rain')) return 'weather-rainy';
         if (condition.includes('cloud')) return 'weather-cloudy';
@@ -70,35 +68,35 @@ const ControlPanel2 = ({ cityName = 'Montreal' }) => {
     };
 
     const format12HourTime = (timeStr) => {
-        if (!timeStr) return ''; // handle undefined or null values
-        const timeOnly = timeStr.split(' ')[1];
-        const [hour, minute] = timeOnly.split(':');
-        let formattedHour = parseInt(hour, 10);
-        const ampm = formattedHour >= 12 ? 'PM' : 'AM';
-        if (formattedHour > 12) {
-            formattedHour -= 12;
-        } else if (formattedHour === 0) {
-            formattedHour = 12;
-        }
-        return `${formattedHour}:${minute} ${ampm}`;
+      if (!timeStr) return ''; 
+      const timeOnly = timeStr.split(' ')[1];
+      const [hour, minute] = timeOnly.split(':');
+      let formattedHour = parseInt(hour, 10);
+      const ampm = formattedHour >= 12 ? 'PM' : 'AM';
+      if (formattedHour > 12) {
+          formattedHour -= 12;
+      } else if (formattedHour === 0) {
+          formattedHour = 12;
+      }
+      return `${formattedHour}:${minute} ${ampm}`;
     };
 
     return (
-        <View style={styles.chip}>
-            <Text style={styles.locationText}>{city}</Text>
-            <View style={styles.detailsContainer}>
-                <Icon name={getWeatherIcon()} size={24} color="#ffffff" />
-                <Text style={styles.detailsText}>
-                    {weatherData?.current.temp_c}°C | {format12HourTime(weatherData?.location.localtime)}
-                </Text>
-            </View>
-        </View>
+      <View style={styles.chip}>
+          <Text style={styles.locationText}>{city}</Text>
+          <View style={styles.detailsContainer}>
+              <Icon name={getWeatherIcon()} size={24} color="#ffffff" />
+              <Text style={styles.detailsText}>
+    {weatherData?.current.temp_c}°C | {format12HourTime(localTime)}
+</Text>
+          </View>
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
     chip: {
-        backgroundColor: 'rgba(0, 0, 0, 0.7)', // Semi-transparent black
+        backgroundColor: 'rgba(0, 0, 0, 0.7)', 
         borderRadius: 25,
         paddingVertical: 10,
         paddingHorizontal: 20,
