@@ -99,11 +99,7 @@ function MapScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>
-      {isComponentVisible && (
-
          <ControlPanel2 cityName={city} />
-
-        )}
       </View>
       <View style={styles.sideNav}>
         
