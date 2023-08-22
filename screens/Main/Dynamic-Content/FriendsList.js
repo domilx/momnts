@@ -39,7 +39,7 @@ const FriendsList = () => {
           style={styles.input}
           placeholder="Find your Friends!"
           placeholderTextColor="#7A807C"
-          keyboardType="search"
+          returnKeyType="search"  // This sets the return key to "search"
           autoCapitalize="none"
         />
         <ScrollView style={styles.userContainer} >

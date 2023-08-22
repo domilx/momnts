@@ -6,11 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
 import { BottomSheet } from './Components/BottomSheet';
-
-
 import ControlPanel from './Components/ControlPanel';
 import ControlPanel2 from './Components/ControlPanel2';
 import FriendsList from './Dynamic-Content/FriendsList';
+import { debounce } from 'lodash';
 
 function MapScreen() {
   const [location, setLocation] = useState(null);
@@ -20,8 +19,32 @@ function MapScreen() {
   const navigation = useNavigation();
   const mapRef = useRef(null);
   const [isComponentVisible, setIsComponentVisible] = useState(true);
+  const [city, setCity] = useState("Montreal");  // Initialized to Montreal by default
 
-  
+  const fetchCityName = async (latitude, longitude) => {
+    try {
+        const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+        const data = await response.json();
+
+        // Extract the city name without any additional details
+        let cityName = data.city || data.locality || data.principalSubdivision || "";
+
+        // Handle cases where we get additional details like "(administrative region)"
+        cityName = cityName.split("(")[0].trim();
+
+        return cityName;
+    } catch (error) {
+        console.error("Error fetching city name:", error);
+        return null; // Return null on error
+    }
+};
+
+
+  const debouncedFetchCityName = debounce(async (region) => {
+    const cityName = await fetchCityName(region.latitude, region.longitude);
+    setCity(cityName);
+  }, 2000);
+
 
   const handleButtonXPress = () => {
     setCurrentView('xView');
@@ -77,8 +100,10 @@ function MapScreen() {
     <View style={styles.container}>
       <View style={styles.topNav}>
       {isComponentVisible && (
-        <ControlPanel2 />
-      )}
+
+         <ControlPanel2 cityName={city} />
+
+        )}
       </View>
       <View style={styles.sideNav}>
         
@@ -91,6 +116,7 @@ function MapScreen() {
       </View>
       <MapView
         ref={mapRef}
+        onRegionChangeComplete={debouncedFetchCityName}
         style={styles.map}
         showsCompass={false}
         initialRegion={{
