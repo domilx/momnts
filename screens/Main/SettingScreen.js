@@ -1,288 +1,230 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Haptics from 'expo-haptics';
 
-
 const SettingsScreen = () => {
-  const navigation = useNavigation();
+    const navigation = useNavigation();
 
-  //Default states
-  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const [locationEnabled, setLocationEnabled] = useState(false);
-  const [ArEnabled, setArEnabled] = useState(false);
+    const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+    const [locationEnabled, setLocationEnabled] = useState(false);
+    const [ArEnabled, setArEnabled] = useState(false);
 
-  
-  
-//Handle Notification Selection
-  const toggleNotifications = () => {
-    setNotificationsEnabled(prevState => !prevState);
-  };
+    const toggleNotifications = () => setNotificationsEnabled(prevState => !prevState);
+    const toggleLocation = () => setLocationEnabled(prevState => !prevState);
+    const toggleAR = () => setArEnabled(prevState => !prevState);
 
-//Handle Location Selection
-  const toggleLocation = () => {
-    setLocationEnabled(prevState => !prevState);
-  };
+    const handleReturn = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        navigation.goBack();
+    };
 
-//Handle Ar Selection
-  const toggleAR = () => {
-    setArEnabled(prevState => !prevState);
-  };
+    const handleBlockedUsers = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        navigation.navigate("BlockedUsers");
+    };
 
-  //return to profile page 
-  
-  const handleReturn = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-    navigation.goBack();
-  };
+    const handleAboutUs = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        navigation.navigate("AboutUs");
+    };
 
-  const handleBlockedUsers = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-    navigation.navigate("BlockedUsers");
+    const handleHelp = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        navigation.navigate("Help");
+    };
 
-  }
+    return (
+        <View style={styles.container}>
+            <View style={styles.top}>
+                <TouchableOpacity activeOpacity={0.7} onPress={handleReturn}>
+                    <Icon name="arrow-left-thin" size={25} color="#D6E0D9" />
+                </TouchableOpacity>
+                <Text style={styles.title}>Settings</Text>
+                <View style={{ width: 25 }} /> 
+            </View>
 
-  const handleAboutUs = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-    navigation.navigate("AboutUs");
+            <ScrollView style={styles.toggleContainer}>
+                <Text style={styles.chunkTitle}>GENERAL</Text>
+                <View style={styles.settingChunk}>
+                    <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleNotifications}>
+                        <Icon name="bell-outline" size={24} color="#D6E0D9" style={styles.iconLeft} />
+                        <Text style={styles.sectionHeading}>Notifications</Text>
+                        <Switch
+                            trackColor={{ false: '#7A807C', true: '#81b0ff' }}
+                            thumbColor={notificationsEnabled ? '#D6E0D9' : '#D6E0D9'}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleNotifications}
+                            value={notificationsEnabled}
+                            style={styles.switch}
+                        />
+                    </TouchableOpacity>
+                    <View style={styles.divider} />
 
-  }
+                    <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleLocation}>
+                        <Icon name="map-marker-outline" size={24} color="#D6E0D9" style={styles.iconLeft} />
+                        <Text style={styles.sectionHeading}>Display Location</Text>
+                        <Switch
+                            trackColor={{ false: '#7A807C', true: '#81b0ff' }}
+                            thumbColor={locationEnabled ? '#D6E0D9' : '#D6E0D9'}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleLocation}
+                            value={locationEnabled}
+                            style={styles.switch}
+                        />
+                    </TouchableOpacity>
+                    <View style={styles.divider} />
 
-  const handleHelp = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-    navigation.navigate("Help");
+                    <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleAR}>
+                        <Icon name="augmented-reality" size={24} color="#D6E0D9" style={styles.iconLeft} />
+                        <Text style={styles.sectionHeading}>AR Features</Text>
+                        <Switch
+                            trackColor={{ false: '#7A807C', true: '#B7C0BA' }}
+                            thumbColor={ArEnabled ? '#FFF' : '#FFF'}
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleAR}
+                            value={ArEnabled}
+                            style={styles.switch}
+                        />
+                    </TouchableOpacity>
+                    <View style={styles.divider} />
 
-  }
+                    <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={handleBlockedUsers}>
+                        <Icon name="account-off-outline" size={24} color="#D6E0D9" style={styles.iconLeft} />
+                        <Text style={styles.sectionHeading}>Blocked Users</Text>
+                        <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+                    </TouchableOpacity>
+                </View>
 
+                <Text style={styles.chunkTitle}>INFO</Text>
+                <View style={styles.settingChunk}>
+                  <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={handleAboutUs}>
+                        <Icon name="information-outline" size={24} color="#D6E0D9" style={styles.iconLeft} />
+                        <Text style={styles.sectionHeading}>About Us</Text>
+                        <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+                    </TouchableOpacity>
 
-  return (
+                    <View style={styles.divider} />
 
-    <View style={styles.container}>
+                    <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={handleHelp}>
+                        <Icon name="help-box" size={24} color="#D6E0D9" style={styles.iconLeft} />
+                        <Text style={styles.sectionHeading}>Help</Text>
+                        <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+                    </TouchableOpacity>
 
-      <View style={styles.titleView}>
+                </View>
 
-        <View style={styles.top}>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-          <Icon name="arrow-left-thin" size={30} color="#D6E0D9" />
-          </TouchableOpacity>
-          <Text style={styles.title}>Settings</Text>
+                <Text style={styles.chunkTitle}>MORE</Text>
+                <View style={styles.settingChunk}>
+                  <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
+                        <Icon name="share-outline" size={24} color="#D6E0D9" style={styles.iconLeft} />
+                        <Text style={styles.sectionHeading}>Share Moments</Text>
+                        <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+                    </TouchableOpacity>
+                    
+                    <View style={styles.divider} />
+
+                    <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
+                        <Icon name="star-outline" size={24} color="#D6E0D9" style={styles.iconLeft} />
+                        <Text style={styles.sectionHeading}>Rate Moments</Text>
+                        <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+                    </TouchableOpacity>
+
+                </View>
+                <TouchableOpacity style={styles.logoutButton} activeOpacity={0.7}>
+                    <Text style={styles.logoutText}>Logout</Text>
+                </TouchableOpacity>
+                <Text style={styles.footerText}>domi & Nathan™</Text>
+
+            </ScrollView>
         </View>
-
-        <View style={styles.divider} />
-
-
-        <ScrollView style={styles.toggleContainer}>
-
-          <View style={styles.settingChunk}> 
-        <View style={styles.sectionContainer}>
-
-        <Text style={styles.chunkTitle}>General</Text>
-        </View>
-
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Notifications</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={notificationsEnabled ? '#D6E0D9' : '#D6E0D9'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleNotifications}
-              value={notificationsEnabled}
-            />
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Display Location</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-              thumbColor={locationEnabled ? '#D6E0D9' : '#D6E0D9'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleLocation}
-              value={locationEnabled}
-            />
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>AR Features</Text>
-            <Switch
-              trackColor={{ false: '#7A807C', true: '#B7C0BA' }}
-              thumbColor={ArEnabled ? '#FFF' : '#FFF'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleAR}
-              value={ArEnabled}
-            />
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.sectionContainer}>
-            <Text style={styles.sectionHeading}>Blocked Users</Text>
-            <TouchableOpacity activeOpacity={1} onPress={handleBlockedUsers} style={styles.iconContainer}>
-            <Icon name="arrow-right-thin" size={30} color="gray" />
-           </TouchableOpacity>
-          </View>
-
-          
-        </View>
-
-        <View style={styles.settingChunk}> 
-
-        <View style={styles.sectionContainer}>
-
-<Text style={styles.chunkTitle}>Info</Text>
-</View>
-
-         <View style={styles.sectionContainer}>
-          
-
-           <Text style={styles.sectionHeading}>About Us</Text>
-           <TouchableOpacity activeOpacity={1} onPress={handleAboutUs} style={styles.iconContainer}>
-           <Icon name="arrow-right-thin" size={30} color="gray" />
-
-           </TouchableOpacity>
-         </View>
-
-        <View style={styles.divider} />
-
-        <View style={styles.sectionContainer}>
-
-          <Text style={styles.sectionHeading}>Help</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleHelp} style={styles.iconContainer}>
-          <Icon name="arrow-right-thin" size={30} color="gray" />
-
-          </TouchableOpacity>
-        </View>
-        
-
-        
-
-        <View style={styles.divider} />
-
-        <View style={styles.settingChunk}> 
-        <View style={styles.sectionContainer}>
-
-<Text style={styles.chunkTitle}>Help Us </Text>
-</View>
-
-       <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Share Moments</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="link" size={30} color="gray" />
-          </TouchableOpacity>
-        </View>
-
-
-        
-
-        <View style={styles.divider} />
-
-       <View style={styles.sectionContainer}>
-          <Text style={styles.sectionHeading}>Rate Moments</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="star" size={30} color="gray" />
-          </TouchableOpacity>
-        </View>
-
-       </View>
-              </View>
-
-
-
-      <TouchableOpacity style={styles.buttonContainer} >
-        <Text style={styles.buttonText}>Logout</Text>
-      </TouchableOpacity>
-
-    </ScrollView>
-
-    <Text style={styles.footerText}>
-        domi & Nathan™
-    </Text>
-   </View>
-
-    </View>
-  );
+    );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#000000',
-  },
-  buttonText: {
-    color: '#000000',
-    fontSize: 16,
-    fontWeight: 'bold',
+      flex: 1,
+      backgroundColor: '#000000',
+      paddingHorizontal: 18,
   },
   top: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    paddingBottom: 20,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingTop: 50,
+      paddingBottom: 20,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#D6E0D9',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    paddingRight: 20,
-  },
-  settingChunk: {
-    marginTop: 20,
-    marginBottom: 20
-  },
-  buttonContainer: {
-    backgroundColor: '#D6E0D9',
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconContainer: {
-    alignItems: 'flex-start',
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#D6E0D9',
   },
   toggleContainer: {
-    marginTop: 30,
-    marginHorizontal: 20,
+      flex: 1,
   },
-  sectionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  settingChunk: {
+      backgroundColor: '#151517',
+      borderRadius: 10,
+      marginTop: 8,
+      marginBottom: 20,
+  },
+  settingItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 10,
+      paddingVertical: 11,  // Applied consistent padding to the entire settingItem
   },
   sectionHeading: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#D6E0D9',
+      flex: 1,
+      fontSize: 14,
+      fontWeight: '600',  
+      color: '#fdfdff',
+      marginLeft: 10,
   },
-  chunkTitle : {
-    fontSize: 15,
-    fontWeight: 'bold',
-    color: 'gray',
-  },
-  footerText: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#7A807C',
-    position: 'absolute',
-    bottom: 40,
-    left: 20,
-    right: 20,
+  chunkTitle: {
+      fontSize: 12,
+      fontWeight: '500',
+      color: '#4e4e4e',
+      marginTop: 15,
   },
   divider: {
-    height: 0.3,
-    backgroundColor: "#D6E0D9",
-    marginVertical: 10,
+      height: 0.3,
+      backgroundColor: "#29292b",
+  },
+  iconLeft: {
+      width: 24,
+      height: 24,
+      marginLeft: 8,
+  },
+  arrow: {      
+    marginRight: 5,
+  },
+  switch: {
+      transform: [{ scaleX: 0.9 }, { scaleY: 0.9 }],
+      marginRight: 5,
+  },
+  logoutButton: {
+      backgroundColor: '#151517',
+      borderRadius: 10,
+      paddingVertical: 14,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 40,
+  },
+  logoutText: {
+      color: 'red',
+      fontSize: 16,
+      fontWeight: 'bold',
+  },
+  footerText: {
+      fontWeight: 'bold',
+      textAlign: 'center',
+      color: '#7A807C',
+      marginBottom: 10,
   },
 });
+
 
 export default SettingsScreen;

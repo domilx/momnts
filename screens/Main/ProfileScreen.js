@@ -38,12 +38,13 @@ const ProfileScreen = () => {
 
       <View style={styles.header}>
         <Image style={styles.avatar} source={require("./profile-image.jpg")} />
-        <TouchableOpacity activeOpacity={0.8} onPress={handleEditProfile}>
+        <TouchableOpacity activeOpacity={0.8} onPress={handleEditProfile} style={styles.nameContainer}>
           <View style={styles.namesIcon}>
             <Text style={styles.displayname}>Nathan Aruna</Text>
+            <Icon name="pencil" size={16} color="#D6E0D9" />
           </View>
           <View style={styles.username}>
-          <Text style={styles.username}>@nate282</Text>
+            <Text style={styles.usernameText}>@nate282</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -153,6 +154,14 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: '#D6E0D9',
     marginHorizontal: 10,
+  },
+  nameContainer: {
+    alignItems: "center",
+  },
+  usernameText: {
+    fontSize: 16,
+    color: "#7A807C",
+    fontWeight: "bold",
   },
 });
 
