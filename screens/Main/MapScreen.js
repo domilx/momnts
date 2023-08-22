@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Dimensions, Image, Text, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -8,43 +8,40 @@ import * as Haptics from 'expo-haptics';
 import { BottomSheet } from './Components/BottomSheet';
 import ControlPanel from './Components/ControlPanel';
 import ControlPanel2 from './Components/ControlPanel2';
+import ControlPanel3 from './Components/ControlPanel3';
 import FriendsList from './Dynamic-Content/FriendsList';
 import { debounce } from 'lodash';
 
-function MapScreen() {
+const MapScreen = () => {
+  const navigation = useNavigation();
+  const mapRef = useRef(null);
+  
   const [location, setLocation] = useState(null);
   const [show, setShow] = useState(false);
   const [currentView, setCurrentView] = useState('noview');
   const [path, setPath] = useState([]);
-  const navigation = useNavigation();
-  const mapRef = useRef(null);
   const [isComponentVisible, setIsComponentVisible] = useState(true);
-  const [city, setCity] = useState("Montreal");  // Initialized to Montreal by default
+  const [city, setCity] = useState("Montreal");
+
+  const debouncedFetchCityName = useCallback(debounce(async (region) => {
+    const cityName = await fetchCityName(region.latitude, region.longitude);
+    setCity(cityName);
+  }, 2000), []);
 
   const fetchCityName = async (latitude, longitude) => {
     try {
-        const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
-        const data = await response.json();
+      const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+      const data = await response.json();
 
-        // Extract the city name without any additional details
-        let cityName = data.city || data.locality || data.principalSubdivision || "";
+      let cityName = data.city || data.locality || data.principalSubdivision || "";
+      cityName = cityName.split("(")[0].trim();
 
-        // Handle cases where we get additional details like "(administrative region)"
-        cityName = cityName.split("(")[0].trim();
-
-        return cityName;
+      return cityName;
     } catch (error) {
-        console.error("Error fetching city name:", error);
-        return null; // Return null on error
+      console.error("Error fetching city name:", error);
+      return null;
     }
-};
-
-
-  const debouncedFetchCityName = debounce(async (region) => {
-    const cityName = await fetchCityName(region.latitude, region.longitude);
-    setCity(cityName);
-  }, 2000);
-
+  };
 
   const handleButtonXPress = () => {
     setCurrentView('xView');
@@ -87,8 +84,8 @@ function MapScreen() {
       if (mapRef.current) {
         mapRef.current.animateToRegion({
           ...currentLocation.coords,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
+          latitudeDelta: 0.04,
+          longitudeDelta: 0.04,
         });
       }
     };
@@ -99,16 +96,19 @@ function MapScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>
-         <ControlPanel2 cityName={city} />
+        <ControlPanel2 cityName={city} />
       </View>
       <View style={styles.sideNav}>
-        
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
           <Image style={styles.avatar} source={require('./profile-image.jpg')} />
         </TouchableOpacity>
         {isComponentVisible && (
-        <ControlPanel />
+          <ControlPanel />
         )}
+      </View>
+
+      <View style={styles.search}>
+        <ControlPanel3 />
       </View>
       <MapView
         ref={mapRef}
@@ -124,6 +124,7 @@ function MapScreen() {
         <Polyline coordinates={path} strokeColor="#000000" strokeWidth={3} />
         {location && (
           <Marker
+            key={`${location.latitude}-${location.longitude}`}
             title="You are here"
             description="Tap for more details"
             coordinate={location}
@@ -171,33 +172,44 @@ function MapScreen() {
   );
 }
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    width: windowWidth,
+    height: windowHeight,
   },
   sideNav: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    top: 50,
+    marginTop: 50,
     right: 10,
+    zIndex: 1,
+  },
+  search: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 58,
+    left: 15,
     zIndex: 1,
   },
   topNav: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    top: 60,
+    marginTop: 50,
     width: '100%',
     zIndex: 1,
   },
   avatar: {
-    width: 62,
-    height: 62,
+    width: 68,
+    height: 68,
     borderRadius: 50,
     marginBottom: 20,
     borderWidth: 1,
@@ -238,7 +250,6 @@ const styles = StyleSheet.create({
     elevation: 10,
     borderWidth: 2,
     borderColor: '#D6E0D9',
-    borderRadius: 40,
   },
   friendsListContainer: {
     marginTop: 90,
