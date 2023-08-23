@@ -96,11 +96,12 @@ const ControlPanel2 = ({ cityName = 'Montreal' }) => {
 
 const styles = StyleSheet.create({
   chip: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(21, 21, 23, 0.7)',
     borderRadius: 25,
     paddingVertical: 9,
     paddingHorizontal: 20,
     alignItems: 'center',
+    borderColor: 'black',
   },
   locationText: {
     color: 'white',

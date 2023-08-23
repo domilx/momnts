@@ -43,7 +43,6 @@ const ProfileScreen = () => {
         <TouchableOpacity activeOpacity={0.8} onPress={handleEditProfile} style={styles.nameContainer}>
           <View style={styles.namesIcon}>
             <Text style={styles.displayname}>Nathan Aruna</Text>
-            <Icon name="pencil" size={16} color="#D6E0D9" />
           </View>
           <View style={styles.username}>
             <Text style={styles.usernameText}>@nate282</Text>
@@ -52,22 +51,7 @@ const ProfileScreen = () => {
       </View>
       <View style={styles.divider} />
 
-      <View style={styles.rowContainer}>
-      <View style={styles.column}>
-        <Text style={styles.number}>123</Text>
-        <Text style={styles.label}>Followers</Text>
-      </View>
-      <View style={styles.verticaldivider} />
-      <View style={styles.column}>
-        <Text style={styles.number}>2</Text>
-        <Text style={styles.label}>Journeys</Text>
-      </View>
-      <View style={styles.verticaldivider} />
-      <View style={styles.column}>
-        <Text style={styles.number}>123</Text>
-        <Text style={styles.label}>Following</Text>
-      </View>
-    </View>
+     
 
 
       <Text style={{color: '#D6E0D9', fontWeight: 'bold', fontSize: 20, marginTop: 100}}>user post and content</Text>
@@ -116,7 +100,7 @@ const styles = StyleSheet.create({
   displayname: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#D6E0D9",
+    color: "#ffffff",
     marginRight: 5,
   },
   username: {

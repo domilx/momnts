@@ -76,10 +76,10 @@ const EditProfileScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.dividerTop} />
-        <ScrollView 
-        style={styles.toggleContainer}
-        showsVerticalScrollIndicator={false} 
-        showsHorizontalScrollIndicator={false}
+        <ScrollView
+          style={styles.toggleContainer}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
         >
           <View style={styles.settingChunk}>
             <TouchableOpacity
@@ -95,42 +95,61 @@ const EditProfileScreen = () => {
               </View>
             </TouchableOpacity>
 
-            <View style={styles.divider} />
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionHeading}>Full Name</Text>
-              <TextInput
-                style={styles.input}
-                defaultValue={DEFAULT_NAME}
-                onChangeText={(text) => setName(text)}
-              />
+            <View style={styles.settingChunk2}>
+              <TouchableOpacity
+                style={styles.settingItem}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.sectionHeading}>Full Name:</Text>
+                <TextInput
+                  style={styles.input}
+                  defaultValue={DEFAULT_NAME}
+                  onChangeText={(text) => setName(text)}
+                />
+              </TouchableOpacity>
+
+              <View style={styles.divider} />
+
+              <TouchableOpacity
+                style={styles.settingItem}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.sectionHeading}>Username:</Text>
+                <TextInput
+                  style={styles.input}
+                  defaultValue={DEFAULT_NAME}
+                  onChangeText={(text) => setName(text)}
+                />
+              </TouchableOpacity>
             </View>
-            <View style={styles.divider} />
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionHeading}>Username</Text>
-              <TextInput
-                style={styles.input}
-                defaultValue={DEFAULT_USERNAME}
-                onChangeText={(text) => setUsername(text)}
-              />
+
+            <View style={styles.settingChunk2}>
+              <TouchableOpacity
+                style={styles.settingItem}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.sectionHeading}>Bio:</Text>
+                <TextInput
+                  style={styles.input}
+                  defaultValue={DEFAULT_BIO}
+                  multiline={true}
+                  onChangeText={(text) => setBio(text)}
+                />
+              </TouchableOpacity>
             </View>
-            <View style={styles.divider} />
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionHeading}>Bio</Text>
-              <TextInput
-                style={[styles.input, { height: 80 }]}
-                defaultValue={DEFAULT_BIO}
-                multiline={true}
-                onChangeText={(text) => setBio(text)}
-              />
-            </View>
-            <View style={styles.divider} />
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionHeading}>Email</Text>
-              <TextInput
-                style={styles.input}
-                defaultValue={DEFAULT_EMAIL}
-                onChangeText={(text) => setUsername(text)}
-              />
+
+            <View style={styles.settingChunk2}>
+              <TouchableOpacity
+                style={styles.settingItem}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.sectionHeading}>Email:</Text>
+                <TextInput
+                  style={styles.input}
+                  defaultValue={DEFAULT_EMAIL}
+                  onChangeText={(text) => setUsername(text)}
+                />
+              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>
@@ -162,7 +181,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 30,
-    paddingHorizontal: 10,
     width: 220,
     color: "#D6E0D9",
     backgroundColor: "transparent",
@@ -178,6 +196,26 @@ const styles = StyleSheet.create({
   settingChunk: {
     marginTop: 20,
     marginBottom: 20,
+  },
+  settingChunk2: {
+    backgroundColor: '#151517',
+    borderRadius: 10,
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  settingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 11,  // Applied consistent padding to the entire settingItem
+  },
+  sectionHeading: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: '600',  
+    color: '#fdfdff',
+    marginLeft: 10,
   },
   avatarClickableArea: {
     justifyContent: "center",
@@ -224,11 +262,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  sectionHeading: {
-    fontSize: 18,
-    fontWeight: "500",
-    color: "#D6E0D9",
-  },
+  
   footerText: {
     fontWeight: "bold",
     textAlign: "center",

@@ -2,7 +2,9 @@ import { Camera, CameraType } from 'expo-camera';
 import { useState } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AntIcon from "react-native-vector-icons/AntDesign";
+import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
@@ -38,14 +40,23 @@ const handleReturn = () => {
   return (
     <View style={styles.container}>
 
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-		<Icon name="arrowleft" onPress={handleReturn} size={30} color="#D6E0D9" />
 
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
+
+      <Camera style={styles.camera} type={type}>
+      <View style={{marginTop: 50, right: -25}}>
+    <View style={styles.buttoCcontainer}>
+      <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
+        <TouchableOpacity  style={{ marginBottom: 10 }}>
+          <MatIcon name="arrow-left-thin" onPress={handleReturn} size={35} color="#D6E0D9" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleCameraType} style={{ marginBottom: 10 }}>
+          <MatIcon name="camera-flip" size={35} color="#D6E0D9" />
+        </TouchableOpacity>
+        
+      </View>
+    </View>
+    </View>
+  
       </Camera>
     </View>
   );
@@ -56,6 +67,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  buttonContainer: {
+
+    flex: 1,
+    borderRadius: 25,
+    backgroundColor: 'rgba(21, 21, 23, 0.7)',
+    alignItems: 'center',
+    alignContent: 'column',
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '76%',
+  },
   camera: {
     flex: 1,
   },
@@ -65,9 +87,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     margin: 64,
   },
+  
   button: {
     flex: 1,
-    alignSelf: 'flex-end',
     alignItems: 'center',
   },
   text: {

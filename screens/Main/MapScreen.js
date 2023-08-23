@@ -212,7 +212,6 @@ const styles = StyleSheet.create({
     height: 68,
     borderRadius: 50,
     marginBottom: 20,
-    borderWidth: 1,
   },
   bottomSheetContent: {
     flex: 1,
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 40,
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(21, 21, 23, 0.98)',
     justifyContent: 'center',
     alignItems: 'center',
     bottom: 40,

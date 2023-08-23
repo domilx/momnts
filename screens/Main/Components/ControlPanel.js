@@ -12,6 +12,11 @@ const ControlPanel = () => {
     navigation.navigate('Settings');
   };
 
+  const handleArView = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
+    navigation.navigate('CameraView');
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
@@ -20,6 +25,9 @@ const ControlPanel = () => {
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSettings} style={{ marginBottom: 10 }}>
           <MatIcon name="image-multiple" size={25} color="#D6E0D9" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleArView} style={{ marginBottom: 10 }}>
+          <MatIcon name="cube-scan" size={25} color="#D6E0D9" />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSettings}>
           <MatIcon name="rocket-launch" size={25} color="#D6E0D9" />
@@ -33,11 +41,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 25,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(21, 21, 23, 0.7)',
     alignItems: 'center',
     alignContent: 'column',
     justifyContent: 'center',
-    borderWidth: 1,
     width: '76%',
   },
 });

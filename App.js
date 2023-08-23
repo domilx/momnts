@@ -24,6 +24,7 @@ import AboutUsScreen from "./screens/Main/Settings/AboutUsScreen";
 import HelpScreen from "./screens/Main/Settings/HelpScreen";
 import CameraScreen from "./screens/Main/Video-Interfaces/CameraView";
 import FriendsScreen from "./screens/Main/FriendsScreen";
+import SearchScreen from "./screens/Main/SearchScreen";
 
 const Stack = createStackNavigator();
 
@@ -82,6 +83,11 @@ const App = () => {
           <Stack.Screen
             name="Settings"
             component={SettingsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

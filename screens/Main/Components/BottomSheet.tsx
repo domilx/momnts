@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     zIndex: 2,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    backgroundColor: 'rgba(21, 21, 23, 0.9)',
     borderRadius: 25,
   },
   buttonsContainer: {

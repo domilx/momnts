@@ -9,21 +9,18 @@ import * as Haptics from 'expo-haptics';
 const ControlPanel = () => {
   const navigation = useNavigation();
 
-  const handleSettings = () => {
+  const handleSearch = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
-    navigation.navigate('Settings');
+    navigation.navigate('Search');
   };
 
   return (
 
       <View  style={styles.container}>
         <View  style={{marginHorizontal: 10, marginVertical: 10}}>
-        <TouchableOpacity
-          onPress={handleSettings}>
+         <TouchableOpacity onPress={handleSearch}>
           <MatIcon name="magnify" size={25} color="#D6E0D9" />
-        </TouchableOpacity>
-      
-
+         </TouchableOpacity>
         </View>
       </View>
      
@@ -34,8 +31,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 25,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    borderWidth: 1,
+    backgroundColor: 'rgba(21, 21, 23, 0.7)',
   },
  
   avatar: {
