@@ -4,6 +4,8 @@ import { Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Haptics from 'expo-haptics';
+import AntIcon from "react-native-vector-icons/AntDesign";
+
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -27,7 +29,7 @@ const ProfileScreen = () => {
     <View style={styles.container}>
 
       <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.returnIcon}>
-            <Icon name="arrow-left-thin" size={30} color="#D6E0D9" />
+        <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
       </TouchableOpacity>
 
       <Text style={{fontSize: 20, paddingTop: 15, color: "#D6E0D9", fontWeight: "bold", justifyContent: "center",}}>Profile</Text>

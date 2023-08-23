@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image, } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from 'expo-haptics';
 
 const SettingsScreen = () => {
@@ -35,17 +36,35 @@ const SettingsScreen = () => {
         navigation.navigate("Help");
     };
 
+    const toggleProfile = () => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        navigation.navigate("EditProfile");
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.top}>
                 <TouchableOpacity activeOpacity={0.7} onPress={handleReturn}>
-                    <Icon name="arrow-left-thin" size={25} color="#D6E0D9" />
+                    <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
                 </TouchableOpacity>
                 <Text style={styles.title}>Settings</Text>
                 <View style={{ width: 25 }} /> 
             </View>
 
             <ScrollView style={styles.toggleContainer}>
+            <View style={styles.settingChunk}>
+              <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleProfile}>
+               <Image
+                  source={require("./profile-image.jpg")}
+                  style={styles.avatar}
+                />
+                <View style={styles.twoText}>
+                  <Text style={styles.fullName}>Domenico Valentino</Text>
+                  <Text style={styles.username}>domenicoVal</Text>
+                </View>
+                <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+              </TouchableOpacity>
+            </View>
                 <Text style={styles.chunkTitle}>GENERAL</Text>
                 <View style={styles.settingChunk}>
                     <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleNotifications}>
@@ -147,6 +166,29 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#000000',
       paddingHorizontal: 18,
+  },
+  twoText: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'left',
+    marginLeft: 10,
+  },
+  fullName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#D6E0D9',
+  },
+  username: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#7A807C',
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 60,
+    resizeMode: "cover",
+    marginVertical: 5,
   },
   top: {
       flexDirection: 'row',

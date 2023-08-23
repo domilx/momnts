@@ -1,6 +1,6 @@
 //imports
 import React, { useState, useEffect, Suspense, useRef } from "react";
-import { Text, View, Button, Platform } from "react-native";
+import { Appearance, StatusBar } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ApplicationProvider } from "@ui-kitten/components";
@@ -30,7 +30,7 @@ const Stack = createStackNavigator();
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  StatusBar.setBarStyle('light-content');
   // Simulating an asynchronous login check
   useEffect(() => {
     // Replace this with your actual login check logic
@@ -48,7 +48,7 @@ const App = () => {
   }
 
   return (
-    <ApplicationProvider {...eva} theme={eva.light}>
+    <ApplicationProvider {...eva} theme={eva.dark}>
       <NavigationContainer>
         <Stack.Navigator>
           {isLoggedIn ? (
