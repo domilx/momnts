@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image, } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
@@ -7,39 +7,12 @@ import * as Haptics from 'expo-haptics';
 
 const SettingsScreen = () => {
     const navigation = useNavigation();
-
-    const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-    const [locationEnabled, setLocationEnabled] = useState(false);
-    const [ArEnabled, setArEnabled] = useState(false);
-
-    const toggleNotifications = () => setNotificationsEnabled(prevState => !prevState);
-    const toggleLocation = () => setLocationEnabled(prevState => !prevState);
-    const toggleAR = () => setArEnabled(prevState => !prevState);
-
     const handleReturn = () => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         navigation.goBack();
     };
 
-    const handleBlockedUsers = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        navigation.navigate("BlockedUsers");
-    };
-
-    const handleAboutUs = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        navigation.navigate("AboutUs");
-    };
-
-    const handleHelp = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        navigation.navigate("Help");
-    };
-
-    const toggleProfile = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        navigation.navigate("EditProfile");
-    }
+    
 
     return (
         <View style={styles.container}>
@@ -57,14 +30,14 @@ const SettingsScreen = () => {
             showsHorizontalScrollIndicator={false}
             >
             <View style={styles.settingChunk}>
-              <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleProfile}>
-               <Image
-                  source={require("./profile-image.jpg")}
-                  style={styles.avatar}
-                />
+              <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
+              <Icon name="magnify" size={25} color="gray" style={styles.arrow} />
+
                 <View style={styles.twoText}>
-                  <Text style={styles.fullName}>Domenico Valentino</Text>
-                  <Text style={styles.username}>domenicoVal</Text>
+                <TextInput
+                  style={[styles.input, {color: '#D6E0D9'}]}
+                  placeholder="Discover new people and places"
+                  placeholderTextColor="#7A807C"/>
                 </View>
                 <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
               </TouchableOpacity>
@@ -113,6 +86,12 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       paddingTop: 50,
       paddingBottom: 20,
+  },
+  input: {
+    height: 25,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    width: "100%",
   },
   title: {
       fontSize: 20,

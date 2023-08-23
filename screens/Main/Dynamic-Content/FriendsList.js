@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, ScrollView, Image, StyleSheet } from "react-native";
+import { View, Text, TextInput, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Card, Avatar } from 'react-native-elements';
@@ -35,13 +35,19 @@ const FriendsList = () => {
     <View style={styles.container}>
       <View style={styles.contentView}>
         <View style={styles.divider} />
-        <TextInput
-          style={styles.input}
-          placeholder="Find your Friends!"
-          placeholderTextColor="#7A807C"
-          returnKeyType="search"  // This sets the return key to "search"
-          autoCapitalize="none"
-        />
+        <View style={styles.settingChunk}>
+              <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
+              <Icon name="magnify" size={25} color="gray" style={styles.arrow} />
+
+                <View style={styles.twoText}>
+                <TextInput
+                  style={[styles.input, {color: '#D6E0D9'}]}
+                  placeholder="See what your friends are up to..."
+                  placeholderTextColor="#7A807C"/>
+                </View>
+                <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+              </TouchableOpacity>
+            </View>
         <ScrollView style={styles.userContainer} >
           <FriendItem
             imageSource={require('../profile-image.jpg')}
@@ -85,14 +91,24 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#D6E0D9',
+    height: 25,
     borderRadius: 5,
     paddingHorizontal: 10,
-    marginBottom: 20,
-    color: '#D6E0D9',
+    width: "100%",
   },
+  settingChunk: {
+    backgroundColor: '#151517',
+    borderRadius: 10,
+    marginTop: 8,
+    marginBottom: 20,
+},
+settingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 11,  // Applied consistent padding to the entire settingItem
+},
   avatarWithStatusContainer: {
     flexDirection: 'row',
     alignItems: 'center',
