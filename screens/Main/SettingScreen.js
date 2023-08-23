@@ -51,7 +51,11 @@ const SettingsScreen = () => {
                 <View style={{ width: 25 }} /> 
             </View>
 
-            <ScrollView style={styles.toggleContainer}>
+            <ScrollView 
+            style={styles.toggleContainer} 
+            showsVerticalScrollIndicator={false} 
+            showsHorizontalScrollIndicator={false}
+            >
             <View style={styles.settingChunk}>
               <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleProfile}>
                <Image

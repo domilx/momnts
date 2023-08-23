@@ -76,7 +76,11 @@ const EditProfileScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.dividerTop} />
-        <ScrollView style={styles.toggleContainer}>
+        <ScrollView 
+        style={styles.toggleContainer}
+        showsVerticalScrollIndicator={false} 
+        showsHorizontalScrollIndicator={false}
+        >
           <View style={styles.settingChunk}>
             <TouchableOpacity
               onPress={handleAvatarClick}
