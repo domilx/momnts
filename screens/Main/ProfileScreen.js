@@ -49,14 +49,8 @@ const ProfileScreen = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.divider} />
 
-     
-
-
-      <Text style={{color: '#D6E0D9', fontWeight: 'bold', fontSize: 20, marginTop: 100}}>user post and content</Text>
-      {/* Additional profile info can be added here */}
-
+    
     </View>
     
   );
@@ -147,7 +141,8 @@ const styles = StyleSheet.create({
   usernameText: {
     fontSize: 16,
     color: "#7A807C",
-    fontWeight: "bold",
+    fontWeight: '600',  
+
   },
 });
 

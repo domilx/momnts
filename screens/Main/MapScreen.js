@@ -61,6 +61,10 @@ const MapScreen = () => {
     navigation.navigate('CameraView');
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
   };
+  const handleProfile = () => {
+    navigation.navigate('Profile');
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+  };
 
   const onOuterClick = () => {
     setShow(false);
@@ -99,7 +103,7 @@ const MapScreen = () => {
         <ControlPanel2 cityName={city} />
       </View>
       <View style={styles.sideNav}>
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity onPress={handleProfile}>
           <Image style={styles.avatar} source={require('./profile-image.jpg')} />
         </TouchableOpacity>
         {isComponentVisible && (
