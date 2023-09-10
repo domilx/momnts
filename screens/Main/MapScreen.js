@@ -10,6 +10,7 @@ import ControlPanel from './Components/ControlPanel';
 import ControlPanel2 from './Components/ControlPanel2';
 import ControlPanel3 from './Components/ControlPanel3';
 import FriendsList from './Dynamic-Content/FriendsList';
+import FriendPost from './Dynamic-Content/FriendPost';
 import { debounce } from 'lodash';
 
 const MapScreen = () => {
@@ -168,7 +169,9 @@ const MapScreen = () => {
             </View>
           )}
           {currentView === 'yView' && (
-            <Text style={styles.infoText}>Button "Y" was pressed</Text>
+            <View style={styles.friendsListContainer}>
+              <FriendPost />
+              </View>
           )}
         </View>
       </BottomSheet>

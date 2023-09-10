@@ -1,43 +1,164 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import { Card, Title, Paragraph } from 'react-native-paper';
+import React, { useState } from "react";
+import { View, Text, TextInput, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Card, Avatar } from 'react-native-elements';
+import * as Haptics from 'expo-haptics';
 
-const UserPostCard = ({ user, post, location }) => {
-  return (
-    <Card style={{ margin: 10, width: '70%', backgroundColor: '#D6E0D9', alignItems: 'center', justifyContent: 'center' }}>
-      <Card.Content>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Image
-            source={{ uri: user.avatar }}
-            style={{ width: 50, height: 50, borderRadius: 25 }}
-          />
-          <Title style={{ marginLeft: 10, fontWeight: 'bold' }}>{user.name}</Title>
-        </View>
-        <Paragraph>{post.content}</Paragraph>
-        {location && (
-          <View style={{ height: 200, marginTop: 10 }}>
-            <MapView
-              style={{ flex: 1 }}
-              initialRegion={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            >
-              <Marker
-                coordinate={{
-                  latitude: location.latitude,
-                  longitude: location.longitude,
-                }}
+const FriendsList = () => {
+  const navigation = useNavigation();
+  
+
+  const FriendItem = ({ avatarSource, username, emoji, postedImageSource }) => {
+    return (
+      <View style={styles.Container}>
+        <View style={styles.friendContainer}>
+          <View style={styles.settingChunk}>
+            <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
+              <Image
+                source={avatarSource}
+                style={styles.avatar}
               />
-            </MapView>
+              <View style={styles.twoText}>
+                <Text style={styles.fullName}>{username}</Text>
+                <Text style={styles.username}>last seen 4h ago</Text>
+              </View>
+              <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+            </TouchableOpacity>
+            {/* User-posted image */}
+            <Image
+              source={postedImageSource}
+              style={styles.postedImage}
+            />
           </View>
-        )}
-      </Card.Content>
-    </Card>
+        </View>
+      </View>
+    );
+  };
+  
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.contentView}>
+        <View style={styles.divider} />
+        
+        <ScrollView style={styles.userContainer} >
+        <FriendItem
+          avatarSource={require('../profile-image.jpg')}
+          username="Elon Musk"
+          postedImageSource={require('../profile-image.jpg')} // Specify the user's posted image source here
+        />
+          <View style={styles.divider} />
+          <FriendItem
+            imageSource={require('../profile-image.jpg')}
+            username="Jeff Bezos"
+          />
+          <View style={styles.divider} />
+          <FriendItem
+            imageSource={require('../profile-image.jpg')}
+            username="Bill Gates"
+          />
+          <View style={styles.divider} />
+          {/* Add more FriendItem components here */}
+        </ScrollView>
+      </View>
+    </View>
   );
 };
 
-export default UserPostCard;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0$)',
+  },
+  contentView: {
+    marginHorizontal: 18,
+  },
+  twoText: {
+    justifyContent: 'center',
+    alignItems: 'left',
+    width: "80%",
+
+    marginLeft: 10,
+  },
+  fullName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#D6E0D9',
+  },
+  username: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#7A807C',
+  },
+  friendContainer: {
+    flex: 1,
+  },
+  arrow: {      
+    marginRight: 5,
+  },
+  friendTextContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  input: {
+    height: 25,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    width: "100%",
+  },
+  settingChunk: {
+    backgroundColor: '#151517',
+    borderRadius: 10,
+    marginTop: 8,
+    marginBottom: 20,
+},
+settingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 11,  // Applied consistent padding to the entire settingItem
+},
+  avatarWithStatusContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    resizeMode: 'cover',
+  },
+  divider: {
+    height: 0.3,
+    backgroundColor: "#D6E0D9",
+    marginVertical: 10,
+  },
+  friendUsername: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#D6E0D9',
+  },
+  friendActivity: {
+    fontSize: 10,
+    color: '#7A807C',
+  },
+  postedImage: {
+    width: '100%',
+    height: 400, // Adjust the height as needed
+    resizeMode: 'cover',
+    borderRadius: 8,
+  },
+  emojiContainer: {
+    marginLeft: 5,
+    backgroundColor: 'black',
+    borderRadius: 30,
+    borderColor: "#D6E0D9",
+    borderWidth: 0.2,
+    padding: 4,
+  },
+});
+
+export default FriendsList;
