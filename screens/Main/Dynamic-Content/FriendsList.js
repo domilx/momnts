@@ -9,25 +9,26 @@ const FriendsList = () => {
   const navigation = useNavigation();
   
 
-  const AvatarWithStatus = ({ avatarSource, emoji }) => {
-    return (
-      <View style={styles.avatarWithStatusContainer}>
-        <Image source={avatarSource} style={styles.avatar} />
-        
-      </View>
-    );
-  };
-
   const FriendItem = ({ imageSource, username, emoji }) => {
     return (
-      <View style={styles.friendContainer}>
-        <AvatarWithStatus avatarSource={imageSource} emoji={emoji} />
-        <View style={styles.friendTextContainer}>
-          <Text style={styles.friendUsername}>{username}</Text>
-          <Text style={styles.friendActivity}>last seen 4h ago</Text>
+      <View style={styles.Container}>
+        <View style={styles.friendContainer}>
+      <View style={styles.settingChunk}>
+      <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
+       <Image
+          source={require("../profile-image.jpg")}
+          style={styles.avatar}
+        />
+        <View style={styles.twoText}>
+          <Text style={styles.fullName}>{username}</Text>
+          <Text style={styles.username}>last seen 4h ago</Text>
         </View>
-        <Icon name="arrow-right-thin" size={30} color="#D6E0D9" />
-      </View>
+        <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+      </TouchableOpacity>
+    </View>
+    </View>
+    </View>
+
     );
   };
 
@@ -80,11 +81,28 @@ const styles = StyleSheet.create({
   contentView: {
     marginHorizontal: 18,
   },
+  twoText: {
+    justifyContent: 'center',
+    alignItems: 'left',
+    width: "80%",
+
+    marginLeft: 10,
+  },
+  fullName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#D6E0D9',
+  },
+  username: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#7A807C',
+  },
   friendContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    justifyContent: 'space-between',
+    flex: 1,
+  },
+  arrow: {      
+    marginRight: 5,
   },
   friendTextContainer: {
     flex: 1,

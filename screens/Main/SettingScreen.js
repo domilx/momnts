@@ -52,7 +52,7 @@ const SettingsScreen = () => {
             </View>
 
             <ScrollView 
-            style={styles.toggleContainer} 
+              style={styles.toggleContainer} 
             showsVerticalScrollIndicator={false} 
             showsHorizontalScrollIndicator={false}
             >
