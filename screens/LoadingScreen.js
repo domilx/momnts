@@ -7,7 +7,7 @@ const LoadingScreen = ({ navigation }) => {
     <TouchableOpacity style={styles.container} activeOpacity={1}>
 
       <View>
-        <Text style={styles.title}>MOMENTS</Text>
+        <Text style={styles.title}>MOMNTS</Text>
         <Text style={styles.subtitle}>Loading... <ActivityIndicator size="small" color="#D6E0D9"/></Text>
       </View>
       

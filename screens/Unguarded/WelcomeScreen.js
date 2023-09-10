@@ -14,7 +14,7 @@ const WelcomeScreen = ({ navigation }) => {
       onPress={handleBeginPress}
     >
       <View>
-        <Text style={styles.title}>MOMENTS</Text>
+        <Text style={styles.title}>MOMNTS</Text>
         <Text style={styles.subtitle}>Tap the screen to get started</Text>
       </View>
       <Text
