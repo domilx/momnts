@@ -26,22 +26,25 @@ import CameraScreen from "./screens/Main/Video-Interfaces/CameraView";
 import FriendsScreen from "./screens/Main/FriendsScreen";
 import SearchScreen from "./screens/Main/SearchScreen";
 
+import { AuthProvider } from './AuthProvider';
+
 const Stack = createStackNavigator();
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  StatusBar.setBarStyle('light-content');
-  // Simulating an asynchronous login check
-  useEffect(() => {
-    // Replace this with your actual login check logic
-    setTimeout(() => {
-      // Simulating a successful login
 
-      //comment the next line to see the welcome screen
-      setIsLoggedIn(true);
+  StatusBar.setBarStyle('light-content');
+
+  useEffect(() => {
+    // Check if the user is logged in when the app initializes
+    async function checkLoginStatus() {
+      const loggedIn = await AuthService.isLoggedIn();
+      setIsLoggedIn(loggedIn);
       setIsLoading(false);
-    }, 2000);
+    }
+
+    checkLoginStatus();
   }, []);
 
   if (isLoading) {

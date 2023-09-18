@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AuthService from "../../logic/services/AuthService";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -10,10 +11,23 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const handleRegister = () => {
-    // Register the user
-    console.log("Logged in successfully!");
-  };
+  const authService = new AuthService('https://api.example.com');
+
+
+  const handleRegister = async (email, password, username) => {
+    try {
+        // Register the user using the AuthService
+        const response = await authService.register(email, password, username);
+        
+        if (response) {  // Depending on the API response, you can further refine this check
+            console.log("Registered successfully!", response);
+        } else {
+            console.error("Registration failed.");
+        }
+    } catch (error) {
+        console.error('Registration error:', error);
+    }
+};
 
   const handleLoginPress = () => {
     // Navigate to the Login screen
@@ -77,7 +91,7 @@ const LoginScreen = () => {
         </Text>
       </View>
 
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleRegister}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={handleRegister(email, password, username)}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
@@ -167,4 +181,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default RegisterScreen;

@@ -4,9 +4,21 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from 'expo-haptics';
+import AuthService from "../../logic/services/AuthService";
 
 const SettingsScreen = () => {
     const navigation = useNavigation();
+    const authService = new AuthService('https://api.example.com');
+
+    const handleLogout = async () => {
+        try {
+            // Logout the user using the AuthService
+            await authService.logout();
+            console.log("Logged out successfully!");
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
 
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
     const [locationEnabled, setLocationEnabled] = useState(false);
@@ -155,7 +167,7 @@ const SettingsScreen = () => {
                     </TouchableOpacity>
 
                 </View>
-                <TouchableOpacity style={styles.logoutButton} activeOpacity={0.7}>
+                <TouchableOpacity style={styles.logoutButton} activeOpacity={0.7} onPress={handleLogout}>
                     <Text style={styles.logoutText}>Logout</Text>
                 </TouchableOpacity>
                 <Text style={styles.footerText}>domi & Nathan™</Text>
