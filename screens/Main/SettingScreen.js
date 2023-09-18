@@ -75,8 +75,8 @@ const SettingsScreen = () => {
                         <Icon name="bell-outline" size={24} color="#D6E0D9" style={styles.iconLeft} />
                         <Text style={styles.sectionHeading}>Notifications</Text>
                         <Switch
-                            trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-                            thumbColor={notificationsEnabled ? '#D6E0D9' : '#D6E0D9'}
+                            trackColor={{ false: '#7A807C', true: '#8a918d' }}
+                            thumbColor={notificationsEnabled ? '#FFF' : '#FFF'}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={toggleNotifications}
                             value={notificationsEnabled}
@@ -89,8 +89,8 @@ const SettingsScreen = () => {
                         <Icon name="map-marker-outline" size={24} color="#D6E0D9" style={styles.iconLeft} />
                         <Text style={styles.sectionHeading}>Display Location</Text>
                         <Switch
-                            trackColor={{ false: '#7A807C', true: '#81b0ff' }}
-                            thumbColor={locationEnabled ? '#D6E0D9' : '#D6E0D9'}
+                            trackColor={{ false: '#7A807C', true: '#8a918d' }}
+                            thumbColor={locationEnabled ? '#FFF' : '#FFF'}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={toggleLocation}
                             value={locationEnabled}
@@ -103,7 +103,7 @@ const SettingsScreen = () => {
                         <Icon name="augmented-reality" size={24} color="#D6E0D9" style={styles.iconLeft} />
                         <Text style={styles.sectionHeading}>AR Features</Text>
                         <Switch
-                            trackColor={{ false: '#7A807C', true: '#B7C0BA' }}
+                            trackColor={{ false: '#7A807C', true: '#8a918d' }}
                             thumbColor={ArEnabled ? '#FFF' : '#FFF'}
                             ios_backgroundColor="#3e3e3e"
                             onValueChange={toggleAR}

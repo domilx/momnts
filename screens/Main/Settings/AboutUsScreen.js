@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AntIcon from "react-native-vector-icons/AntDesign";
+
 import * as Haptics from 'expo-haptics';
 
 
@@ -46,12 +48,11 @@ const AboutUsScreen = () => {
 
         <View style={styles.top}>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrow-left-thin" size={30} color="#D6E0D9" />
+          <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
           </TouchableOpacity>
           <Text style={styles.title}>About Us</Text>
         </View>
  
-        <View style={styles.divider} />
 
 
         <ScrollView style={styles.toggleContainer}>

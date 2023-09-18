@@ -11,6 +11,8 @@ import {
 import * as Haptics from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import * as ImagePicker from 'expo-image-picker';
+
 
 const EditProfileScreen = () => {
   const navigation = useNavigation();
@@ -39,12 +41,31 @@ const EditProfileScreen = () => {
     }
   }, [name, username, bio, email]);
 
+  const [image, setImage] = useState(null);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
   };
 
   const handleAvatarClick = () => {
+    pickImage();
     console.log("Avatar or camera button clicked!");
   };
 
@@ -83,11 +104,11 @@ const EditProfileScreen = () => {
         >
           <View style={styles.settingChunk}>
             <TouchableOpacity
-              onPress={handleAvatarClick}
+              onPress={pickImage}
               style={styles.avatarClickableArea}
             >
               <Image
-                source={require("./profile-image.jpg")}
+                source={{ uri: image }}
                 style={styles.avatar}
               />
               <View style={styles.cameraIconOverlay}>

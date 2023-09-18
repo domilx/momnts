@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView} from "rea
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Haptics from 'expo-haptics';
+import AntIcon from "react-native-vector-icons/AntDesign";
 
 
 const HelpScreen = () => {
@@ -43,74 +44,13 @@ const HelpScreen = () => {
 
         <View style={styles.top}>
           <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.iconContainer}>
-            <Icon name="arrow-left-thin" size={30} color="#D6E0D9" />
+          <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
           </TouchableOpacity>
           <Text style={styles.title}>Help</Text>
         </View>
 
-        <View style={styles.divider} />
 
-
-        <ScrollView style={styles.toggleContainer}>
-
-          <View style={styles.settingChunk}> 
-        <View style={styles.sectionContainer}>
-
-        </View>
-
-          <View style={styles.sectionContainer}>
-            
-          <AccordionItem
-        title="How can I change my password?"
-        content="Answer to question 1asdasdasdadgfdgslkhgadflasgflshkdbfaskhsufgsadfouhabsvfhjasgfblkasjhfashvbcjvbpakeurhshfb"
-      />
-      
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.sectionContainer}>
-          <AccordionItem
-        title="How can I change my email?"
-        content="Answer to question 1asdasdasdadgfdgslkhgadflasgflshkdbfaskhsufgsadfouhabsvfhjasgfblkasjhfashvbcjvbpakeurhshfb"
-      />
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.sectionContainer}>
-          <AccordionItem
-        title="How can I change my username?"
-        content="Answer to question 1asdasdasdadgfdgslkhgadflasgflshkdbfaskhsufgsadfouhabsvfhjasgfblkasjhfashvbcjvbpakeurhshfb"
-      />
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.sectionContainer}>
-            
-          </View>
-
-          
-        </View>
-
-        <View style={styles.settingChunk}> 
-
-        <View style={styles.sectionContainer}>
-
-
-
-       </View>
-              </View>
-
-
-
-      
-    </ScrollView>
-
-    <Text style={styles.footerText}>
-        domi & Nathan™
-    </Text>
+   
    </View>
 
     </View>

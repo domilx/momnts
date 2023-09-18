@@ -23,8 +23,8 @@ const FriendsList = () => {
           <Text style={styles.fullName}>{username}</Text>
           <Text style={styles.username}>last seen 4h ago</Text>
         </View>
-        <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
       </TouchableOpacity>
+      
     </View>
     </View>
     </View>
