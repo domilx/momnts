@@ -1,208 +1,170 @@
 import React, { useState } from "react";
-import { View, div, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
-import { Input, Button, Layout, Divider, Toggle, Icon, IconElement } from "@ui-kitten/components";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-
-
 const LoginScreen = () => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+
   const navigation = useNavigation();
 
-  const handleLogin = () => {
-    // Perform login using Firebase authentication
-    //firebase
-    //  .auth()
-    //  .signInWithEmailAndPassword(email, password)
-    //  .then((userCredential) => {
-    //    // Login successful
-    //    console.log('Logged in successfully!', userCredential.user);
-    //  })
-    //  .catch((error) => {
-    //    // Login failed
-    //    console.log('Login error:', error);
-    //  });
-
+  const handleRegister = () => {
+    // Register the user
     console.log("Logged in successfully!");
-    navigation.navigate("ProfileCreation");
   };
 
-  const handleloginPress = () => {
-    // Navigate to the Register screen
+  const handleLoginPress = () => {
+    // Navigate to the Login screen
     navigation.navigate("Login");
   };
 
-  
-
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View style={styles.container} >
       <View style={styles.titleView}>
         <Text style={styles.title}>Register</Text>
-        <View style={{paddingLeft: 9, paddingTop: 40, paddingRight: 9}}>
+        <View style={styles.inputContainer}>
 
-      <Text style={styles.label}>Email</Text>
-      <TextInput
-        style={[styles.input, {color: '#D6E0D9'}]}
-        placeholder="Enter your email"
-        placeholderTextColor="#7A807C"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        tex
-      />
-     
-     <Text style={styles.label}>Password</Text>
-      <TextInput
-        style={[styles.input, {color: '#D6E0D9'}]}
-        placeholder="Enter your password"
-        placeholderTextColor="#7A807C"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-      />
+        <Text style={styles.label}>Username</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your email"
+            placeholderTextColor="#7A807C"
+            value={username}
+            onChangeText={(text) => setEmail(text)}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
 
-      <TextInput
-        style={[styles.input, {color: '#D6E0D9'}]}
-        placeholder="Confirm your password"
-        placeholderTextColor="#7A807C"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-      />
-      
-      
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your email"
+            placeholderTextColor="#7A807C"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+
+
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your password"
+            placeholderTextColor="#7A807C"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm your password"
+            placeholderTextColor="#7A807C"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry
+          />
+        </View>
+        <Text style={styles.registerText}>
+          Already have an account?{" "}
+          <Text onPress={handleLoginPress} style={styles.registerLink}>
+            Login
+          </Text>
+        </Text>
       </View>
-     <Text style={{fontWeight: "bold", textAlign: "left", color: "#7A807C", position: "absolute", bottom: 10, left: 10, right: 20,}}>
-        Already have an account? <Text  onPress={handleloginPress} style={{fontWeight: "bold", textAlign: "right", color: "#D6E0D9", position: "absolute", bottom: 10, left: 20, right: 0,}}> Login</Text>
-      </Text>
 
-      </View>
+      <TouchableOpacity style={styles.buttonContainer} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
 
-      
-
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleLogin}>
-      <Text style={styles.buttonText}>Register</Text>
-    </TouchableOpacity>
-
-      <Text
-        style={{
-          fontWeight: "bold",
-          textAlign: "center",
-          color: "#7A807C",
-          position: "absolute",
-          bottom: 40,
-          left: 20,
-          right: 20,
-        }}
-      >
-        domi & Nathan™
-      </Text>
+      <Text style={styles.footerText}>domi & Nathan™</Text>
     </View>
+    </TouchableWithoutFeedback>
+
   );
 };
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    backgroundColor: '#D6E0D9',
+    backgroundColor: "#D6E0D9",
     borderRadius: 8,
     paddingVertical: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 100,
   },
-
-  circleButtonContainer: {
-
-  },
-  iconButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#7A807C"', // Set the background color of the circular button
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon: {
-    width: 30,
-    height: 30,
-    resizeMode: 'contain',
-  },
-  
   buttonText: {
-    color: '#000000',
+    color: "#000000",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    paddingHorizontal: 15
-
+    backgroundColor: "black",
+    paddingHorizontal: 15,
   },
   label: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#D6E0D9',
+    fontWeight: "bold",
+    color: "#D6E0D9",
     marginBottom: 5,
+  },
+  inputContainer: {
+    paddingLeft: 9,
+    paddingTop: 40,
+    paddingRight: 9,
   },
   input: {
     height: 40,
     borderWidth: 1,
-    borderColor: '#D6E0D9',
+    borderColor: "#D6E0D9",
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
+    color: "#D6E0D9",
   },
-
-  
-  captionContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    
+  registerText: {
+    fontWeight: "bold",
+    textAlign: "left",
+    color: "#7A807C",
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    right: 20,
   },
-  captionText: {
-    fontSize: 12,
-    fontWeight: '400',
-    fontWeight: 'bold',
-    color: "#7A807C"
-  },
-  email: {
-    paddingTop: 50,
-    width: '97%',
-    margin: 8,
-    maxWidth: 400,
-    fontSize: 20,
-  },
-  password: {
-    width: '97%',
-    margin: 8,
-    maxWidth: 400,
-    fontSize: 20,
+  registerLink: {
+    fontWeight: "bold",
+    textAlign: "right",
+    color: "#D6E0D9",
+    position: "absolute",
+    bottom: 10,
+    left: 20,
+    right: 0,
   },
   titleView: {
     flex: 1,
     paddingTop: 80,
   },
-
   title: {
     fontSize: 45,
-    fontWeight: 'bold',
-    color: '#D6E0D9',
+    fontWeight: "bold",
+    color: "#D6E0D9",
     paddingLeft: 8,
-    
-    textAlign: 'left',
+    textAlign: "left",
   },
-  subtitle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#7A807C',
-    textAlign: 'center',
+  footerText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#7A807C",
+    position: "absolute",
+    bottom: 40,
+    left: 20,
+    right: 20,
   },
-  
-  
 });
 
 export default LoginScreen;

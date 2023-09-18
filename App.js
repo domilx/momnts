@@ -39,7 +39,7 @@ const App = () => {
       // Simulating a successful login
 
       //comment the next line to see the welcome screen
-      setIsLoggedIn(true);
+      setIsLoggedIn(false);
       setIsLoading(false);
     }, 2000);
   }, []);
