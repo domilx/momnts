@@ -42,21 +42,26 @@ const FriendsList = () => {
       <View style={styles.contentView}>
         <View style={styles.divider} />
         
-        <ScrollView style={styles.userContainer} >
+        <ScrollView style={{    backgroundColor: 'rgba(21, 21, 23, 0)',
+}} >
         <FriendItem
           avatarSource={require('../profile-image.jpg')}
-          username="Elon Musk"
-          postedImageSource={require('../profile-image.jpg')} // Specify the user's posted image source here
+          username="Aly Shariff"
+          postedImageSource={require('../Sample/2.jpg')} // Specify the user's posted image source here
         />
           <View style={styles.divider} />
           <FriendItem
-            imageSource={require('../profile-image.jpg')}
-            username="Jeff Bezos"
+          avatarSource={require('../profile-image.jpg')}
+          postedImageSource={require('../Sample/1.jpg')} // Specify the user's posted image source here
+
+          username="Xin Lei"
           />
           <View style={styles.divider} />
           <FriendItem
-            imageSource={require('../profile-image.jpg')}
-            username="Bill Gates"
+          avatarSource={require('../profile-image.jpg')}
+          username="Bill Gates"
+            postedImageSource={require('../Sample/3.jpg')} // Specify the user's posted image source here
+
           />
           <View style={styles.divider} />
           {/* Add more FriendItem components here */}
@@ -109,7 +114,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   settingChunk: {
-    backgroundColor: '#151517',
     borderRadius: 10,
     marginTop: 8,
     marginBottom: 20,
@@ -118,7 +122,6 @@ settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 10,
     paddingVertical: 11,  // Applied consistent padding to the entire settingItem
 },
   avatarWithStatusContainer: {
@@ -149,7 +152,7 @@ settingItem: {
     width: '100%',
     height: 400, // Adjust the height as needed
     resizeMode: 'cover',
-    borderRadius: 8,
+    borderRadius: 10,
   },
   emojiContainer: {
     marginLeft: 5,

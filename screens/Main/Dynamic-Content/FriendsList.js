@@ -35,7 +35,6 @@ const FriendsList = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentView}>
-        <View style={styles.divider} />
         <View style={styles.settingChunk}>
               <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
               <Icon name="magnify" size={25} color="gray" style={styles.arrow} />
@@ -50,20 +49,7 @@ const FriendsList = () => {
               </TouchableOpacity>
             </View>
         <ScrollView style={styles.userContainer} >
-          <FriendItem
-            imageSource={require('../profile-image.jpg')}
-            username="Elon Musk"
-          />
-          <View style={styles.divider} />
-          <FriendItem
-            imageSource={require('../profile-image.jpg')}
-            username="Jeff Bezos"
-          />
-          <View style={styles.divider} />
-          <FriendItem
-            imageSource={require('../profile-image.jpg')}
-            username="Bill Gates"
-          />
+          
           <View style={styles.divider} />
           {/* Add more FriendItem components here */}
         </ScrollView>
@@ -117,7 +103,7 @@ const styles = StyleSheet.create({
   settingChunk: {
     backgroundColor: '#151517',
     borderRadius: 10,
-    marginTop: 8,
+    marginTop: 3,
     marginBottom: 20,
 },
 settingItem: {

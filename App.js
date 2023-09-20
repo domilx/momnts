@@ -26,13 +26,13 @@ import CameraScreen from "./screens/Main/Video-Interfaces/CameraView";
 import FriendsScreen from "./screens/Main/FriendsScreen";
 import SearchScreen from "./screens/Main/SearchScreen";
 
-import { AuthProvider } from './AuthProvider';
+import { AuthProvider } from './logic/provider/AuthProvider';
 
 const Stack = createStackNavigator();
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   StatusBar.setBarStyle('light-content');
 
