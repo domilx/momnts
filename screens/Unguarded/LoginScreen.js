@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFe
 import AuthService from "../../logic/services/AuthService";
 
 const LoginScreen = ({ navigation }) => {
-  const authService = new AuthService('https://api.example.com');
+  const authService = new AuthService('http://127.0.0.1:5000/login');
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

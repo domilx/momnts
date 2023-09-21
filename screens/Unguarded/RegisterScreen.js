@@ -11,7 +11,7 @@ const RegisterScreen = () => {
 
   const navigation = useNavigation();
 
-  const authService = new AuthService('https://api.example.com');
+  const authService = new AuthService('http://127.0.0.1:5000/login');
 
 
   const handleRegister = async (email, password, username) => {
