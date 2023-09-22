@@ -5,13 +5,16 @@ import * as Location from 'expo-location';
 import { useNavigation } from '@react-navigation/native';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
+import { debounce } from 'lodash';
+
+//comp imports
 import { BottomSheet } from './Components/BottomSheet';
 import ControlPanel from './Components/ControlPanel';
 import ControlPanel2 from './Components/ControlPanel2';
 import ControlPanel3 from './Components/ControlPanel3';
 import FriendsList from './Dynamic-Content/FriendsList';
 import FriendPost from './Dynamic-Content/FriendPost';
-import { debounce } from 'lodash';
+import MapPost from './Dynamic-Content/MapPost';
 
 const MapScreen = () => {
   const navigation = useNavigation();
@@ -126,7 +129,13 @@ const MapScreen = () => {
           latitudeDelta: 0.4,
           longitudeDelta: 0.4,
         }}>
-        <Polyline coordinates={path} strokeColor="#000000" strokeWidth={3} />
+       
+       <Marker
+        coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+      >
+        <MapPost image={require('./profile-image.jpg')} />
+      </Marker>
+
         {location && (
           <Marker
             key={`${location.latitude}-${location.longitude}`}
@@ -136,6 +145,7 @@ const MapScreen = () => {
           />
         )}
       </MapView>
+
       <BottomSheet show={show} onOuterClick={onOuterClick}>
         <View style={styles.bottomSheetContent}>
           <View style={styles.buttonsContainer}>
