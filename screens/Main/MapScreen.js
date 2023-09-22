@@ -19,7 +19,8 @@ import MapPost from './Dynamic-Content/MapPost';
 const MapScreen = () => {
   const navigation = useNavigation();
   const mapRef = useRef(null);
-  
+  const [zoomLevel, setZoomLevel] = useState(0);
+
   const [location, setLocation] = useState(null);
   const [show, setShow] = useState(false);
   const [currentView, setCurrentView] = useState('noview');
@@ -130,19 +131,15 @@ const MapScreen = () => {
           longitudeDelta: 0.4,
         }}>
        
-       <Marker
-        coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
-      >
-        <MapPost image={require('./profile-image.jpg')} />
-      </Marker>
 
         {location && (
           <Marker
             key={`${location.latitude}-${location.longitude}`}
-            title="You are here"
-            description="Tap for more details"
-            coordinate={location}
-          />
+            coordinate={location}>
+             
+             <MapPost  />
+          </Marker>
+
         )}
       </MapView>
 

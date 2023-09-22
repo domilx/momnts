@@ -31,7 +31,7 @@ import { AuthProvider } from './logic/provider/AuthProvider';
 const Stack = createStackNavigator();
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
   StatusBar.setBarStyle('light-content');
