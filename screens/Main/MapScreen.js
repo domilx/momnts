@@ -157,7 +157,6 @@ const MapScreen = () => {
               activeOpacity={1}
               onPress={handleCenterButtonClick}
               style={styles.circleButton}>
-              <MatIcon name="plus" size={40} color="#D6E0D9" />
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={1}
@@ -172,12 +171,11 @@ const MapScreen = () => {
           )}
           {currentView === 'xView' && (
             <View style={styles.friendsListContainer}>
-              <FriendsList />
+              <FriendPost />
             </View>
           )}
           {currentView === 'yView' && (
             <View style={styles.friendsListContainer}>
-              <FriendPost />
               </View>
           )}
         </View>
@@ -255,13 +253,13 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 40,
-    backgroundColor: 'rgba(21, 21, 23, 0.98)',
     justifyContent: 'center',
     alignItems: 'center',
     bottom: 40,
+    backgroundColor: '#2D2D2D',
     alignSelf: 'center',
     elevation: 10,
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: '#D6E0D9',
   },
   friendsListContainer: {

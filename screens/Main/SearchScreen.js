@@ -37,7 +37,10 @@ const SettingsScreen = () => {
                 <TextInput
                   style={[styles.input, {color: '#D6E0D9'}]}
                   placeholder="Discover new people and places"
+                  keyboardAppearance='dark'
+
                   placeholderTextColor="#7A807C"/>
+                  
                 </View>
                 <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
               </TouchableOpacity>

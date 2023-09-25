@@ -50,6 +50,8 @@ const RegisterScreen = () => {
             onChangeText={(text) => setEmail(text)}
             keyboardType="email-address"
             autoCapitalize="none"
+            keyboardAppearance='dark'
+
           />
 
           <Text style={styles.label}>Email</Text>
@@ -61,6 +63,8 @@ const RegisterScreen = () => {
             onChangeText={(text) => setEmail(text)}
             keyboardType="email-address"
             autoCapitalize="none"
+            keyboardAppearance='dark'
+
           />
 
 
@@ -72,6 +76,8 @@ const RegisterScreen = () => {
             value={password}
             onChangeText={(text) => setPassword(text)}
             secureTextEntry
+            keyboardAppearance='dark'
+
           />
 
           <TextInput
@@ -81,6 +87,8 @@ const RegisterScreen = () => {
             value={password}
             onChangeText={(text) => setPassword(text)}
             secureTextEntry
+            keyboardAppearance='dark'
+
           />
         </View>
         <Text style={styles.registerText}>

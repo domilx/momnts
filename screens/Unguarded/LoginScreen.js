@@ -46,6 +46,8 @@ const LoginScreen = ({ navigation }) => {
             onChangeText={(text) => setEmail(text)}
             keyboardType="email-address"
             autoCapitalize="none"
+            keyboardAppearance='dark'
+
           />
 
           <Text style={styles.label}>Password</Text>
@@ -57,6 +59,8 @@ const LoginScreen = ({ navigation }) => {
             value={password}
             onChangeText={(text) => setPassword(text)}
             secureTextEntry
+            keyboardAppearance='dark'
+
           />
         </View>
 
