@@ -162,8 +162,8 @@ const MapScreen = () => {
               activeOpacity={1}
               onPress={handleButtonYPress}
               style={styles.navItem}>
-              <MatIcon name="sign-direction" size={35} color="#D6E0D9" />
-              <Text style={styles.name}>Journeys</Text>
+              <MatIcon name="map-marker-radius" size={35} color="#D6E0D9" />
+              <Text style={styles.name}>Places</Text>
             </TouchableOpacity>
           </View>
           {currentView === 'noview' && (
@@ -250,8 +250,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   circleButton: {
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',

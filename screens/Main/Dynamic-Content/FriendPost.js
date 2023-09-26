@@ -40,10 +40,8 @@ const FriendsList = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentView}>
-        <View style={styles.divider} />
         
-        <ScrollView style={{    backgroundColor: 'rgba(21, 21, 23, 0)',
-}} >
+        <ScrollView showsVerticalScrollIndicator={false}>
         <FriendItem
           avatarSource={require('../profile-image.jpg')}
           username="Aly Shariff"
@@ -128,8 +126,8 @@ settingItem: {
     alignItems: 'center',
   },
   avatar: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     borderRadius: 30,
     resizeMode: 'cover',
   },

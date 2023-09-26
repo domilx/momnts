@@ -126,6 +126,8 @@ const EditProfileScreen = () => {
                   style={styles.input}
                   defaultValue={DEFAULT_NAME}
                   onChangeText={(text) => setName(text)}
+                  keyboardAppearance='dark'
+
                 />
               </TouchableOpacity>
 
@@ -140,6 +142,8 @@ const EditProfileScreen = () => {
                   style={styles.input}
                   defaultValue={DEFAULT_NAME}
                   onChangeText={(text) => setName(text)}
+                  keyboardAppearance='dark'
+
                 />
               </TouchableOpacity>
             </View>
@@ -155,6 +159,8 @@ const EditProfileScreen = () => {
                   defaultValue={DEFAULT_BIO}
                   multiline={true}
                   onChangeText={(text) => setBio(text)}
+                  keyboardAppearance='dark'
+
                 />
               </TouchableOpacity>
             </View>
@@ -169,6 +175,8 @@ const EditProfileScreen = () => {
                   style={styles.input}
                   defaultValue={DEFAULT_EMAIL}
                   onChangeText={(text) => setUsername(text)}
+                  keyboardAppearance='dark'
+
                 />
               </TouchableOpacity>
             </View>
