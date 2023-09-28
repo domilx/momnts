@@ -1,38 +1,64 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import MapView, { Marker } from 'react-native-maps';
+import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Card, Avatar } from 'react-native-elements';
 import * as Haptics from 'expo-haptics';
 
 const FriendsList = () => {
   const navigation = useNavigation();
-  
+  const [showContent, setShowImage] = useState(true);
+
+  const toggleContent = () => {
+    setShowImage(!showContent);
+  };
 
   const FriendItem = ({ avatarSource, username, emoji, postedImageSource }) => {
     return (
       <View style={styles.Container}>
-        <View style={styles.friendContainer}>
-          <View style={styles.settingChunk}>
-            <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
-              <Image
-                source={avatarSource}
-                style={styles.avatar}
-              />
-              <View style={styles.twoText}>
-                <Text style={styles.fullName}>{username}</Text>
-                <Text style={styles.username}>last seen 4h ago</Text>
-              </View>
-              <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+      <View style={styles.friendContainer}>
+        <View style={styles.settingChunk}>
+          <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
+            <Image source={avatarSource} style={styles.avatar} />
+            <View style={styles.twoText}>
+              <Text style={styles.fullName}>{username}</Text>
+              <Text style={styles.username}>last seen 4h ago</Text>
+            </View>
+
+            <TouchableOpacity onPress={toggleContent} >
+            <MatIcon name="map-marker-circle" size={30} color="gray" style={{left: -20}} />
             </TouchableOpacity>
-            {/* User-posted image */}
-            <Image
-              source={postedImageSource}
-              style={styles.postedImage}
-            />
-          </View>
+          </TouchableOpacity>
+
+          {showContent ? (
+            
+            <Image source={postedImageSource} style={styles.postedImage} />
+          ) : (
+            // Display the map
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                // Set your initial map region here
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            >
+              <Marker
+                coordinate={{
+                  // Set the coordinates of the marker on the map
+                  latitude: 37.78825,
+                  longitude: -122.4324,
+                }}
+              />
+            </MapView>
+          )}
+          
         </View>
       </View>
+    </View>
     );
   };
   
@@ -75,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contentView: {
-    marginHorizontal: 18,
+    marginHorizontal: 20,
   },
   twoText: {
     justifyContent: 'center',
@@ -83,6 +109,11 @@ const styles = StyleSheet.create({
     width: "80%",
 
     marginLeft: 10,
+  },
+  map: {
+    width: '100%',
+    height: 400,
+    borderRadius: 10,
   },
   fullName: {
     fontSize: 16,
@@ -98,7 +129,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   arrow: {      
-    marginRight: 5,
+    marginRight: 10,
   },
   friendTextContainer: {
     flex: 1,
@@ -119,7 +150,7 @@ settingItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 11,  // Applied consistent padding to the entire settingItem
+    paddingVertical: 11,  
 },
   avatarWithStatusContainer: {
     flexDirection: 'row',
