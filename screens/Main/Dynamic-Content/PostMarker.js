@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text,  StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const UserMarker = ({  }) => (
+const PostMaker = ({  }) => (
     
     <View style={styles.container}>
       <View style={styles.settingChunk}>
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default UserMarker;
+export default PostMaker;

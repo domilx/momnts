@@ -27,6 +27,7 @@ const MapScreen = () => {
   const [path, setPath] = useState([]);
   const [isComponentVisible, setIsComponentVisible] = useState(true);
   const [city, setCity] = useState('Montreal');
+  console.log(location)
 
   const debouncedFetchCityName = useCallback(
     debounce(async (region) => {
@@ -134,11 +135,13 @@ const MapScreen = () => {
           latitudeDelta: 0.4,
           longitudeDelta: 0.4,
         }}>
+        
         {location && (
+          
           <Marker
             key={`${location.latitude}-${location.longitude}`}
             coordinate={location}>
-            <UserMarker />
+            {isComponentVisible && <UserMarker />}
           </Marker>
         )}
       </MapView>

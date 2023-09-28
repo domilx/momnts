@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import AuthService from "../../logic/services/AuthService";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 const LoginScreen = ({ navigation }) => {
   const authService = new AuthService('http://127.0.0.1:5000/login');
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+};
 
   const handleLogin = async (email, password) => {
     try {
@@ -49,7 +56,6 @@ const LoginScreen = ({ navigation }) => {
             keyboardAppearance='dark'
 
           />
-
           <Text style={styles.label}>Password</Text>
 
           <TextInput
@@ -58,10 +64,17 @@ const LoginScreen = ({ navigation }) => {
             placeholderTextColor="#7A807C"
             value={password}
             onChangeText={(text) => setPassword(text)}
-            secureTextEntry
+            secureTextEntry={!showPassword}
             keyboardAppearance='dark'
-
           />
+          <Icon
+            name={showPassword ? 'eye' : 'eye-off'}
+            size={24}
+            color="#aaa"
+            style={{left: 290, bottom: 52}}
+            onPress={toggleShowPassword}
+          />
+
         </View>
 
 
