@@ -44,7 +44,6 @@ const EditProfileScreen = () => {
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -182,7 +181,7 @@ const EditProfileScreen = () => {
             </View>
           </View>
         </ScrollView>
-        <Text style={styles.footerText}>domi & Nathan™</Text>
+        <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
       </View>
     </View>
   );

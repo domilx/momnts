@@ -170,7 +170,7 @@ const SettingsScreen = () => {
                 <TouchableOpacity style={styles.logoutButton} activeOpacity={0.7} onPress={handleLogout}>
                     <Text style={styles.logoutText}>Logout</Text>
                 </TouchableOpacity>
-                <Text style={styles.footerText}>domi & Nathan™</Text>
+                <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
 
             </ScrollView>
         </View>

@@ -2,9 +2,9 @@ import { Camera, CameraType } from 'expo-camera';
 import { useState } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as Haptics from 'expo-haptics';
 
 
 
@@ -15,6 +15,7 @@ export default function CameraView() {
 
 const handleReturn = () => {
     navigation.goBack();
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
 
@@ -34,6 +35,7 @@ const handleReturn = () => {
   }
 
   function toggleCameraType() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
@@ -43,18 +45,24 @@ const handleReturn = () => {
 
 
       <Camera style={styles.camera} type={type}>
-      <View style={{marginTop: 50, right: -25}}>
-    <View style={styles.buttoCcontainer}>
-      <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
-        <TouchableOpacity  style={{ marginBottom: 10 }}>
-          <MatIcon name="arrow-left-thin" onPress={handleReturn} size={35} color="#D6E0D9" />
+    <View style={styles.buttonContainer}>
+      <View style={styles.buttonbackground}>
+        <TouchableOpacity onPress={handleReturn}>
+          <MatIcon name="close-circle-outline" size={35} color="#D6E0D9" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={toggleCameraType} style={{ marginBottom: 10 }}>
-          <MatIcon name="camera-flip" size={35} color="#D6E0D9" />
-        </TouchableOpacity>
-        
       </View>
-    </View>
+
+        <TouchableOpacity
+            activeOpacity={1}
+            style={styles.circleButton}>
+        </TouchableOpacity>
+        <View style={styles.buttonbackground}>
+
+        <TouchableOpacity onPress={toggleCameraType}>
+          <MatIcon name="camera-retake-outline" size={35} color="#D6E0D9" />
+        </TouchableOpacity>
+        </View>
+
     </View>
   
       </Camera>
@@ -68,24 +76,38 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-
-    flex: 1,
-    borderRadius: 25,
-    backgroundColor: 'rgba(21, 21, 23, 0.7)',
-    alignItems: 'center',
-    alignContent: 'column',
+    paddingHorizontal: 20,
+    position: 'absolute',
+    top: 700,
+    flexDirection: 'row',
     alignContent: 'center',
-    justifyContent: 'center',
-    width: '76%',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   camera: {
     flex: 1,
   },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 64,
+  circleButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 40,
+    backgroundColor: 'rgba(21, 21, 23, 0.7)',
+    alignSelf: 'center',
+    elevation: 10,
+    borderWidth: 4,
+    borderColor: '#D6E0D9',
+  },
+  buttonbackground: {
+    borderRadius: 25,
+    backgroundColor: 'rgba(21, 21, 23, 0.7)',
+    alignItems: 'center',
+    alignContent: 'column',
+    justifyContent: 'center',
+    height: "70%",
+    width: "15%",
   },
   
   button: {

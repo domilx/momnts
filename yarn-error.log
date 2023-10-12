@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarnpkg add expo-image-picker@~14.1.1
+  /usr/local/bin/node /usr/local/bin/yarnpkg add expo-bitmoji
 
 PATH: 
   /Users/nathanaruna/moments/node_modules/.bin:/Users/nathanaruna/moments/node_modules/.bin:/Users/nathanaruna/node_modules/.bin:/Users/node_modules/.bin:/node_modules/.bin:/usr/local/lib/node_modules/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.11/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin
@@ -14,7 +14,17 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/Users/nathanaruna/moments/node_modules/.yarn-integrity'
+  Error: https://registry.yarnpkg.com/expo-bitmoji: Not found
+      at params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1359:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
 
 npm manifest: 
   {
@@ -41,7 +51,7 @@ npm manifest:
       "@types/react": "~18.0.27",
       "@ui-kitten/components": "^5.3.1",
       "@ui-kitten/eva-icons": "^5.3.1",
-      "axios": "^1.4.0",
+      "axios": "^1.5.0",
       "babel-plugin-transform-inline-environment-variables": "^0.4.4",
       "expo": "~48.0.18",
       "expo-asset-utils": "^3.0.0",
@@ -51,6 +61,7 @@ npm manifest:
       "expo-gl": "~12.4.0",
       "expo-graphics": "^2.0.0",
       "expo-haptics": "~12.2.1",
+      "expo-image-picker": "~14.1.1",
       "expo-linear-gradient": "~12.1.2",
       "expo-location": "~15.1.1",
       "expo-notifications": "~0.18.1",
@@ -4308,10 +4319,10 @@ Lockfile:
     "resolved" "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
     "version" "1.0.5"
   
-  "axios@^1.4.0":
-    "integrity" "sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA=="
-    "resolved" "https://registry.npmjs.org/axios/-/axios-1.4.0.tgz"
-    "version" "1.4.0"
+  "axios@^1.5.0":
+    "integrity" "sha512-D4DdjDo5CY50Qms0qGQTTw6Q44jl7zRwY7bthds06pUGfChBCTcQs+N743eFWGEd6pRTMd6A+I87aWyFV5wiZQ=="
+    "resolved" "https://registry.npmjs.org/axios/-/axios-1.5.0.tgz"
+    "version" "1.5.0"
     dependencies:
       "follow-redirects" "^1.15.0"
       "form-data" "^4.0.0"
@@ -5700,6 +5711,18 @@ Lockfile:
     "integrity" "sha512-XRZtmIQi901Q4+/cZnVrULRFOqShsgCuSP0SCbVEhnq8sK0OA4jgun12O93Pu5aGvTyoqsAcIArE8tX+8AEqRA=="
     "resolved" "https://registry.npmjs.org/expo-haptics/-/expo-haptics-12.2.1.tgz"
     "version" "12.2.1"
+  
+  "expo-image-loader@~4.1.0":
+    "integrity" "sha512-ciEHVokU0f6w0eTxdRxLCio6tskMsjxWIoV92+/ZD37qePUJYMfEphPhu1sruyvMBNR8/j5iyOvPFVGTfO8oxA=="
+    "resolved" "https://registry.npmjs.org/expo-image-loader/-/expo-image-loader-4.1.1.tgz"
+    "version" "4.1.1"
+  
+  "expo-image-picker@~14.1.1":
+    "integrity" "sha512-SvWtnkLW7jp5Ntvk3lVcRQmhFYja8psmiR7O6P/+7S6f4llt3vaFwb4I3+pUXqJxxpi7BHc2+95qOLf0SFOIag=="
+    "resolved" "https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-14.1.1.tgz"
+    "version" "14.1.1"
+    dependencies:
+      "expo-image-loader" "~4.1.0"
   
   "expo-keep-awake@~12.0.1":
     "integrity" "sha512-hqeCnb4033TyuZaXs93zTK7rjVJ3bywXATyMmKmKkLEsH2PKBAl/VmjlCOPQL/2Ncqz6aj7Wo//tjeJTARBD4g=="

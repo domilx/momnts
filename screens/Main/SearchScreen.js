@@ -47,7 +47,7 @@ const SettingsScreen = () => {
             </View>
                 
                 
-                <Text style={styles.footerText}>domi & Nathan™</Text>
+                <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
 
             </ScrollView>
         </View>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from 'expo-haptics';
 
@@ -20,21 +21,7 @@ const SettingsScreen = () => {
         navigation.goBack();
     };
 
-    const handleBlockedUsers = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        navigation.navigate("BlockedUsers");
-    };
-
-    const handleAboutUs = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        navigation.navigate("AboutUs");
-    };
-
-    const handleHelp = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        navigation.navigate("Help");
-    };
-
+   
     const toggleProfile = () => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         navigation.navigate("EditProfile");
@@ -64,6 +51,8 @@ const SettingsScreen = () => {
                     <Text style={styles.fullName}>Domenico Valentino</Text>
                     <Text style={styles.username}>Blocked 09/26/2023</Text>
                   </View>
+                  <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+
                 </TouchableOpacity>
               </View>
               <View style={styles.divider} />
@@ -78,7 +67,10 @@ const SettingsScreen = () => {
                     <Text style={styles.fullName}>Domenico Valentino</Text>
                     <Text style={styles.username}>Blocked 09/26/2023</Text>
                   </View>
+                  <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
+
                 </TouchableOpacity>
+                
               </View>
               <View style={styles.divider} />
 
@@ -92,10 +84,11 @@ const SettingsScreen = () => {
                     <Text style={styles.fullName}>Domenico Valentino</Text>
                     <Text style={styles.username}>Blocked 09/26/2023</Text>
                   </View>
+                  <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
                 </TouchableOpacity>
               </View>
                   
-              <Text style={styles.footerText}>domi & Nathan™</Text>
+              <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
             </ScrollView>
         </View>
     );
