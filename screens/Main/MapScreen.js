@@ -27,7 +27,6 @@ const MapScreen = () => {
   const [path, setPath] = useState([]);
   const [isComponentVisible, setIsComponentVisible] = useState(true);
   const [city, setCity] = useState('Montreal');
-  console.log(location)
 
   const debouncedFetchCityName = useCallback(
     debounce(async (region) => {
