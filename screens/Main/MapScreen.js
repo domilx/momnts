@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
 import { debounce } from 'lodash';
+import UserService from '../../services/UserService';
 
 // comp imports
 import { BottomSheet } from './Components/BottomSheet';
@@ -27,6 +28,8 @@ const MapScreen = () => {
   const [path, setPath] = useState([]);
   const [isComponentVisible, setIsComponentVisible] = useState(true);
   const [city, setCity] = useState('Montreal');
+  const [profile, setProfile] = useState({});
+
 
   const debouncedFetchCityName = useCallback(
     debounce(async (region) => {
@@ -85,6 +88,13 @@ const MapScreen = () => {
   };
 
   useEffect(() => {
+    const loadUserProfile = async () => {
+      const userProfile = await UserService.getUserProfile();
+      if (userProfile) {
+          setProfile(userProfile);
+      }
+    };
+
     const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -105,6 +115,7 @@ const MapScreen = () => {
       }
     };
 
+    loadUserProfile();
     getLocation();
   }, []);
 
@@ -115,7 +126,7 @@ const MapScreen = () => {
       </View>
       <View style={styles.sideNav}>
         <TouchableOpacity onPress={handleProfile}>
-          <Image style={styles.avatar} source={require('./profile-image.jpg')} />
+          <Image style={styles.avatar} source={{ uri: profile.profileImageUrl }} />
         </TouchableOpacity>
         {isComponentVisible && <ControlPanel />}
       </View>
@@ -140,7 +151,7 @@ const MapScreen = () => {
           <Marker
             key={`${location.latitude}-${location.longitude}`}
             coordinate={location}>
-            {isComponentVisible && <UserMarker />}
+            {isComponentVisible && <UserMarker username={profile.username} image={{uri: profile.profileImageUrl}}/>}
           </Marker>
         )}
       </MapView>

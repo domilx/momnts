@@ -3,13 +3,13 @@ import React from 'react';
 import { View, Text,  StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const UserMarker = ({  }) => (
+const UserMarker = ({ username, image }) => (
     
     <View style={styles.container}>
       <View style={styles.settingChunk}>
           <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
-          <Image style={styles.avatar} source={require('../profile-image.jpg')} />
-              <Text style={styles.sectionHeading}>username</Text>
+          <Image style={styles.avatar} source={image} />
+              <Text style={styles.sectionHeading}>{username}</Text>
               <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
           </TouchableOpacity>
       </View>

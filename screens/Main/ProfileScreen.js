@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Haptics from 'expo-haptics';
 import AntIcon from "react-native-vector-icons/AntDesign";
-
+import UserService from '../../services/UserService';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
+  const [profile, setProfile] = useState({});
 
   const handleSettings = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
@@ -25,6 +26,17 @@ const ProfileScreen = () => {
     navigation.goBack();
   };
 
+  useEffect(() => {
+    const loadUserProfile = async () => {
+        const userProfile = await UserService.getUserProfile();
+        if (userProfile) {
+            setProfile(userProfile);
+        }
+    };
+
+    loadUserProfile();
+  }, []);
+   
   return (
     <View style={styles.container}>
 
@@ -39,13 +51,13 @@ const ProfileScreen = () => {
       </TouchableOpacity>
 
       <View style={styles.header}>
-        <Image style={styles.avatar} source={require("./profile-image.jpg")} />
+      <Image style={styles.avatar} source={{ uri: profile.profileImageUrl }} />
         <TouchableOpacity activeOpacity={0.8} onPress={handleEditProfile} style={styles.nameContainer}>
           <View style={styles.namesIcon}>
-            <Text style={styles.displayname}>Nathan Aruna</Text>
+          <Text style={styles.displayname}>{profile.fullName}</Text>
           </View>
           <View style={styles.username}>
-            <Text style={styles.usernameText}>@nate282</Text>
+          <Text style={styles.usernameText}>@{profile.username}</Text>
           </View>
         </TouchableOpacity>
       </View>

@@ -6,15 +6,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { ApplicationProvider } from "@ui-kitten/components";
 import { useFonts } from "expo-font";
 import * as eva from "@eva-design/eva";
-import * as Device from "expo-device";
-import * as Notifications from "expo-notifications";
-
+import * as Font from 'expo-font';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 //screens
 import LoadingScreen from "./screens/LoadingScreen";
 import WelcomeScreen from "./screens/Unguarded/WelcomeScreen";
 import RegisterScreen from "./screens/Unguarded/RegisterScreen";
 import LoginScreen from "./screens/Unguarded/LoginScreen";
-import ProfileCreationScreen from "./screens/Unguarded/ProfileCreationScreen";
 import ProfileScreen from "./screens/Main/ProfileScreen";
 import MapScreen from "./screens/Main/MapScreen";
 import SettingsScreen from "./screens/Main/SettingScreen";
@@ -26,31 +24,47 @@ import CameraScreen from "./screens/Main/Video-Interfaces/CameraView";
 import FriendsScreen from "./screens/Main/FriendsScreen";
 import SearchScreen from "./screens/Main/SearchScreen";
 
-import { AuthProvider } from './logic/provider/AuthProvider';
+import { auth } from "./firebase";
+
 
 const Stack = createStackNavigator();
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFontLoaded, setFontLoaded] = useState(false);
 
   StatusBar.setBarStyle('light-content');
-
-  useEffect(() => {
-    // Check if the user is logged in when the app initializes
-    async function checkLoginStatus() {
-      const loggedIn = await AuthService.isLoggedIn();
-      setIsLoggedIn(loggedIn);
+  
+  const loadFonts = async () => {
+    await Font.loadAsync({
+      ...MaterialCommunityIcons.font,
+    });
+  };
+  useEffect(() => { 
+    loadFonts().then(() => {
+      setFontLoaded(true);
+    });
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setIsLoggedIn(!!user);
       setIsLoading(false);
-    }
+    });
 
-    checkLoginStatus();
+    // Cleanup the subscription on component unmount
+    return () => unsubscribe();
   }, []);
+
+  if (!isFontLoaded) {
+    return (
+      <LoadingScreen/>
+    );
+  }
 
   if (isLoading) {
     return <LoadingScreen />;
   }
 
+  
   return (
     <ApplicationProvider {...eva} theme={eva.dark}>
       <NavigationContainer>
@@ -77,11 +91,6 @@ const App = () => {
             name="Register"
             options={{ headerShown: false }}
             component={RegisterScreen}
-          />
-          <Stack.Screen
-            name="ProfileCreation"
-            options={{ headerShown: false }}
-            component={ProfileCreationScreen}
           />
           <Stack.Screen
             name="Settings"

@@ -1,23 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Switch, ScrollView, Image, } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from 'expo-haptics';
-import AuthService from "../../logic/services/AuthService";
+import UserService from '../../services/UserService';
 
 const SettingsScreen = () => {
     const navigation = useNavigation();
-    const authService = new AuthService('https://api.example.com');
+    const [profile, setProfile] = useState({});
 
     const handleLogout = async () => {
-        try {
-            // Logout the user using the AuthService
-            await authService.logout();
-            console.log("Logged out successfully!");
-        } catch (error) {
-            console.error('Logout error:', error);
-        }
+        console.log("Logging out...");
     };
 
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);
@@ -53,6 +47,16 @@ const SettingsScreen = () => {
         navigation.navigate("EditProfile");
     }
 
+    useEffect(() => {
+      const loadUserProfile = async () => {
+          const userProfile = await UserService.getUserProfile();
+          if (userProfile) {
+              setProfile(userProfile);
+          }
+      };
+
+      loadUserProfile();
+    }, []);
     return (
         <View style={styles.container}>
             <View style={styles.top}>
@@ -71,12 +75,12 @@ const SettingsScreen = () => {
             <View style={styles.settingChunk}>
               <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleProfile}>
                <Image
-                  source={require("./profile-image.jpg")}
+                  source={{ uri: profile.profileImageUrl }}
                   style={styles.avatar}
                 />
                 <View style={styles.twoText}>
-                  <Text style={styles.fullName}>Domenico Valentino</Text>
-                  <Text style={styles.username}>domenicoVal</Text>
+                  <Text style={styles.fullName}>{profile.fullName}</Text>
+                  <Text style={styles.username}>{profile.username}</Text>
                 </View>
                 <Icon name="chevron-right" size={25} color="gray" style={styles.arrow} />
               </TouchableOpacity>

@@ -1,191 +1,325 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert,
+} from "react-native";
+import * as Haptics from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
-import AuthService from "../../logic/services/AuthService";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import * as ImagePicker from 'expo-image-picker';
+import AuthService from "../../services/AuthService";
 
 const RegisterScreen = () => {
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-
   const navigation = useNavigation();
 
-  const authService = new AuthService('http://127.0.0.1:5000/login');
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [image, setImage] = useState(null);
 
+  useEffect(() => {}, [name, username, bio, email]);
 
-  const handleRegister = async (email, password, username) => {
-    try {
-        // Register the user using the AuthService
-        const response = await authService.register(email, password, username);
-        
-        if (response) {  // Depending on the API response, you can further refine this check
-            console.log("Registered successfully!", response);
-        } else {
-            console.error("Registration failed.");
-        }
-    } catch (error) {
-        console.error('Registration error:', error);
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
-};
-
-  const handleLoginPress = () => {
-    // Navigate to the Login screen
-    navigation.navigate("Login");
   };
 
+  const handleReturn = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.goBack();
+  };
+
+  const handleRegister = async () => {
+    try {
+      // Ensure we have the necessary details
+      if (!name || !username || !bio || !email || !password || !image) {
+        Alert.alert('Registration failed', 'Please fill in all fields.');
+        return;
+      }
+
+      // Convert image URI to blob
+      const response = await fetch(image);
+      const blob = await response.blob();
+
+      await AuthService.register(email, password, username, name, bio, blob);
+
+      // Navigate or do any other tasks after successful registration
+      console.log('Registration successful');
+      navigation.navigate("MapScreen");
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Registration failed', error.message);
+    }
+  };
+
+
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.container} >
-      <View style={styles.titleView}>
-        <Text style={styles.title}>Register</Text>
-        <View style={styles.inputContainer}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          <View style={styles.titleView}>
+          
+            <View style={styles.top}>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={handleReturn}
+                style={styles.iconContainer}
+              >
+                <Text style={styles.cancel}>Back</Text>
+              </TouchableOpacity>
+              <Text style={styles.title}>Register</Text>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={handleRegister}
+                style={styles.iconContainer}
+              >
+                <Text
+                  style={[
+                    styles.cancel,
+                    { color: "white" },
+                  ]}
+                >
+                  Create
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.dividerTop} />
+            <ScrollView
+              style={styles.toggleContainer}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.settingChunk}>
+                <TouchableOpacity
+                  onPress={pickImage}
+                  style={styles.avatarClickableArea}
+                >
+                  <Image
+                    source={{ uri: image }}
+                    style={styles.avatar}
+                  />
+                  <View style={styles.cameraIconOverlay}>
+                    <Icon name="camera" size={20} color="#000000" />
+                  </View>
+                </TouchableOpacity>
 
-        <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your email"
-            placeholderTextColor="#7A807C"
-            value={username}
-            onChangeText={(text) => setEmail(text)}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            keyboardAppearance='dark'
+                <View style={styles.settingChunk2}>
+                  <TouchableOpacity
+                    style={styles.settingItem}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.sectionHeading}>Full Name:</Text>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={(text) => setName(text)}
+                      keyboardAppearance='dark'
+                    />
+                  </TouchableOpacity>
 
-          />
+                  <View style={styles.divider} />
 
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your email"
-            placeholderTextColor="#7A807C"
-            value={email}
-            onChangeText={(text) => setEmail(text)}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            keyboardAppearance='dark'
+                  <TouchableOpacity
+                    style={styles.settingItem}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.sectionHeading}>Username:</Text>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={(text) => setUsername(text)}
+                      keyboardAppearance='dark'
+                    />
+                  </TouchableOpacity>
 
-          />
+                  <View style={styles.divider} />
 
+                  <TouchableOpacity
+                    style={styles.settingItem}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.sectionHeading}>Bio:</Text>
+                    <TextInput
+                      style={styles.input}
+                      multiline={true}
+                      onChangeText={(text) => setBio(text)}
+                      keyboardAppearance='dark'
+                    />
+                  </TouchableOpacity>
 
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your password"
-            placeholderTextColor="#7A807C"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry
-            keyboardAppearance='dark'
+                  <View style={styles.divider} />
 
-          />
+                  <TouchableOpacity
+                    style={styles.settingItem}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.sectionHeading}>Email:</Text>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={(text) => setEmail(text)}
+                      keyboardAppearance='dark'
+                    />
+                  </TouchableOpacity>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Confirm your password"
-            placeholderTextColor="#7A807C"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry
-            keyboardAppearance='dark'
+                  <View style={styles.divider} />
 
-          />
+                  <TouchableOpacity
+                    style={styles.settingItem}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.sectionHeading}>Password:</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <TextInput
+                        style={styles.input}
+                        defaultValue=""
+                        onChangeText={(text) => setPassword(text)}
+                        secureTextEntry={true}
+                        keyboardAppearance='dark'
+                      />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </ScrollView>
+          </View>
         </View>
-        <Text style={styles.registerText}>
-          Already have an account?{" "}
-          <Text onPress={handleLoginPress} style={styles.registerLink}>
-            Login
-          </Text>
-        </Text>
-      </View>
-
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleRegister(email, password, username)}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.footerText}>domi & Nathan™</Text>
-    </View>
-    </TouchableWithoutFeedback>
-
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    backgroundColor: "#D6E0D9",
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 100,
-  },
-  buttonText: {
-    color: "#000000",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   container: {
     flex: 1,
-    backgroundColor: "black",
-    paddingHorizontal: 15,
+    alignItems: "center",
+    backgroundColor: "#000000",
   },
-  label: {
-    fontSize: 16,
-    fontWeight: "bold",
+  cancel: {
     color: "#D6E0D9",
-    marginBottom: 5,
+    fontSize: 16,
+    fontWeight: "500",
   },
-  inputContainer: {
-    paddingLeft: 9,
-    paddingTop: 40,
-    paddingRight: 9,
+  top: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    paddingBottom: 20,
   },
   input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: "#D6E0D9",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    height: 30,
+    width: 220,
     color: "#D6E0D9",
-  },
-  registerText: {
-    fontWeight: "bold",
-    textAlign: "left",
-    color: "#7A807C",
-    position: "absolute",
-    bottom: 10,
-    left: 10,
-    right: 20,
-  },
-  registerLink: {
-    fontWeight: "bold",
-    textAlign: "right",
-    color: "#D6E0D9",
-    position: "absolute",
-    bottom: 10,
-    left: 20,
-    right: 0,
-  },
-  titleView: {
-    flex: 1,
-    paddingTop: 80,
+    backgroundColor: "transparent",
   },
   title: {
-    fontSize: 45,
-    fontWeight: "bold",
-    color: "#D6E0D9",
-    paddingLeft: 8,
-    textAlign: "left",
-  },
-  footerText: {
-    fontWeight: "bold",
+    fontSize: 20,
+    fontWeight: "600",
     textAlign: "center",
-    color: "#7A807C",
+    color: "#FFFFFF",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  settingChunk: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  settingChunk2: {
+    backgroundColor: '#151517',
+    borderRadius: 10,
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  settingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 11,
+  },
+  sectionHeading: {
+    flex: 1,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#fdfdff',
+    marginLeft: 10,
+  },
+  avatarClickableArea: {
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  avatar: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    resizeMode: "cover",
+  },
+  cameraIconOverlay: {
     position: "absolute",
-    bottom: 40,
-    left: 20,
-    right: 20,
+    right: 5,
+    bottom: 5,
+    backgroundColor: "white",
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+  },
+  iconContainer: {
+    alignItems: "flex-start",
+  },
+  toggleContainer: {
+    marginHorizontal: 10,
+  },
+  sectionContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  divider: {
+    height: 0.3,
+    backgroundColor: "#29292b",
+    marginVertical: 10,
+  },
+  dividerTop: {
+    height: 0.3,
+    backgroundColor: "#29292b",
   },
 });
 
