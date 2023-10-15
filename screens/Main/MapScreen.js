@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as Haptics from 'expo-haptics';
 import { debounce } from 'lodash';
+import { LinearGradient } from 'expo-linear-gradient';
 
 // comp imports
 import { BottomSheet } from './Components/BottomSheet';
@@ -109,10 +110,19 @@ const MapScreen = () => {
   }, []);
 
   return (
+    
+    
     <View style={styles.container}>
+      
       <View style={styles.topNav}>
+      <LinearGradient
+        colors={['rgba(21, 21, 23, 0.9)', 'rgba(21, 21, 23, 0)']} // Reversed order of colors
+        style={styles.background}
+      />
         <ControlPanel2 cityName={city} />
       </View>
+      
+
       <View style={styles.sideNav}>
         <TouchableOpacity onPress={handleProfile}>
           <Image style={styles.avatar} source={require('./profile-image.jpg')} />
@@ -122,7 +132,10 @@ const MapScreen = () => {
 
       <View style={styles.search}>
         <ControlPanel3 />
+       
       </View>
+
+      
       <MapView
         ref={mapRef}
         onRegionChangeComplete={debouncedFetchCityName}
@@ -176,7 +189,8 @@ const MapScreen = () => {
           {currentView === 'yView' && <View style={styles.friendsListContainer}></View>}
         </View>
       </BottomSheet>
-    </View>
+      </View>
+
   );
 };
 
@@ -260,6 +274,14 @@ const styles = StyleSheet.create({
   },
   friendsListContainer: {
     marginTop: 90,
+  },
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: -60,
+    bottom: 0
+
   },
 });
 
