@@ -84,7 +84,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <Text style={styles.footerText}>domi & Nathan™</Text>
+      <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
     </View>
     </TouchableWithoutFeedback>
   );
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 100,
+    marginBottom: 90,
   },
   buttonText: {
     color: "#000000",
