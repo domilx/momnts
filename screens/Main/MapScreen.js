@@ -245,6 +245,8 @@ const styles = StyleSheet.create({
     height: 68,
     borderRadius: 50,
     marginBottom: 20,
+    backgroundColor: "#7A807C",
+
   },
   bottomSheetContent: {
     flex: 1,

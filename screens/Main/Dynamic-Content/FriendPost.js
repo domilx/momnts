@@ -69,20 +69,17 @@ const FriendsList = () => {
         
         <ScrollView showsVerticalScrollIndicator={false}>
         <FriendItem
-          avatarSource={require('../profile-image.jpg')}
           username="Aly Shariff"
           postedImageSource={require('../Sample/2.jpg')} // Specify the user's posted image source here
         />
           <View style={styles.divider} />
           <FriendItem
-          avatarSource={require('../profile-image.jpg')}
           postedImageSource={require('../Sample/1.jpg')} // Specify the user's posted image source here
 
           username="Xin Lei"
           />
           <View style={styles.divider} />
           <FriendItem
-          avatarSource={require('../profile-image.jpg')}
           username="Bill Gates"
             postedImageSource={require('../Sample/3.jpg')} // Specify the user's posted image source here
 
@@ -161,6 +158,8 @@ settingItem: {
     height: 40,
     borderRadius: 30,
     resizeMode: 'cover',
+    backgroundColor: "#7A807C",
+
   },
   divider: {
     height: 0.3,

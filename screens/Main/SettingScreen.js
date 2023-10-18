@@ -209,6 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     resizeMode: "cover",
     marginVertical: 5,
+    backgroundColor: "#7A807C",
   },
   top: {
       flexDirection: 'row',

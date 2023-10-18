@@ -29,6 +29,8 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 50,
+    backgroundColor: "#7A807C",
+
   },
   settingItem: {
     flexDirection: 'row',

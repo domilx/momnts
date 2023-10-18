@@ -16,7 +16,6 @@ const FriendsList = () => {
       <View style={styles.settingChunk}>
       <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
        <Image
-          source={require("../profile-image.jpg")}
           style={styles.avatar}
         />
         <View style={styles.twoText}>
@@ -122,6 +121,8 @@ settingItem: {
     height: 60,
     borderRadius: 30,
     resizeMode: 'cover',
+    backgroundColor: "#7A807C",
+
   },
   divider: {
     height: 0.3,

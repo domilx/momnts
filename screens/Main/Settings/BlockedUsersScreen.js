@@ -44,7 +44,6 @@ const SettingsScreen = () => {
               <View style={styles.settingChunk}>
                 <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleProfile}>
                   <Image
-                    source={require("../profile-image.jpg")}
                     style={styles.avatar}
                   />
                   <View style={styles.twoText}>
@@ -60,7 +59,6 @@ const SettingsScreen = () => {
               <View style={styles.settingChunk}>
                 <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleProfile}>
                   <Image
-                    source={require("../profile-image.jpg")}
                     style={styles.avatar}
                   />
                   <View style={styles.twoText}>
@@ -77,7 +75,6 @@ const SettingsScreen = () => {
               <View style={styles.settingChunk}>
                 <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} onPress={toggleProfile}>
                   <Image
-                    source={require("../profile-image.jpg")}
                     style={styles.avatar}
                   />
                   <View style={styles.twoText}>
@@ -122,6 +119,8 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     resizeMode: "cover",
     marginVertical: 5,
+    backgroundColor: "#7A807C",
+
   },
   divider: {
     height: 0.3,

@@ -59,6 +59,9 @@ const ProfileScreen = () => {
           <View style={styles.username}>
           <Text style={styles.usernameText}>@{profile.username}</Text>
           </View>
+          <View style={styles.username}>
+          <Text style={styles.bioText}>"{profile.bio}"</Text>
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -102,6 +105,7 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 60,
     marginBottom: 10,
+    backgroundColor: "#7A807C",
   },
   displayname: {
     fontSize: 24,
@@ -113,6 +117,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#7A807C",
     fontWeight: "bold",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bioText: {
+    fontSize: 16,
+    color: "#7A807C",
+    fontStyle: 'italic',
     justifyContent: "center",
     alignItems: "center",
   },
