@@ -28,7 +28,7 @@ const WelcomeScreen = ({ navigation }) => {
           right: 20,
         }}
       >
-        domi & Nathan™
+        Domi, Nathan, Xin & Aly™
       </Text>
     </TouchableOpacity>
   );

@@ -1,46 +1,63 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AuthService from "../../services/AuthService";
+import { useNavigation } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
 
+const { width } = Dimensions.get("window");
 
 const LoginScreen = ({ navigation }) => {
-
+  // State variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
+
+  // Toggles visibility of password
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
-};
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
+  };
+  
+  // Handles navigation to register screen
+  const handleRegisterPress = () => {
+    navigation.navigate('Register');
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
+  // Handles haptic feedback on text input focus
+  const handleTextInputFocus = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); 
+  };
+  
+  // Handles login logic
   const handleLogin = async (email, password) => {
     try {
       await AuthService.login(email, password);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Success);
       navigation.navigate("MapScreen");
     } catch (error) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Error);
       console.error(error);
       Alert.alert('Login failed', error.message);
     }
   };
 
-
-  const handleRegisterPress = () => {
-    // Navigate to the Register screen
-    navigation.navigate("Register");
-  };
-
+  // Renders the login screen
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <View style={styles.container}>
-      <View style={styles.titleView}>
-        <Text style={styles.title}>Login</Text>
+      <View style={styles.container}>
+        {/* Title */}
+        <View style={styles.titleView}>
+          <Text style={styles.title}>Login</Text>
+        </View>
 
-        <View style={styles.inputContainer}>
+        {/* Input fields */}
+        <View style={{ ...styles.inputContainer, width: width - 30 }}>
           <Text style={styles.label}>Email</Text>
-
           <TextInput
-            style={styles.input}
+            style={{ ...styles.input, fontSize: 13 }} // Dynamic font size
             placeholder="Enter your email"
             placeholderTextColor="#7A807C"
             value={email}
@@ -48,69 +65,76 @@ const LoginScreen = ({ navigation }) => {
             keyboardType="email-address"
             autoCapitalize="none"
             keyboardAppearance='dark'
-
+            onFocus={handleTextInputFocus}
           />
+
           <Text style={styles.label}>Password</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your password"
-            placeholderTextColor="#7A807C"
-            value={password}
-            onChangeText={(text) => setPassword(text)}
-            secureTextEntry={!showPassword}
-            keyboardAppearance='dark'
-          />
-          <Icon
-            name={showPassword ? 'eye' : 'eye-off'}
-            size={24}
-            color="#aaa"
-            style={{left: 290, bottom: 52}}
-            onPress={toggleShowPassword}
-          />
+          <View style={styles.passwordInputContainer}>
+            <TextInput
+              style={{ ...styles.input2, flex: 1, fontSize: 13 }} // Dynamic font size
+              placeholder="Enter your password"
+              placeholderTextColor="#7A807C"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              secureTextEntry={!showPassword}
+              keyboardAppearance='dark'
+              onFocus={handleTextInputFocus}
+            />
+           <TouchableOpacity style={styles.iconContainer} onPress={toggleShowPassword}>
+              <Icon
+                name={showPassword ? 'eye' : 'eye-off'}
+                size={24}
+                color="#aaa"
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.forgotPassword}>Forgot Password?</Text>
 
         </View>
 
-
-        <Text style={styles.registerText}>
+        <View style={styles.bottomContainer}>
+        {/* Register link */}
+         <Text style={styles.registerText}>
           Don't have an account?{" "}
           <Text onPress={handleRegisterPress} style={styles.registerLink}>
             Create One
           </Text>
-        </Text>
+         </Text>
+        {/* Login button */}
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => handleLogin(email, password)}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+
+         {/* Footer */}
+         <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
+       </View>
+
+       
       </View>
-
-      <TouchableOpacity style={styles.buttonContainer} onPress={() => handleLogin(email, password)}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
-    </View>
     </TouchableWithoutFeedback>
   );
 };
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
     paddingHorizontal: 15,
+    paddingTop: 100,  
   },
-  titleView: {
-    flex: 1,
-    paddingTop: 80,
-  },
+  
   title: {
     fontSize: 45,
     fontWeight: "bold",
     color: "#D6E0D9",
-    paddingLeft: 8,
-    textAlign: "left",
   },
   inputContainer: {
-    paddingLeft: 9,
     paddingTop: 40,
-    paddingRight: 9,
+  },
+  passwordInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   label: {
     fontSize: 16,
@@ -118,40 +142,49 @@ const styles = StyleSheet.create({
     color: "#D6E0D9",
     marginBottom: 5,
   },
+
+  forgotPassword: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#7A807C",
+    marginTop: 6,
+    marginRight: 10,
+  },
+
   input: {
     height: 40,
-    borderWidth: 1,
+    borderWidth: 1.2,
     borderColor: "#D6E0D9",
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
     color: "#D6E0D9",
   },
+  input2: {
+    height: 40,
+    borderWidth: 1.2,
+    borderColor: "#D6E0D9",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    color: "#D6E0D9",
+  },
   registerText: {
     fontWeight: "bold",
-    textAlign: "left",
     color: "#7A807C",
-    position: "absolute",
-    bottom: 10,
-    left: 10,
-    right: 20,
+    marginVertical: 10,
   },
   registerLink: {
     fontWeight: "bold",
-    textAlign: "right",
     color: "#D6E0D9",
-    position: "absolute",
-    bottom: 10,
-    left: 20,
-    right: 0,
   },
   buttonContainer: {
     backgroundColor: "#D6E0D9",
     borderRadius: 8,
     paddingVertical: 14,
+    marginBottom: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 90,
+    
   },
   buttonText: {
     color: "#000000",
@@ -160,12 +193,19 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontWeight: "bold",
-    textAlign: "center",
     color: "#7A807C",
+    textAlign: "center",
+  },
+  bottomContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 50,
+  },
+ 
+  iconContainer: {
     position: "absolute",
-    bottom: 40,
-    left: 20,
-    right: 20,
+    right: 10,
+    top: 10,
   },
 });
 

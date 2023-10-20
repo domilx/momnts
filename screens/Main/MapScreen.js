@@ -22,7 +22,6 @@ const MapScreen = () => {
   const navigation = useNavigation();
   const mapRef = useRef(null);
   const [zoomLevel, setZoomLevel] = useState(0);
-
   const [location, setLocation] = useState(null);
   const [show, setShow] = useState(false);
   const [currentView, setCurrentView] = useState('noview');

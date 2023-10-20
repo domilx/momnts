@@ -1,19 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Alert,
-  Modal,
-} from "react-native";
+import { View, Text, Dimensions, TouchableOpacity, StyleSheet, TextInput, ScrollView, Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert, Modal} from "react-native";
 import * as Haptics from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -21,14 +7,18 @@ import * as ImagePicker from 'expo-image-picker';
 import AuthService from "../../services/AuthService";
 
 const RegisterScreen = () => {
-  const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [image, setImage] = useState(null);
+    // Register variables
+    const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
+    const [bio, setBio] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [image, setImage] = useState(null);
+
+    // Rando variables
+    const navigation = useNavigation();
+    const [modalVisible, setModalVisible] = useState(false);
+    const { width } = Dimensions.get("window");
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -46,6 +36,10 @@ const RegisterScreen = () => {
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
+  };
+
+  const handleTextInputFocus = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); 
   };
 
   const handleRegister = async () => {
@@ -71,92 +65,92 @@ const RegisterScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
-    >
+    
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
 
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.scrollViewContent}
-          >
+        {/* Title */}
+         <View style={styles.titleView}>
             <Text style={styles.title}>Register</Text>
+        </View>
 
-            <View style={styles.inputContainer}>
+        {/* Input fields */}
+          <View style={{ ...styles.inputContainer, width: width - 30 }}>
               <Text style={styles.label}>Username</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Username:"
+                placeholder="Enter your username"
                 placeholderTextColor="#7A807C"
                 onChangeText={(text) => setUsername(text)}
-                keyboardType="email-address"
+                keyboardType="default"
                 autoCapitalize="none"
                 keyboardAppearance='dark'
+                onFocus={handleTextInputFocus}
               />
 
               <Text style={styles.label}>Email</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Email:"
+                placeholder="Enter your email"
                 placeholderTextColor="#7A807C"
                 onChangeText={(text) => setEmail(text)}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 keyboardAppearance='dark'
+                onFocus={handleTextInputFocus}
               />
 
               <Text style={styles.label}>Password</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Password:"
+                placeholder="Enter super secret password"
                 placeholderTextColor="#7A807C"
                 onChangeText={(text) => setPassword(text)}
-                keyboardType="email-address"
+                keyboardType="default"
                 autoCapitalize="none"
                 secureTextEntry={true}
                 keyboardAppearance='dark'
+                onFocus={handleTextInputFocus}
               />
             </View>
 
-           
-           
-            <Text style={styles.registerText}>
-              Already have an account?{" "}
-              <Text onPress={handleReturn} style={styles.registerLink}>
-                Login
+            {/* Bottom container */}  
+            <View style={styles.bottomContainer}>
+              <Text style={styles.registerText}>
+                 Already have an account?{" "}
+                <Text onPress={handleReturn} style={styles.registerLink}>
+                  Login
+                </Text>
               </Text>
-            </Text>
+              <TouchableOpacity style={styles.buttonContainer} onPress={() => setModalVisible(true)}>
+               <Text style={styles.buttonText}>Register</Text>
+              </TouchableOpacity>
+              <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
+            </View>
 
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => setModalVisible(true)}>
-              <Text style={styles.buttonText}>Continue</Text>
-            </TouchableOpacity>
-
-          </ScrollView>
-
+            {/* Modal 2nd stage of registration*/}
           <Modal
             animationType="slide"
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => setModalVisible(false)}
-          >
+            >
+
             <View style={styles.modalContainer}>
               <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.modalContent}>
                   <View style={{padding: 40}}></View>
-                <TouchableOpacity
-                  onPress={pickImage}
-                  style={styles.avatarClickableArea}
-                >
-                  <Image
-                    source={{ uri: image }}
-                    style={styles.avatar}
-                  />
-                  <View style={styles.cameraIconOverlay}>
-                    <Icon name="camera" size={20} color="#000000" />
-                  </View>
+                  <TouchableOpacity
+                    onPress={pickImage}
+                    style={styles.avatarClickableArea}
+                  >
+                    <Image
+                      source={{ uri: image }}
+                      style={styles.avatar}
+                    />
+                    <View style={styles.cameraIconOverlay}>
+                      <Icon name="camera" size={20} color="#000000" />
+                    </View>
                 </TouchableOpacity>
                   <Text style={styles.label}>Full Name</Text>
                   <TextInput
@@ -164,9 +158,10 @@ const RegisterScreen = () => {
                     placeholder="Full Name:"
                     placeholderTextColor="#7A807C"
                     onChangeText={(text) => setName(text)}
-                    keyboardType="email-address"
+                    keyboardType="default"
                     autoCapitalize="none"
                     keyboardAppearance='dark'
+                    onFocus={handleTextInputFocus}
                   />
                   <Text style={styles.label}>Bio</Text>
                   <TextInput
@@ -174,36 +169,30 @@ const RegisterScreen = () => {
                     placeholder="Bio:"
                     placeholderTextColor="#7A807C"
                     onChangeText={(text) => setBio(text)}
-                    keyboardType="email-address"
+                    keyboardType="defaults"
                     autoCapitalize="none"
                     keyboardAppearance='dark'
+                    onFocus={handleTextInputFocus}
                   />
 
                   
-                 <Text style={styles.registerText}>
+                  <Text style={styles.registerText}>
                     Change registration details?{" "}
-                 <Text  onPress={() => setModalVisible(false)} style={styles.registerLink}>
-                    Return
-              </Text>
-            </Text>
+                    <Text  onPress={() => setModalVisible(false)} style={styles.registerLink}>
+                       Return
+                    </Text>
+                  </Text>
 
-            <TouchableOpacity style={styles.buttonContainer} onPress={handleRegister}>
-              <Text style={styles.buttonText}>Register</Text>
-            </TouchableOpacity>
-            <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
-
+                  <TouchableOpacity style={styles.buttonContainer} onPress={handleRegister}>
+                    <Text style={styles.buttonText}>Register</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
                 </View>
-                
               </TouchableWithoutFeedback>
-              
             </View>
-           
           </Modal>
-
-          <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
   );
 };
 
@@ -211,22 +200,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "black",
-    paddingHorizontal: 11,
-    justifyContent: "center",
+    paddingHorizontal: 15,
+    paddingTop: 100,  
   },
-  scrollViewContent: {
-    flexGrow: 1,
+
+  bottomContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 50,
   },
+ 
   title: {
     fontSize: 45,
     fontWeight: "bold",
     color: "#D6E0D9",
-    marginTop: 80,
-    marginBottom: 50,
-    textAlign: "left",
   },
   inputContainer: {
-    marginBottom: 20,
+    paddingTop: 40,
   },
   label: {
     fontSize: 16,
@@ -236,7 +226,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderWidth: 1,
+    borderWidth: 1.2,
     borderColor: "#D6E0D9",
     borderRadius: 5,
     paddingHorizontal: 10,
@@ -287,6 +277,8 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 20,
+
   },
   buttonText: {
     color: "#000000",
@@ -295,10 +287,8 @@ const styles = StyleSheet.create({
   },
   registerText: {
     fontWeight: "bold",
-    textAlign: "left",
     color: "#7A807C",
-    marginBottom: 10,
-    marginTop: 220,
+    marginVertical: 10,
   },
   registerLink: {
     fontWeight: "bold",
@@ -327,12 +317,8 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontWeight: "bold",
-    textAlign: "center",
     color: "#7A807C",
-    position: "absolute",
-    bottom: 40,
-    left: 20,
-    right: 20,
+    textAlign: "center",
   },
 });
 

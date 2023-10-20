@@ -45,7 +45,8 @@ const handleReturn = () => {
 
 
       <Camera style={styles.camera} type={type}>
-    <View style={styles.buttonContainer}>
+      </Camera>
+      <View style={styles.buttonContainer}>
       <View style={styles.buttonbackground}>
         <TouchableOpacity onPress={handleReturn}>
           <MatIcon name="close-circle-outline" size={35} color="#D6E0D9" />
@@ -56,8 +57,8 @@ const handleReturn = () => {
             activeOpacity={1}
             style={styles.circleButton}>
         </TouchableOpacity>
-        <View style={styles.buttonbackground}>
 
+        <View style={styles.buttonbackground}>
         <TouchableOpacity onPress={toggleCameraType}>
           <MatIcon name="camera-retake-outline" size={35} color="#D6E0D9" />
         </TouchableOpacity>
@@ -65,7 +66,6 @@ const handleReturn = () => {
 
     </View>
   
-      </Camera>
     </View>
   );
 }
@@ -78,11 +78,13 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingHorizontal: 20,
     position: 'absolute',
-    top: 700,
     flexDirection: 'row',
-    alignContent: 'center',
     justifyContent: 'space-between',
     width: '100%',
+    flex: 1,
+    marginBottom: -100,
+
+
   },
   camera: {
     flex: 1,
@@ -111,10 +113,8 @@ const styles = StyleSheet.create({
   },
   
   button: {
-    flex: 1,
-    alignItems: 'center',
   },
-  text: {
+  text: {  
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',

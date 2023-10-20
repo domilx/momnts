@@ -3,6 +3,7 @@ import { doc, setDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../firebase';
 
+
 const AuthService = {
     async isLoggedIn(): Promise<boolean> {
         const user = auth.currentUser;
@@ -34,6 +35,7 @@ const AuthService = {
       throw error;
     }
   }
+  
 };
 
 export default AuthService;
