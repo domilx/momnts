@@ -173,17 +173,14 @@ const MapScreen = () => {
           longitudeDelta: 0.4,
         }}
       >
-        {/* Marker user posts test location */}
         <Marker coordinate={testLocation}>
-          <PostMarker />
+          <PostMarker onPress={() => setModalVisible(true)}/>
         </Marker>
 
         <Marker coordinate={testLocation2}>
           <PostMarker />
         </Marker>
-
-
-        {/* Marker for loged in user */}
+        
         {location && (
           <Marker
             key={`${location.latitude}-${location.longitude}`}
