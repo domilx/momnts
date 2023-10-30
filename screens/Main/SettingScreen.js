@@ -5,13 +5,21 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from 'expo-haptics';
 import UserService from '../../services/UserService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 const SettingsScreen = () => {
     const navigation = useNavigation();
     const [profile, setProfile] = useState({});
 
     const handleLogout = async () => {
-        console.log("Logging out...");
+        try {
+            await AsyncStorage.removeItem('userProfile');
+            navigation.navigate("Login");
+          } catch (error) {
+            console.error('Error logging out:', error);
+          }
     };
 
     const [notificationsEnabled, setNotificationsEnabled] = useState(false);

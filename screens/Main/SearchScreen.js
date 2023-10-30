@@ -13,6 +13,8 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from "expo-haptics";
+import UserCard from "./Dynamic-Content/UserCard";
+import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -28,36 +30,45 @@ const SettingsScreen = () => {
           <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
         </TouchableOpacity>
         <Text style={styles.title}>Search</Text>
-        <View style={{ width: 25 }} />
+        <TouchableOpacity activeOpacity={0.7} onPress={handleReturn}>
+          <MatIcon name="account-group" size={28} color="#D6E0D9" />
+        </TouchableOpacity>
       </View>
 
+      <View style={styles.settingChunk}>
+        <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
+          <Icon name="magnify" size={25} color="gray" style={styles.arrow} />
+
+          <View style={styles.twoText}>
+            <TextInput
+              style={[styles.input, { color: "#D6E0D9" }]}
+              placeholder="Discover new people and places"
+              keyboardAppearance="dark"
+              placeholderTextColor="#7A807C"
+            />
+          </View>
+          <Icon
+            name="chevron-right"
+            size={25}
+            color="gray"
+            style={styles.arrow}
+          />
+        </TouchableOpacity>
+      </View>
       <ScrollView
         style={styles.toggleContainer}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <View style={styles.settingChunk}>
-          <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
-            <Icon name="magnify" size={25} color="gray" style={styles.arrow} />
-
-            <View style={styles.twoText}>
-              <TextInput
-                style={[styles.input, { color: "#D6E0D9" }]}
-                placeholder="Discover new people and places"
-                keyboardAppearance="dark"
-                placeholderTextColor="#7A807C"
-              />
-            </View>
-            <Icon
-              name="chevron-right"
-              size={25}
-              color="gray"
-              style={styles.arrow}
-            />
-          </TouchableOpacity>
-        </View>
-
+        <Text style={styles.chunkTitle}>Recent Searches</Text>
+        <UserCard />
+        
+        <Text style={styles.chunkTitle}>Recommended</Text>
+        <UserCard />
+        
+        {/*
         <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
+  */}
       </ScrollView>
     </View>
   );
@@ -124,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 10,
-    paddingVertical: 11, // Applied consistent padding to the entire settingItem
+    paddingVertical: 11,
   },
   sectionHeading: {
     flex: 1,
@@ -135,9 +146,9 @@ const styles = StyleSheet.create({
   },
   chunkTitle: {
     fontSize: 12,
-    fontWeight: "500",
+    fontWeight: "600",
     color: "#4e4e4e",
-    marginTop: 15,
+    marginTop: 20,
   },
   divider: {
     height: 0.3,
@@ -172,7 +183,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#7A807C",
-    marginBottom: 10,
+    top: 250,
   },
 });
 
