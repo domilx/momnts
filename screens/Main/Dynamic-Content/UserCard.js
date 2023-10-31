@@ -21,7 +21,7 @@ const UserCard = () => {
 	  />
 	  <View style={styles.twoText}>
 		<Text style={styles.fullName}>Nathan Aruna</Text>
-		<Text style={styles.username}>@nathanaruna</Text>
+		<Text style={styles.username}>@nathanaruna1</Text>
 	  </View>
 	  <Icon name="window-close" size={20} color="gray" style={styles.arrow} />
 	</TouchableOpacity>
