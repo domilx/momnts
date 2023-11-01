@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Dimensions } from "react-native";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Dimensions,
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AuthService from "../../services/AuthService";
-import { useNavigation } from '@react-navigation/native';
-import * as Haptics from 'expo-haptics';
+import { useNavigation } from "@react-navigation/native";
+import * as Haptics from "expo-haptics";
+import OverlayComponent from "../Main/Components/LoadingOverlay";
 
 const { width } = Dimensions.get("window");
 
@@ -12,35 +22,41 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isOverlayVisible, setOverlayVisible] = useState(false);
+
+  const handleCloseOverlay = () => {
+    setOverlayVisible(false);
+  };
 
   // Toggles visibility of password
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
   };
-  
+
   // Handles navigation to register screen
   const handleRegisterPress = () => {
-    navigation.navigate('Register');
+    navigation.navigate("Register");
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   // Handles haptic feedback on text input focus
   const handleTextInputFocus = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); 
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
-  
+
   // Handles login logic
   const handleLogin = async (email, password) => {
     try {
+      setOverlayVisible(true);
       await AuthService.login(email, password);
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Success);
       navigation.navigate("MapScreen");
     } catch (error) {
+      setOverlayVisible(false);
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Error);
       console.error(error);
-      Alert.alert('Login failed', error.message);
+      Alert.alert("Login failed", error.message);
     }
   };
 
@@ -64,7 +80,7 @@ const LoginScreen = ({ navigation }) => {
             onChangeText={(text) => setEmail(text)}
             keyboardType="email-address"
             autoCapitalize="none"
-            keyboardAppearance='dark'
+            keyboardAppearance="dark"
             onFocus={handleTextInputFocus}
           />
 
@@ -77,39 +93,46 @@ const LoginScreen = ({ navigation }) => {
               value={password}
               onChangeText={(text) => setPassword(text)}
               secureTextEntry={!showPassword}
-              keyboardAppearance='dark'
+              keyboardAppearance="dark"
               onFocus={handleTextInputFocus}
             />
-           <TouchableOpacity style={styles.iconContainer} onPress={toggleShowPassword}>
+            <TouchableOpacity
+              style={styles.iconContainer}
+              onPress={toggleShowPassword}
+            >
               <Icon
-                name={showPassword ? 'eye' : 'eye-off'}
+                name={showPassword ? "eye" : "eye-off"}
                 size={24}
                 color="#aaa"
               />
             </TouchableOpacity>
           </View>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
-
         </View>
 
         <View style={styles.bottomContainer}>
-        {/* Register link */}
-         <Text style={styles.registerText}>
-          Don't have an account?{" "}
-          <Text onPress={handleRegisterPress} style={styles.registerLink}>
-            Create One
+          {/* Register link */}
+          <Text style={styles.registerText}>
+            Don't have an account?{" "}
+            <Text onPress={handleRegisterPress} style={styles.registerLink}>
+              Create One
+            </Text>
           </Text>
-         </Text>
-        {/* Login button */}
-        <TouchableOpacity style={styles.buttonContainer} onPress={() => handleLogin(email, password)}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
+          {/* Login button */}
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => handleLogin(email, password)}
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
 
-         {/* Footer */}
-         <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
-       </View>
-
-       
+          <OverlayComponent
+            isVisible={isOverlayVisible}
+            onClose={handleCloseOverlay}
+          />
+          {/* Footer */}
+          <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -121,9 +144,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
     paddingHorizontal: 15,
-    paddingTop: 100,  
+    paddingTop: 100,
   },
-  
+
   title: {
     fontSize: 45,
     fontWeight: "bold",
@@ -184,7 +207,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
     justifyContent: "center",
-    
   },
   buttonText: {
     color: "#000000",
@@ -201,7 +223,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginBottom: 50,
   },
- 
+
   iconContainer: {
     position: "absolute",
     right: 10,

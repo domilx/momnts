@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Haptics from 'expo-haptics';
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Haptics from "expo-haptics";
 
-const ControlPanel2 = ({ cityName = 'Montreal' }) => {
+const ControlPanel2 = ({ cityName = "Montreal" }) => {
   const [city, setCity] = useState(cityName);
   const [weatherData, setWeatherData] = useState(null);
-  const [localTime, setLocalTime] = useState('');
+  const [localTime, setLocalTime] = useState("");
 
   const fetchInterval = 5400000; // 90 minutes in milliseconds
 
@@ -39,7 +39,9 @@ const ControlPanel2 = ({ cityName = 'Montreal' }) => {
 
     const fetchWeather = async () => {
       try {
-        const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=214bcc7cd373419da76173110232208&q=${city}`);
+        const response = await fetch(
+          `http://api.weatherapi.com/v1/current.json?key=214bcc7cd373419da76173110232208&q=${city}`
+        );
         const data = await response.json();
         saveWeatherData(data);
         setWeatherData(data);
@@ -47,7 +49,6 @@ const ControlPanel2 = ({ cityName = 'Montreal' }) => {
         if (data?.location?.localtime) {
           setLocalTime(data.location.localtime);
         }
-
       } catch (error) {
         console.error("Error fetching weather data:", error);
       }
@@ -60,19 +61,19 @@ const ControlPanel2 = ({ cityName = 'Montreal' }) => {
   }, [city]);
 
   const getWeatherIcon = () => {
-    if (!weatherData) return 'weather-cloudy';
+    if (!weatherData) return "weather-cloudy";
     const condition = weatherData.current.condition.text.toLowerCase();
-    if (condition.includes('rain')) return 'weather-rainy';
-    if (condition.includes('cloud')) return 'weather-cloudy';
-    return 'weather-sunny';
+    if (condition.includes("rain")) return "weather-rainy";
+    if (condition.includes("cloud")) return "weather-cloudy";
+    return "weather-sunny";
   };
 
   const format12HourTime = (timeStr) => {
-    if (!timeStr) return '';
-    const timeOnly = timeStr.split(' ')[1];
-    const [hour, minute] = timeOnly.split(':');
+    if (!timeStr) return "";
+    const timeOnly = timeStr.split(" ")[1];
+    const [hour, minute] = timeOnly.split(":");
     let formattedHour = parseInt(hour, 10);
-    const ampm = formattedHour >= 12 ? 'PM' : 'AM';
+    const ampm = formattedHour >= 12 ? "PM" : "AM";
     if (formattedHour > 12) {
       formattedHour -= 12;
     } else if (formattedHour === 0) {
@@ -96,25 +97,25 @@ const ControlPanel2 = ({ cityName = 'Montreal' }) => {
 
 const styles = StyleSheet.create({
   chip: {
-    backgroundColor: 'rgba(21, 21, 23, 0.7)',
+    backgroundColor: "rgba(21, 21, 23, 0.7)",
     borderRadius: 25,
     paddingVertical: 9,
     paddingHorizontal: 20,
-    alignItems: 'center',
-    borderColor: 'black',
+    alignItems: "center",
+    borderColor: "black",
   },
   locationText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   detailsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 5,
   },
   detailsText: {
-    color: '#D6E0D9',
+    color: "#D6E0D9",
     fontSize: 12,
     marginLeft: 5,
   },

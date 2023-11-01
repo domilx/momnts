@@ -8,6 +8,7 @@ import {
   ScrollView,
   Image,
   TextInput,
+  FlatList,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -15,12 +16,45 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from "expo-haptics";
 import UserCard from "./Dynamic-Content/UserCard";
 import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Input, ListItem } from "react-native-elements";
+import SearchService from "../../services/SearchService"; 
+import FriendsService from "../../services/FriendsService"; 
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = (query) => {
+    setSearch(query);
+
+    clearTimeout(timeoutId);
+    const timeoutId = setTimeout(async () => {
+      try {
+        const results = await SearchService.searchUsers(query);
+        setSearchResults(results);
+        console.log("Search Results:", searchResults);
+      } catch (error) {
+        console.error("Error searching users:", error);
+      }
+    }, 300);
+  };
+
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
+  };
+
+  const sendFriendRequest = async (userId) => {
+    try {
+      const requestSent = await FriendsService.sendFriendRequest(userId);
+      if (requestSent) {
+        console.log('Friend request sent successfully!');
+        // You can update the UI or show a confirmation message here
+      }
+    } catch (error) {
+      console.error("Error sending friend request:", error);
+    }
   };
 
   return (
@@ -45,6 +79,8 @@ const SettingsScreen = () => {
               placeholder="Discover new people and places"
               keyboardAppearance="dark"
               placeholderTextColor="#7A807C"
+              onChangeText={handleSearch}
+              value={search}
             />
           </View>
           <Icon
@@ -60,12 +96,13 @@ const SettingsScreen = () => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <Text style={styles.chunkTitle}>Recent Searches</Text>
-        <UserCard />
-        
-        <Text style={styles.chunkTitle}>Recommended</Text>
-        <UserCard />
-        
+       <FlatList
+        data={searchResults}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <UserCard user={item} onSendFriendRequest={sendFriendRequest} />
+        )}
+      />
         {/*
         <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
   */}
