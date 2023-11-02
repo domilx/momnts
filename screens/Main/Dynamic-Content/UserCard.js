@@ -2,13 +2,13 @@ import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 
-const UserCard = ({ user, onSendFriendRequest }) => {
-  const handleSendFriendRequest = () => {
-    onSendFriendRequest(user.id); 
+const UserCard = ({ user, userCard }) => {
+  const handleUserCard = () => {
+    userCard(user.id); 
   };
   return (
     <View style={styles.settingChunk}>
-      <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
+      <TouchableOpacity style={styles.settingItem} onPress={handleUserCard} activeOpacity={0.7}>
         <Image source={{ uri: user.profileImageUrl }} style={styles.avatar} />
         <View style={styles.twoText}>
           <Text style={styles.fullName}>{user.fullName}</Text>
@@ -19,7 +19,6 @@ const UserCard = ({ user, onSendFriendRequest }) => {
           size={25}
           color="#D6E0D9"
           style={styles.arrow}
-          onPress={handleSendFriendRequest}
         />
       </TouchableOpacity>
     </View>

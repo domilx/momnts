@@ -14,6 +14,7 @@ import WelcomeScreen from "./screens/Unguarded/WelcomeScreen";
 import RegisterScreen from "./screens/Unguarded/RegisterScreen";
 import LoginScreen from "./screens/Unguarded/LoginScreen";
 import ProfileScreen from "./screens/Main/ProfileScreen";
+import UserProfile from "./screens/Main/Dynamic-Content/UserProfile";
 import MapScreen from "./screens/Main/MapScreen";
 import SettingsScreen from "./screens/Main/SettingScreen";
 import EditProfileScreen from "./screens/Main/EditProfileScreen";
@@ -23,7 +24,6 @@ import HelpScreen from "./screens/Main/Settings/HelpScreen";
 import CameraScreen from "./screens/Main/Video-Interfaces/CameraView";
 import FriendsScreen from "./screens/Main/FriendsScreen";
 import SearchScreen from "./screens/Main/SearchScreen";
-
 import { auth } from "./firebase";
 
 
@@ -105,6 +105,11 @@ const App = () => {
           <Stack.Screen
             name="Profile"
             component={ProfileScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="UserProfile"
+            component={UserProfile}
             options={{ headerShown: false }}
           />
           <Stack.Screen

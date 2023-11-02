@@ -17,8 +17,8 @@ import * as Haptics from "expo-haptics";
 import UserCard from "./Dynamic-Content/UserCard";
 import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Input, ListItem } from "react-native-elements";
-import SearchService from "../../services/SearchService"; 
-import FriendsService from "../../services/FriendsService"; 
+import SearchService from "../../services/SearchService";
+import FriendsService from "../../services/FriendsService";
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -45,11 +45,16 @@ const SettingsScreen = () => {
     navigation.goBack();
   };
 
+  const handleProfile = () => {
+    navigation.navigate("UserProfile");
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
   const sendFriendRequest = async (userId) => {
     try {
       const requestSent = await FriendsService.sendFriendRequest(userId);
       if (requestSent) {
-        console.log('Friend request sent successfully!');
+        console.log("Friend request sent successfully!");
         // You can update the UI or show a confirmation message here
       }
     } catch (error) {
@@ -96,16 +101,13 @@ const SettingsScreen = () => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-       <FlatList
-        data={searchResults}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <UserCard user={item} onSendFriendRequest={sendFriendRequest} />
-        )}
-      />
-        {/*
-        <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
-  */}
+        <FlatList
+          data={searchResults}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <UserCard user={item} userCard={handleProfile} />
+          )}
+        />
       </ScrollView>
     </View>
   );
