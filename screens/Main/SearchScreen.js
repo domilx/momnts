@@ -45,22 +45,17 @@ const SettingsScreen = () => {
     navigation.goBack();
   };
 
+  const handleFriends = () => {
+    navigation.navigate("Friends");
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
   const handleProfile = () => {
     navigation.navigate("UserProfile");
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
-  const sendFriendRequest = async (userId) => {
-    try {
-      const requestSent = await FriendsService.sendFriendRequest(userId);
-      if (requestSent) {
-        console.log("Friend request sent successfully!");
-        // You can update the UI or show a confirmation message here
-      }
-    } catch (error) {
-      console.error("Error sending friend request:", error);
-    }
-  };
+ 
 
   return (
     <View style={styles.container}>
@@ -69,7 +64,7 @@ const SettingsScreen = () => {
           <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
         </TouchableOpacity>
         <Text style={styles.title}>Search</Text>
-        <TouchableOpacity activeOpacity={0.7} onPress={handleReturn}>
+        <TouchableOpacity activeOpacity={0.7} onPress={handleFriends}>
           <MatIcon name="account-group" size={28} color="#D6E0D9" />
         </TouchableOpacity>
       </View>

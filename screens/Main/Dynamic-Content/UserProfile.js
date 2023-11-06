@@ -14,10 +14,19 @@ const UserProfile = () => {
     navigation.goBack();
   };
 
+  const handleForeignProfileSettings = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleReturn} activeOpacity={1} style={styles.returnIcon}>
         <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={handleForeignProfileSettings} activeOpacity={1} style={styles.settingsIcon}>
+      <Icon name="dots-horizontal" size={30} color="#D6E0D9" />
       </TouchableOpacity>
 
       
@@ -30,13 +39,13 @@ const UserProfile = () => {
         />
         <TouchableOpacity activeOpacity={0.8} style={styles.nameContainer}>
           <View style={styles.namesIcon}>
-            <Text style={styles.displayname}>Nathan Aruna</Text>
+            <Text style={styles.displayname}>Users Profile</Text>
           </View>
           <View style={styles.username}>
-            <Text style={styles.usernameText}>@nathanaruna</Text>
+            <Text style={styles.usernameText}>@randomuser</Text>
           </View>
           <View style={styles.username}>
-            <Text style={styles.bioText}>love planes so so much </Text>
+            <Text style={styles.bioText}>"love planes so so much"</Text>
           </View>
         </TouchableOpacity>
       </View>
