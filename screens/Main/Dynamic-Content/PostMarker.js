@@ -27,10 +27,37 @@ const PostMarker = () => {
         activeOpacity={0.7}
       >
         <View style={styles.avatarContainer}>
-          <Image style={styles.avatar} source={{ uri: imageUrl }} />
-          {/*<Icon name="lock" size={20} color="#7A807C" style={styles.icon} /> */}
+          <View
+            style={{
+              borderColor: "rgba(21, 21, 23, 0.7)",
+              borderWidth: 5,
+              borderRadius: 50,
+            }}
+          >
+            <Image style={styles.avatar} source={{ uri: imageUrl }} />
+          </View>
+
+          <View
+            style={{
+              backgroundColor: "rgba(21, 21, 23, 0.7)",
+              borderColor: "rgba(21, 21, 23, 0.0)",
+              borderWidth: 5,
+              borderRadius: 50,
+            }}
+          >
+            <Text style={styles.sectionHeading}>
+              nathanaruna
+              <Icon
+                name="chevron-right"
+                size={15}
+                color="gray"
+              />
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
+      {/*
+
       <TouchableOpacity onPress={toggleModal} style={styles.button}>
         <Text style={styles.buttonText}>Open Modal</Text>
       </TouchableOpacity>
@@ -43,6 +70,7 @@ const PostMarker = () => {
           </TouchableOpacity>
         </View>
       </Modal>
+      */}
     </View>
   );
 };
@@ -55,7 +83,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatarContainer: {
-    flexDirection: "row",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
   },
   avatar: {
@@ -81,7 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
     color: "#fdfdff",
-    marginLeft: 10,
+    paddingHorizontal: 5,
   },
   closeButton: {
     marginTop: 100,
