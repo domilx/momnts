@@ -27,31 +27,23 @@ const PostMarker = () => {
         activeOpacity={0.7}
       >
         <View style={styles.avatarContainer}>
-          <View
-            style={{
-              borderColor: "rgba(21, 21, 23, 0.7)",
-              borderWidth: 5,
-              borderRadius: 50,
-            }}
-          >
-            <Image style={styles.avatar} source={{ uri: imageUrl }} />
-          </View>
+        
 
           <View
             style={{
+              flexDirection: "row",
               backgroundColor: "rgba(21, 21, 23, 0.7)",
               borderColor: "rgba(21, 21, 23, 0.0)",
               borderWidth: 5,
               borderRadius: 50,
             }}
           >
+          <Image style={styles.avatar} source={{ uri: imageUrl }} />
+
             <Text style={styles.sectionHeading}>
-              nathanaruna
-              <Icon
-                name="chevron-right"
-                size={15}
-                color="gray"
-              />
+              @nathanaruna 
+              <Icon name="image-multiple" size={15} color="#B7C0BA" />
+              
             </Text>
           </View>
         </View>
@@ -88,8 +80,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatar: {
-    width: 45,
-    height: 45,
+    width: 20,
+    height: 20,
     borderRadius: 50,
     borderColor: "rgba(21, 21, 23, 0.1)",
     borderWidth: 1,
@@ -109,7 +101,7 @@ const styles = StyleSheet.create({
   sectionHeading: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#fdfdff",
+    color: "#B7C0BA",
     paddingHorizontal: 5,
   },
   closeButton: {
