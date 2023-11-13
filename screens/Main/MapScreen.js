@@ -25,6 +25,7 @@ import FriendsList from "./Dynamic-Content/FriendsList";
 import FriendPost from "./Dynamic-Content/FriendPost";
 import UserMarker from "./Dynamic-Content/UserMarker";
 import PostMarker from "./Dynamic-Content/PostMarker";
+import Places from "./Dynamic-Content/Places";
 
 const MapScreen = () => {
   const navigation = useNavigation();
@@ -232,7 +233,9 @@ const MapScreen = () => {
             </View>
           )}
           {currentView === "yView" && (
-            <View style={styles.friendsListContainer}></View>
+            <View style={styles.friendsListContainer}>
+              <Places />
+            </View>
           )}
         </View>
       </BottomSheet>

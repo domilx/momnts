@@ -36,14 +36,16 @@ const PostMarker = () => {
               borderColor: "rgba(21, 21, 23, 0.0)",
               borderWidth: 5,
               borderRadius: 50,
+              
             }}
           >
           <Image style={styles.avatar} source={{ uri: imageUrl }} />
 
             <Text style={styles.sectionHeading}>
-              @nathanaruna 
+              +1
+              {/*
               <Icon name="image-multiple" size={15} color="#B7C0BA" />
-              
+              */}
             </Text>
           </View>
         </View>
@@ -73,11 +75,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     justifyContent: "center",
     alignItems: "center",
+    
   },
   avatarContainer: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    
   },
   avatar: {
     width: 20,

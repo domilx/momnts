@@ -15,7 +15,7 @@ const UserMarker = ({ username, image }) => (
         <Icon
           name="chevron-right"
           size={25}
-          color="gray"
+          color="#B7C0BA"
           style={styles.arrow}
         />
       </TouchableOpacity>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   settingChunk: {
     backgroundColor: "rgba(21, 21, 23, 0.7)",
-    borderRadius: 10,
+    borderRadius: 50,
   },
   avatar: {
     width: 30,
