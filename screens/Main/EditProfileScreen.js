@@ -11,8 +11,8 @@ import {
 import * as Haptics from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import * as ImagePicker from 'expo-image-picker';
-
+import * as ImagePicker from "expo-image-picker";
+import UserService from "../../services/UserService";
 
 const EditProfileScreen = () => {
   const navigation = useNavigation();
@@ -21,13 +21,25 @@ const EditProfileScreen = () => {
   const DEFAULT_USERNAME = "johndoe";
   const DEFAULT_BIO = "This is my bio.";
   const DEFAULT_EMAIL = "johndoe@mail.com";
+  const [profile, setProfile] = useState({});
 
   const [name, setName] = useState(DEFAULT_NAME);
   const [username, setUsername] = useState(DEFAULT_USERNAME);
   const [bio, setBio] = useState(DEFAULT_BIO);
   const [email, setEmail] = useState(DEFAULT_EMAIL);
-
   const [hasChanged, setHasChanged] = useState(false);
+
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      const userProfile = await UserService.getUserProfile();
+      if (userProfile) {
+        setProfile(userProfile);
+      }
+    };
+
+    loadUserProfile();
+  }, []);
+
   useEffect(() => {
     if (
       name !== DEFAULT_NAME ||
@@ -106,76 +118,57 @@ const EditProfileScreen = () => {
               onPress={pickImage}
               style={styles.avatarClickableArea}
             >
-              <Image
-                source={{ uri: image }}
-                style={styles.avatar}
-              />
+              <Image source={{  uri: profile.profileImageUrl }} style={styles.avatar} />
               <View style={styles.cameraIconOverlay}>
                 <Icon name="camera" size={20} color="#000000" />
               </View>
             </TouchableOpacity>
 
             <View style={styles.settingChunk2}>
-              <TouchableOpacity
-                style={styles.settingItem}
-                activeOpacity={0.7}
-              >
+              <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
                 <Text style={styles.sectionHeading}>Full Name:</Text>
                 <TextInput
                   style={styles.input}
-                  defaultValue={DEFAULT_NAME}
+                  defaultValue={profile.fullName}
                   onChangeText={(text) => setName(text)}
-                  keyboardAppearance='dark'
-
+                  keyboardAppearance="dark"
                 />
               </TouchableOpacity>
 
               <View style={styles.divider} />
 
-              <TouchableOpacity
-                style={styles.settingItem}
-                activeOpacity={0.7}
-              >
+              <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
                 <Text style={styles.sectionHeading}>Username:</Text>
                 <TextInput
                   style={styles.input}
-                  defaultValue={DEFAULT_NAME}
+                  defaultValue={profile.username}
                   onChangeText={(text) => setName(text)}
-                  keyboardAppearance='dark'
-
+                  keyboardAppearance="dark"
                 />
               </TouchableOpacity>
             </View>
 
             <View style={styles.settingChunk2}>
-              <TouchableOpacity
-                style={styles.settingItem}
-                activeOpacity={0.7}
-              >
+              <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
                 <Text style={styles.sectionHeading}>Bio:</Text>
                 <TextInput
                   style={styles.input}
-                  defaultValue={DEFAULT_BIO}
+                  defaultValue={profile.bio}
                   multiline={true}
                   onChangeText={(text) => setBio(text)}
-                  keyboardAppearance='dark'
-
+                  keyboardAppearance="dark"
                 />
               </TouchableOpacity>
             </View>
 
             <View style={styles.settingChunk2}>
-              <TouchableOpacity
-                style={styles.settingItem}
-                activeOpacity={0.7}
-              >
+              <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
                 <Text style={styles.sectionHeading}>Email:</Text>
                 <TextInput
                   style={styles.input}
-                  defaultValue={DEFAULT_EMAIL}
+                  defaultValue={profile.email}
                   onChangeText={(text) => setUsername(text)}
-                  keyboardAppearance='dark'
-
+                  keyboardAppearance="dark"
                 />
               </TouchableOpacity>
             </View>
@@ -226,23 +219,23 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   settingChunk2: {
-    backgroundColor: '#151517',
+    backgroundColor: "#151517",
     borderRadius: 10,
     marginTop: 8,
     marginBottom: 20,
   },
   settingItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 10,
-    paddingVertical: 11,  // Applied consistent padding to the entire settingItem
+    paddingVertical: 11, // Applied consistent padding to the entire settingItem
   },
   sectionHeading: {
     flex: 1,
     fontSize: 14,
-    fontWeight: '600',  
-    color: '#fdfdff',
+    fontWeight: "600",
+    color: "#fdfdff",
     marginLeft: 10,
   },
   avatarClickableArea: {
@@ -290,7 +283,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  
+
   footerText: {
     fontWeight: "bold",
     textAlign: "center",

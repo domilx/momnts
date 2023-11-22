@@ -18,7 +18,11 @@ import UserCard from "./Dynamic-Content/UserCard";
 import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Input, ListItem } from "react-native-elements";
 import SearchService from "../../services/SearchService";
-import FriendsService from "../../services/FriendsService";
+import {
+  sendFriendRequest,
+  acceptFriendRequest,
+  getUserFriends,
+} from "../../services/FriendsService";
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -39,7 +43,7 @@ const SettingsScreen = () => {
       }
     }, 300);
   };
-
+  
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
@@ -49,13 +53,6 @@ const SettingsScreen = () => {
     navigation.navigate("Friends");
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
-
-  const handleProfile = () => {
-    navigation.navigate("UserProfile");
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  };
-
- 
 
   return (
     <View style={styles.container}>
@@ -98,10 +95,8 @@ const SettingsScreen = () => {
       >
         <FlatList
           data={searchResults}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <UserCard user={item} userCard={handleProfile} />
-          )}
+          keyExtractor={(item) => item.userId}
+          renderItem={({ item }) => <UserCard user={item} />}
         />
       </ScrollView>
     </View>

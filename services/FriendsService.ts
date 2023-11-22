@@ -1,26 +1,29 @@
-// Import necessary modules from Firebase
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase'; // Assuming you have a 'db' object initialized for Firebase
+import { auth, db, storage } from '../firebase';
+import { doc, getDoc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 
-const sendFriendRequest = async (senderId, receiverId) => {
+export const sendFriendRequest = async (recipientId) => {
   try {
-    const friendRequestsCollection = collection(db, 'friendRequests');
+    // Get the currently logged-in user
+    const currentUser = auth.currentUser;
 
-    // Add a new document to the 'friendRequests' collection with senderId, receiverId, and status as 'pending'
-    await addDoc(friendRequestsCollection, {
-      senderId: senderId,
-      receiverId: receiverId,
-      status: 'pending',
-      timestamp: new Date(),
-    });
+    if (currentUser) {
+      const senderId = currentUser.uid; 
 
-    return true; // Request sent successfully
+      const senderDocRef = doc(db, 'users', senderId);
+      const recipientDocRef = doc(db, 'users', recipientId);
+
+      await updateDoc(senderDocRef, {
+        friendRequestsSent: arrayUnion(recipientId),
+      });
+
+      await updateDoc(recipientDocRef, {
+        friendRequestsReceived: arrayUnion(senderId),
+      });
+    } else {
+      throw new Error('No user logged in.');
+    }
   } catch (error) {
-    console.error("Error sending friend request:", error);
+    console.error('Error sending friend request:', error);
     throw error;
   }
-};
-
-export default {
-  sendFriendRequest,
 };

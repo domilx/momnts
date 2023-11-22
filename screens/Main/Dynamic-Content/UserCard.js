@@ -1,26 +1,56 @@
-import React from "react";
+import React, { useState } from 'react';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { sendFriendRequest } from "../../../services/FriendsService"; // Import the function from your service file
+import * as Haptics from "expo-haptics";
 
 const UserCard = ({ user, userCard }) => {
-  const handleUserCard = () => {
-    userCard(user.id); 
+  const [addIndicator, setaddIndicator] = useState(false);
+  
+
+
+  const handleSendFriendRequest = async () => {
+    try {
+      const userId = getUserIdFromDocumentId(user); 
+      if (userId) {
+        await sendFriendRequest(userId);
+        setaddIndicator(!addIndicator);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.success);
+
+
+      } else {
+        console.error('User ID not found');
+      }
+    } catch (error) {
+      console.error('Error sending friend request:', error);
+    }
   };
+
+  // PLEASE FIX ITS TAKING THE PROFILE URL LINK AND EXTRACTING USER ID SO NOT HALAL MODE
+  const getUserIdFromDocumentId = (user) => {
+   
+    const profileImageUrl = user.profileImageUrl || '';
+    const userId = profileImageUrl.split('%2F')[1].split('?')[0]; 
+    return userId;
+  };
+
   return (
     <View style={styles.settingChunk}>
-      <TouchableOpacity style={styles.settingItem} onPress={handleUserCard} activeOpacity={0.7}>
+      <View style={styles.settingItem}  activeOpacity={0.7}>
         <Image source={{ uri: user.profileImageUrl }} style={styles.avatar} />
         <View style={styles.twoText}>
           <Text style={styles.fullName}>{user.fullName}</Text>
           <Text style={styles.username}>@{user.username}</Text>
         </View>
-        <Icon
-          name="account-plus-outline"
-          size={25}
-          color="#D6E0D9"
-          style={styles.arrow}
-        />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={handleSendFriendRequest}>
+          <Icon
+            name={addIndicator ? "account-remove" : "account-plus"}
+            size={25}
+            color={addIndicator ? "#7A807C" : "#D6E0D9"}
+            style={styles.arrow}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
