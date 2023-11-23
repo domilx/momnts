@@ -21,6 +21,7 @@ import { BottomSheet } from "./Components/BottomSheet";
 import ControlPanel from "./Components/ControlPanel";
 import ControlPanel2 from "./Components/ControlPanel2";
 import ControlPanel3 from "./Components/ControlPanel3";
+import BadgeIcon from "./Components/BadgeIcon";
 import FriendsList from "./Dynamic-Content/FriendsList";
 import FriendPost from "./Dynamic-Content/FriendPost";
 import UserMarker from "./Dynamic-Content/UserMarker";
@@ -207,7 +208,7 @@ const MapScreen = () => {
               onPress={handleButtonXPress}
               style={styles.navItem}
             >
-              <MatIcon name="account-group" size={35} color="#D6E0D9" />
+            <BadgeIcon iconName="account-group" badgeCount={3} />
               <Text style={styles.name}>Friends</Text>
             </TouchableOpacity>
             <TouchableOpacity

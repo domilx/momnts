@@ -97,7 +97,7 @@ const ControlPanel2 = ({ cityName = "Montreal" }) => {
 
 const styles = StyleSheet.create({
   chip: {
-    backgroundColor: "rgba(21, 21, 23, 0.7)",
+    backgroundColor: "rgba(21, 21, 23, 0.8)",
     borderRadius: 25,
     paddingVertical: 9,
     paddingHorizontal: 20,

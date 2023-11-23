@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 25,
-    backgroundColor: "rgba(21, 21, 23, 0.7)",
+    backgroundColor: "rgba(21, 21, 23, 0.8)",
   },
 
   avatar: {
