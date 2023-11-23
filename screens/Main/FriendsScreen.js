@@ -21,7 +21,6 @@ import SearchService from "../../services/SearchService";
 import FriendsService from "../../services/FriendsService";
 import { auth, db } from "../../firebase";
 
-
 const SettingsScreen = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
@@ -42,7 +41,11 @@ const SettingsScreen = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
-  
+  const handleBlockedUsers = () => {
+    navigation.navigate("BlockedUsers");
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -50,7 +53,7 @@ const SettingsScreen = () => {
           <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
         </TouchableOpacity>
         <Text style={styles.title}>MOMNTS</Text>
-        <TouchableOpacity activeOpacity={0.7} onPress={handleFriends}>
+        <TouchableOpacity activeOpacity={0.7} onPress={handleBlockedUsers}>
           <MatIcon name="account-off-outline" size={28} color="#D6E0D9" />
         </TouchableOpacity>
       </View>
@@ -76,7 +79,7 @@ const SettingsScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={{paddingHorizontal: 10}} >
+      <View style={{ paddingHorizontal: 10 }}>
         <View
           style={{
             flexDirection: "row",
@@ -93,9 +96,7 @@ const SettingsScreen = () => {
         style={styles.toggleContainer}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-      >
-       
-      </ScrollView>
+      ></ScrollView>
     </View>
   );
 };

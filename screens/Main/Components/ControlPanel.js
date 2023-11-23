@@ -31,6 +31,7 @@ const ControlPanel = () => {
         <TouchableOpacity onPress={handleFriends} style={{ marginBottom: 10 }}>
           <MatIcon name="account-group" size={25} color="#D6E0D9" />
         </TouchableOpacity>
+
         <TouchableOpacity onPress={handleArView} style={{ marginBottom: 10 }}>
           <MatIcon name="cube-scan" size={25} color="#D6E0D9" />
         </TouchableOpacity>

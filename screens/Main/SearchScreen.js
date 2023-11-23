@@ -43,12 +43,15 @@ const SettingsScreen = () => {
       }
     }, 300);
   };
-  
+
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
   };
-
+  
+  const handleTextInputFocus = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  };
   const handleFriends = () => {
     navigation.navigate("Friends");
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -78,6 +81,8 @@ const SettingsScreen = () => {
               placeholderTextColor="#7A807C"
               onChangeText={handleSearch}
               value={search}
+              onFocus={handleTextInputFocus}
+
             />
           </View>
           <Icon
@@ -88,17 +93,12 @@ const SettingsScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <ScrollView
-        style={styles.toggleContainer}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      >
+     
         <FlatList
           data={searchResults}
           keyExtractor={(item) => item.userId}
           renderItem={({ item }) => <UserCard user={item} />}
         />
-      </ScrollView>
     </View>
   );
 };
