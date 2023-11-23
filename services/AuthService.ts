@@ -25,6 +25,7 @@ const AuthService = {
             fullName,
             bio,
             profileImageUrl: imageUrl,
+            
         });
     },
 

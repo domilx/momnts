@@ -17,14 +17,19 @@ const ControlPanel = () => {
     navigation.navigate("CameraView");
   };
 
+  const handleFriends = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
+    navigation.navigate("Friends");
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
         <TouchableOpacity onPress={handleSettings} style={{ marginBottom: 10 }}>
           <MatIcon name="cog" size={25} color="#D6E0D9" />
         </TouchableOpacity>
-        <TouchableOpacity style={{ marginBottom: 10 }}>
-          <MatIcon name="image-multiple" size={25} color="#D6E0D9" />
+        <TouchableOpacity onPress={handleFriends} style={{ marginBottom: 10 }}>
+          <MatIcon name="account-group" size={25} color="#D6E0D9" />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleArView} style={{ marginBottom: 10 }}>
           <MatIcon name="cube-scan" size={25} color="#D6E0D9" />

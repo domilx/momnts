@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -19,26 +19,13 @@ import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Input, ListItem } from "react-native-elements";
 import SearchService from "../../services/SearchService";
 import FriendsService from "../../services/FriendsService";
+import { auth, db } from "../../firebase";
+
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
-  const handleSearch = (query) => {
-    setSearch(query);
-
-    clearTimeout(timeoutId);
-    const timeoutId = setTimeout(async () => {
-      try {
-        const results = await SearchService.searchUsers(query);
-        setSearchResults(results);
-        console.log("Search Results:", searchResults);
-      } catch (error) {
-        console.error("Error searching users:", error);
-      }
-    }, 300);
-  };
 
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -55,17 +42,16 @@ const SettingsScreen = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
- 
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <TouchableOpacity activeOpacity={0.7} onPress={handleReturn}>
           <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
         </TouchableOpacity>
-        <Text style={styles.title}>Friends</Text>
+        <Text style={styles.title}>MOMNTS</Text>
         <TouchableOpacity activeOpacity={0.7} onPress={handleFriends}>
-          <MatIcon name="account-group" size={28} color="#D6E0D9" />
+          <MatIcon name="account-off-outline" size={28} color="#D6E0D9" />
         </TouchableOpacity>
       </View>
 
@@ -79,7 +65,6 @@ const SettingsScreen = () => {
               placeholder="Search for your friends"
               keyboardAppearance="dark"
               placeholderTextColor="#7A807C"
-              onChangeText={handleSearch}
               value={search}
             />
           </View>
@@ -91,18 +76,25 @@ const SettingsScreen = () => {
           />
         </TouchableOpacity>
       </View>
+      <View style={{paddingHorizontal: 10}} >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <Text style={styles.filterButton}>Requested</Text>
+          <Text style={styles.filterButton}>Friends</Text>
+          <Text style={styles.filterButton}>Incoming</Text>
+        </View>
+      </View>
       <ScrollView
         style={styles.toggleContainer}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <FlatList
-          data={searchResults}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <UserCard user={item} userCard={handleProfile} />
-          )}
-        />
+       
       </ScrollView>
     </View>
   );
@@ -179,6 +171,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   chunkTitle: {
+    fontSize: 12,
+    fontWeight: "600",
+    color: "#4e4e4e",
+    marginTop: 20,
+  },
+  filterButton: {
     fontSize: 12,
     fontWeight: "600",
     color: "#4e4e4e",
