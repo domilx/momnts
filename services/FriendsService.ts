@@ -37,15 +37,41 @@ export const sendFriendRequest = async (recipientId) => {
 };
 
 export const getSentFriendRequests = async (userId) => {
-  const requestsRef = collection(db, "users", userId, "sentFriendRequests");
-  const sentRequestsSnapshot = await getDocs(requestsRef);
-  const sentRequests = [];
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
 
-  sentRequestsSnapshot.forEach((doc) => {
-    sentRequests.push({ id: doc.id, ...doc.data() });
-  });
-  return sentRequests;
+    if (userDocSnap.exists()) {
+      // Assuming 'friendRequestsSent' is an array of user IDs stored in the user's document
+      const sentRequests = userDocSnap.data().friendRequestsSent;
+      return sentRequests; // This will be an array of user IDs
+    } else {
+      throw new Error("User document does not exist.");
+    }
+  } catch (error) {
+    console.error("Error getting sent friend requests:", error);
+    throw error;
+  }
 };
+
+export const getReceivedFriendRequests = async (userId) => {
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      // Assuming 'friendRequestsReceived' is an array of user IDs stored in the user's document
+      const receivedRequests = userDocSnap.data().friendRequestsReceived;
+      return receivedRequests; // This will be an array of user IDs
+    } else {
+      throw new Error("User document does not exist.");
+    }
+  } catch (error) {
+    console.error("Error getting received friend requests:", error);
+    throw error;
+  }
+};
+
 
 export const acceptFriendRequest = async (senderId) => {
   try {
@@ -82,6 +108,24 @@ export const acceptFriendRequest = async (senderId) => {
     }
   } catch (error) {
     console.error("Error accepting friend request:", error);
+    throw error;
+  }
+};
+
+export const getFriends = async (userId) => {
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      // Assuming 'friends' is an array of user IDs stored in the user's document
+      const friends = userDocSnap.data().friends || [];
+      return friends; // This will be an array of user IDs
+    } else {
+      throw new Error("User document does not exist.");
+    }
+  } catch (error) {
+    console.error("Error getting friends list:", error);
     throw error;
   }
 };

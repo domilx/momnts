@@ -18,13 +18,20 @@ import UserCard from "./Dynamic-Content/UserCard";
 import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Input, ListItem } from "react-native-elements";
 import SearchService from "../../services/SearchService";
-import FriendsService from "../../services/FriendsService";
+import { getSentFriendRequests } from "../../services/FriendsService";
+import { getReceivedFriendRequests } from "../../services/FriendsService";
+import { getFriends } from "../../services/FriendsService"; 
 import { auth, db } from "../../firebase";
 
-const SettingsScreen = () => {
+const FriendsScreen = () => {
   const navigation = useNavigation();
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [search, setSearch] = useState('');
+  const [activeTab, setActiveTab] = useState('friends'); // Possible values: 'friends', 'sent', 'received'
+  const [friends, setFriends] = useState([]);
+  const [sentRequests, setSentRequests] = useState([]);
+  const [receivedRequests, setReceivedRequests] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+
 
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -46,6 +53,69 @@ const SettingsScreen = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userId = currentUser.uid;
+        const friendsList = await getFriends(userId);
+        const sent = await getSentFriendRequests(userId);
+        const received = await getReceivedFriendRequests(userId);
+
+        setFriends(friendsList);
+        setSentRequests(sent);
+        setReceivedRequests(received);
+        // Initially display friends
+        setFilteredData(friendsList);
+      }
+    };
+    // Assume we have a function to get the current user's incoming friend requests
+    const fetchIncomingRequests = async () => {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const userId = currentUser.uid;
+        const requests = await getSentFriendRequests(userId);
+        setReceivedRequests(requests);
+      }
+    };
+
+    let data = [];
+    if (activeTab === 'friends') {
+      data = friends;
+    } else if (activeTab === 'sent') {
+      data = sentRequests;
+    } else if (activeTab === 'received') {
+      data = receivedRequests;
+    }
+
+    if (search) {
+      data = data.filter((item) =>
+        item.username.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    setFilteredData(data);
+    fetchData();
+    fetchIncomingRequests();
+  }, [search, activeTab, friends, sentRequests, receivedRequests]);
+
+  const handleTabChange = (tabName) => {
+    setActiveTab(tabName);
+    setSearch(''); // Clear search when changing tabs
+  };
+
+  const acceptRequest = async (senderId) => {
+    try {
+      await FriendsService.acceptFriendRequest(senderId);
+      // Refresh the list of incoming requests
+      const updatedRequests = incomingRequests.filter(req => req.senderId !== senderId);
+      setIncomingRequests(updatedRequests);
+    } catch (error) {
+      console.error("Error accepting friend request:", error);
+    }
+  };
+
+
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -58,45 +128,22 @@ const SettingsScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.settingChunk}>
-        <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
-          <Icon name="magnify" size={25} color="gray" style={styles.arrow} />
-
-          <View style={styles.twoText}>
-            <TextInput
-              style={[styles.input, { color: "#D6E0D9" }]}
-              placeholder="Search for your friends"
-              keyboardAppearance="dark"
-              placeholderTextColor="#7A807C"
-              value={search}
-            />
-          </View>
-          <Icon
-            name="chevron-right"
-            size={25}
-            color="gray"
-            style={styles.arrow}
-          />
+      <View style={styles.tabs}>
+        <TouchableOpacity onPress={() => handleTabChange('friends')}>
+          <Text style={styles.tab}>Friends</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleTabChange('sent')}>
+          <Text style={styles.tab}>Sent Requests</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleTabChange('received')}>
+          <Text style={styles.tab}>Received Requests</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ paddingHorizontal: 10 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <Text style={styles.filterButton}>Requested</Text>
-          <Text style={styles.filterButton}>Friends</Text>
-          <Text style={styles.filterButton}>Incoming</Text>
-        </View>
-      </View>
-      <ScrollView
-        style={styles.toggleContainer}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      ></ScrollView>
+      <FlatList
+        data={filteredData}
+        keyExtractor={(item) => item.userId}
+        renderItem={({ item }) => <UserCard user={item} />}
+      />
     </View>
   );
 };
@@ -218,6 +265,12 @@ const styles = StyleSheet.create({
     color: "#7A807C",
     top: 250,
   },
+  tabs: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+  },
+
 });
 
-export default SettingsScreen;
+export default FriendsScreen;
