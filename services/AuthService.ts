@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { auth, db, storage } from '../firebase';
+import { db, auth, storage } from '../firebase';
 
 
 const AuthService = {
@@ -21,11 +21,11 @@ const AuthService = {
 
         // Save additional user details in Firestore
         await setDoc(doc(db, 'users', user?.uid), {
-            username,
-            fullName,
-            bio,
-            profileImageUrl: imageUrl,
-            
+          userId: user?.uid, // Explicitly store the userId
+          username,
+          fullName,
+          bio,
+          profileImageUrl: imageUrl,
         });
     },
 

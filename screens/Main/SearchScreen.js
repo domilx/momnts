@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -29,26 +29,48 @@ const SettingsScreen = () => {
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = (query) => {
-    setSearch(query);
-
-    clearTimeout(timeoutId);
-    const timeoutId = setTimeout(async () => {
-      try {
-        const results = await SearchService.searchUsers(query);
-        setSearchResults(results);
-        console.log("Search Results:", searchResults);
-      } catch (error) {
-        console.error("Error searching users:", error);
+  // Debounce function to delay the execution of the search
+  function debounce(fn, delay) {
+    let timeoutId;
+    return function (...args) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
       }
-    }, 300);
+      timeoutId = setTimeout(() => {
+        fn(...args);
+      }, delay);
+    };
+  }
+
+  const handleSearchChange = (text) => {
+    setSearch(text); // Update the search state which triggers the useEffect
   };
+
+  // Define the debounced handleSearch function outside of the useEffect to avoid re-creating it on every render
+  const debouncedHandleSearch = debounce((query) => {
+    if (query.trim() === '') {
+      setSearchResults([]);
+    } else {
+      SearchService.searchUsers(query).then(setSearchResults).catch((error) => {
+        console.error("Error searching users:", error);
+      });
+    }
+  }, 300);
+
+  // useEffect to call the debouncedHandleSearch whenever the search state changes
+  useEffect(() => {
+    if (search.trim() !== "") {
+      debouncedHandleSearch(search);
+    } else {
+      setSearchResults([]); // Clear results if the search input is empty
+    }
+  }, [search]);
 
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
   };
-  
+
   const handleTextInputFocus = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
@@ -79,10 +101,9 @@ const SettingsScreen = () => {
               placeholder="Discover new people and places"
               keyboardAppearance="dark"
               placeholderTextColor="#7A807C"
-              onChangeText={handleSearch}
+              onChangeText={handleSearchChange}
               value={search}
               onFocus={handleTextInputFocus}
-
             />
           </View>
           <Icon
@@ -93,12 +114,12 @@ const SettingsScreen = () => {
           />
         </TouchableOpacity>
       </View>
-     
-        <FlatList
-          data={searchResults}
-          keyExtractor={(item) => item.userId}
-          renderItem={({ item }) => <UserCard user={item} />}
-        />
+
+      <FlatList
+        data={searchResults}
+        keyExtractor={(item) => item.userId}
+        renderItem={({ item }) => <UserCard user={item} />}
+      />
     </View>
   );
 };

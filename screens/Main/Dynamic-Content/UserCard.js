@@ -11,9 +11,8 @@ const UserCard = ({ user, userCard }) => {
 
   const handleSendFriendRequest = async () => {
     try {
-      const userId = getUserIdFromDocumentId(user);
-      if (userId) {
-        await sendFriendRequest(userId);
+      if (user.userId) {
+        await sendFriendRequest(user.userId);
         setaddIndicator(!addIndicator);
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.success);
       } else {
@@ -28,14 +27,6 @@ const UserCard = ({ user, userCard }) => {
     navigation.navigate("UserProfile", { user })
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
   };
-
-  // PLEASE FIX ITS TAKING THE PROFILE URL LINK AND EXTRACTING USER ID SO NOT HALAL MODE
-  const getUserIdFromDocumentId = (user) => {
-    const profileImageUrl = user.profileImageUrl || "";
-    const userId = profileImageUrl.split("%2F")[1].split("?")[0];
-    return userId;
-  };
-
   return (
     <View style={styles.settingChunk}>
       <TouchableOpacity

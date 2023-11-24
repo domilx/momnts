@@ -1,34 +1,34 @@
+import { useState, useEffect } from 'react';
 import { auth, db } from '../firebase';
-import { getDocs, query, where, collection } from 'firebase/firestore';
+import { query, collection, where, getDocs, limit } from 'firebase/firestore';
 
-const searchUsers = async (searchQuery) => {
-  try {
-    const user = auth.currentUser;
-    if (user) {
-      const usersCollection = collection(db, 'users');
-      const q = query(
-        usersCollection,
-        where('username', '>=', searchQuery), 
-      );
-
-      const querySnapshot = await getDocs(q);
-      const searchResults = [];
-
-      querySnapshot.forEach((doc) => {
-        const userData = doc.data();
-        if (userData.username.includes(searchQuery)) {
-          searchResults.push(userData);
-        }
-      });
-
-      return searchResults;
+const SearchService = {
+  async searchUsers(searchQuery) {
+    // Check if the search query is not empty
+    if (searchQuery.trim() === '') {
+      return [];
     }
-  } catch (error) {
-    console.error("Error searching users:", error);
-    throw error;
-  }
+
+    const usersCollection = collection(db, 'users');
+    const searchQueryLower = searchQuery.toLowerCase();
+    const q = query(
+      usersCollection,
+      where('username', '>=', searchQueryLower),
+      where('username', '<=', searchQueryLower + '\uf8ff'),
+      limit(10)
+    );
+
+    const querySnapshot = await getDocs(q);
+    const searchResults = [];
+
+    querySnapshot.forEach((doc) => {
+      if (doc.id !== auth.currentUser.uid) {
+        searchResults.push({ userId: doc.id, ...doc.data() });
+      }
+    });
+
+    return searchResults;
+  },
 };
 
-export default {
-  searchUsers,
-};
+export default SearchService;
