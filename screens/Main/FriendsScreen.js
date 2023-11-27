@@ -20,18 +20,17 @@ import { Input, ListItem } from "react-native-elements";
 import SearchService from "../../services/SearchService";
 import { getSentFriendRequests } from "../../services/FriendsService";
 import { getReceivedFriendRequests } from "../../services/FriendsService";
-import { getFriends } from "../../services/FriendsService"; 
+import { getFriends } from "../../services/FriendsService";
 import { auth, db } from "../../firebase";
 
 const FriendsScreen = () => {
   const navigation = useNavigation();
-  const [search, setSearch] = useState('');
-  const [activeTab, setActiveTab] = useState('friends'); // Possible values: 'friends', 'sent', 'received'
+  const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState("friends"); // Possible values: 'friends', 'sent', 'received'
   const [friends, setFriends] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
   const [receivedRequests, setReceivedRequests] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-
 
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -58,63 +57,43 @@ const FriendsScreen = () => {
       const currentUser = auth.currentUser;
       if (currentUser) {
         const userId = currentUser.uid;
-        const friendsList = await getFriends(userId);
-        const sent = await getSentFriendRequests(userId);
-        const received = await getReceivedFriendRequests(userId);
 
-        setFriends(friendsList);
-        setSentRequests(sent);
-        setReceivedRequests(received);
-        // Initially display friends
-        setFilteredData(friendsList);
-      }
-    };
-    // Assume we have a function to get the current user's incoming friend requests
-    const fetchIncomingRequests = async () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        const userId = currentUser.uid;
-        const requests = await getSentFriendRequests(userId);
-        setReceivedRequests(requests);
+        if (activeTab === "friends" && !friends.length) {
+          const friendsList = await getFriends(userId);
+          setFriends(friendsList);
+          setFilteredData(friendsList);
+        } else if (activeTab === "sent" && !sentRequests.length) {
+          const sent = await getSentFriendRequests(userId);
+          setSentRequests(sent);
+          setFilteredData(sent);
+        } else if (activeTab === "received" && !receivedRequests.length) {
+          const received = await getReceivedFriendRequests(userId);
+          setReceivedRequests(received);
+          setFilteredData(received);
+        }
       }
     };
 
-    let data = [];
-    if (activeTab === 'friends') {
-      data = friends;
-    } else if (activeTab === 'sent') {
-      data = sentRequests;
-    } else if (activeTab === 'received') {
-      data = receivedRequests;
-    }
-
-    if (search) {
-      data = data.filter((item) =>
-        item.username.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-
-    setFilteredData(data);
     fetchData();
-    fetchIncomingRequests();
-  }, [search, activeTab, friends, sentRequests, receivedRequests]);
+  }, [activeTab, friends, sentRequests, receivedRequests]);
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
-    setSearch(''); // Clear search when changing tabs
+    setSearch(""); // Clear search when changing tabs
   };
 
   const acceptRequest = async (senderId) => {
     try {
       await FriendsService.acceptFriendRequest(senderId);
       // Refresh the list of incoming requests
-      const updatedRequests = incomingRequests.filter(req => req.senderId !== senderId);
+      const updatedRequests = incomingRequests.filter(
+        (req) => req.senderId !== senderId
+      );
       setIncomingRequests(updatedRequests);
     } catch (error) {
       console.error("Error accepting friend request:", error);
     }
   };
-
 
   return (
     <View style={styles.container}>
@@ -129,14 +108,20 @@ const FriendsScreen = () => {
       </View>
 
       <View style={styles.tabs}>
-        <TouchableOpacity onPress={() => handleTabChange('friends')}>
-          <Text style={styles.tab}>Friends</Text>
+        <TouchableOpacity onPress={() => handleTabChange("friends")}>
+          <View style={styles.tab}>
+            <Text style={activeTab === "friends" ? styles.activeTabText : styles.tabText}>Friends</Text>
+          </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleTabChange('sent')}>
-          <Text style={styles.tab}>Sent Requests</Text>
+        <TouchableOpacity onPress={() => handleTabChange("sent")}>
+          <View style={styles.tab}>
+            <Text style={activeTab === "sent" ? styles.activeTabText : styles.tabText}>Sent Requests</Text>
+          </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleTabChange('received')}>
-          <Text style={styles.tab}>Received Requests</Text>
+        <TouchableOpacity onPress={() => handleTabChange("received")}>
+          <View style={styles.tab}>
+            <Text style={activeTab === "received" ? styles.activeTabText : styles.tabText}>Received Requests</Text>
+          </View>
         </TouchableOpacity>
       </View>
       <FlatList
@@ -266,11 +251,29 @@ const styles = StyleSheet.create({
     top: 250,
   },
   tabs: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     paddingVertical: 10,
+    color: "#4e4e4e",
   },
 
+  tabText: {
+    backgroundColor: "#151517",
+    color: "#4e4e4e",
+    paddingHorizontal: 7,
+  },
+
+  tab: {
+    borderWidth: 5,
+    borderColor: "#151517",
+    backgroundColor: "#151517",
+    borderRadius: 20,
+  },
+
+  activeTabText: {
+    color: "#7A807C", 
+    paddingHorizontal: 7,
+  },
 });
 
 export default FriendsScreen;
