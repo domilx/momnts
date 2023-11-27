@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from "expo-haptics";
-import UserCard from "./Dynamic-Content/UserCard";
+import UserCard2 from "./Dynamic-Content/UserCard2";
 import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Input, ListItem } from "react-native-elements";
 import SearchService from "../../services/SearchService";
@@ -127,7 +127,7 @@ const FriendsScreen = () => {
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.userId}
-        renderItem={({ item }) => <UserCard user={item} />}
+        renderItem={({ item }) => <UserCard2 user={item} />}
       />
     </View>
   );
