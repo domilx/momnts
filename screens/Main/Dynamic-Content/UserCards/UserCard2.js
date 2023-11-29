@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import { sendFriendRequest } from "../../../services/FriendsService"; // Import the function from your service file
+import { sendFriendRequest } from "../../../../services/FriendsService"; // Import the function from your service file
 import * as Haptics from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
 

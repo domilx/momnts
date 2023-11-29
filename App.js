@@ -24,6 +24,7 @@ import HelpScreen from "./screens/Main/Settings/HelpScreen";
 import CameraScreen from "./screens/Main/Video-Interfaces/CameraView";
 import FriendsScreen from "./screens/Main/FriendsScreen";
 import SearchScreen from "./screens/Main/SearchScreen";
+import PostReviewScreen from "./screens/Main/Video-Interfaces/PostReview";
 import { auth } from "./firebase";
 
 
@@ -142,6 +143,13 @@ const App = () => {
             component={FriendsScreen}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="PostReview"
+            component={PostReviewScreen}
+            options={{ headerShown: false }}
+          />
+
+
         </Stack.Navigator>
       </NavigationContainer>
     </ApplicationProvider>

@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from "expo-haptics";
-import UserCard from "./Dynamic-Content/UserCard";
+import UserCard from "./Dynamic-Content/UserCards/UserCard";
 import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Input, ListItem } from "react-native-elements";
 import SearchService from "../../services/SearchService";
