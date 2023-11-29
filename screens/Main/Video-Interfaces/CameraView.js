@@ -1,6 +1,6 @@
 import { Camera, CameraType } from "expo-camera";
 import { useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -12,6 +12,7 @@ export default function CameraView() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const navigation = useNavigation();
   const [capturedPhoto, setCapturedPhoto] = useState(null); // New state to hold captured photo URI
+  const [isPreviewing, setIsPreviewing] = useState(false); // State to control the preview
 
 
   const handleReturn = () => {
@@ -42,11 +43,19 @@ export default function CameraView() {
   }
 
   const takePicture = async () => {
-    if (cameraRef) {
+    if (cameraRef && !isPreviewing) {
       try {
+        setIsPreviewing(true);
         const { uri } = await cameraRef.takePictureAsync();
-        navigation.navigate('PostReview', { photoURI: uri });
+        setCapturedPhoto(uri);
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+        setTimeout(() => {
+          setIsPreviewing(false);
+          navigation.navigate('PostReview', { photoURI: uri });
+        }, 1000); // Adjust the delay duration as needed
       } catch (error) {
+        setIsPreviewing(false);
         console.error('Error taking picture:', error);
       }
     }
@@ -54,17 +63,24 @@ export default function CameraView() {
 
   return (
     <View style={styles.container}>
+       {capturedPhoto ? ( // Display the captured photo when available
+        <Image source={{ uri: capturedPhoto }} style={styles.camera} />
+      ) : (
        <Camera
         ref={(ref) => setCameraRef(ref)}
         style={styles.camera}
         type={type}
       ></Camera>
+      )}
+
       <View style={styles.buttonContainer}>
         <View style={styles.buttonbackground}>
           <TouchableOpacity onPress={handleReturn}>
             <MatIcon name="close-circle-outline" size={35} color="#D6E0D9" />
           </TouchableOpacity>
         </View>
+
+      
 
         <TouchableOpacity
           activeOpacity={1}
@@ -94,7 +110,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     flex: 1,
-    bottom: 60,
+    bottom: 30,
   },
   camera: {
     flex: 1,
@@ -105,7 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     justifyContent: "center",
     alignItems: "center",
-    bottom: 40,
+    bottom: 20,
     backgroundColor: "rgba(21, 21, 23, 0.7)",
     alignSelf: "center",
     elevation: 10,
@@ -113,12 +129,12 @@ const styles = StyleSheet.create({
     borderColor: "#D6E0D9",
   },
   buttonbackground: {
-    borderRadius: 25,
+    borderRadius: 80,
     backgroundColor: "rgba(21, 21, 23, 0.7)",
     alignItems: "center",
     alignContent: "column",
     justifyContent: "center",
-    height: "70%",
+    height: "75%",
     width: "15%",
   },
 

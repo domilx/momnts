@@ -95,6 +95,8 @@ const MapScreen = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
   };
 
+  
+
   const handleProfile = () => {
     navigation.navigate("Profile");
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
