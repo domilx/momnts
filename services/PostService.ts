@@ -14,8 +14,8 @@ const uploadPhoto = async (userId, imageUri) => {
     const response = await fetch(imageUri);
     const blob = await response.blob();
 
-    // Reference to the storage location
-    const storageRef = ref(storage, `momnts/${currentUser.uid}/dailyPhoto.jpg`);
+    const currentDate = new Date().toISOString().replace(/[:.]/g, '-'); // Replace characters not allowed in reference
+    const storageRef = ref(storage, `momnts/${currentUser.uid}/${currentDate}.jpg`);
 
     // Upload the image blob to Firebase Storage
     await uploadBytes(storageRef, blob);
@@ -24,13 +24,13 @@ const uploadPhoto = async (userId, imageUri) => {
     const downloadURL = await getDownloadURL(storageRef);
     console.log('Download URL:', downloadURL);
 
-    // Return the download URL
     return downloadURL;
   } catch (error) {
     console.error('Error uploading photo:', error);
     return null;
   }
 };
+
 // Function to update user's document with the daily photo URL
 const updateDailyPhoto = async (userId, photoURL) => {
   try {

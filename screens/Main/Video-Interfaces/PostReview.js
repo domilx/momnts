@@ -19,10 +19,7 @@ const PostReviewScreen = () => {
   
       // Upload photo to Firebase Storage
       const downloadURL = await uploadPhoto(userId, photoURI); 
-      if (downloadURL) {
-        updateDailyPhoto(userId, downloadURL);
-        navigation.goBack();
-      }
+     
     } else {
       console.log('User not logged in');
     }
