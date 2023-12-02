@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Button, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { uploadPhoto, updateDailyPhoto } from "../../../services/PostService"; // Replace with your Firebase functions
+import { uploadPhoto, updateMomnts } from "../../../services/PostService"; // Replace with your Firebase functions
 import { auth, db, storage } from "../../../firebase";
 import { doc, setDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
@@ -12,16 +12,33 @@ const PostReviewScreen = () => {
   const { photoURI } = route.params;
 
   const handleSavePhoto = async () => {
-    // Check if a user is currently authenticated
-    const user = auth.currentUser;
-    if (user) {
-      const userId = user.uid;
+    try {
+      console.log('Attempting to save photo');
+      const user = auth.currentUser;
+      if (user) {
+        const userId = user.uid;
   
-      // Upload photo to Firebase Storage
-      const downloadURL = await uploadPhoto(userId, photoURI); 
-     
-    } else {
-      console.log('User not logged in');
+        // Upload photo to Firebase Storage
+        console.log('user id:', userId)
+        console.log('photoURI:', photoURI)
+        const downloadURL = await uploadPhoto(userId, photoURI);
+
+        console.log('After uploadPhoto');
+        console.log('Download URL:', downloadURL);
+  
+        if (downloadURL) {
+          // Update daily photo URL in Firestore
+          await updateMomnts(userId, downloadURL);
+          // Navigate back after successful upload and update
+          navigation.goBack();
+        } else {
+          console.log('Error uploading photo.');
+        }
+      } else {
+        console.log('User not logged in');
+      }
+    } catch (error) {
+      console.error('Error handling photo:', error);
     }
   };
 
