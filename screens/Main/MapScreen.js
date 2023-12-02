@@ -22,8 +22,7 @@ import ControlPanel from "./Components/ControlPanel";
 import ControlPanel2 from "./Components/ControlPanel2";
 import ControlPanel3 from "./Components/ControlPanel3";
 import BadgeIcon from "./Components/BadgeIcon";
-import FriendsList from "./Dynamic-Content/FriendsList";
-import FriendPost from "./Dynamic-Content/FriendPost";
+import UserFeed from "./Dynamic-Content/UserFeed";
 import UserMarker from "./Dynamic-Content/UserMarker";
 import PostMarker from "./Dynamic-Content/PostMarker";
 import Places from "./Dynamic-Content/Places";
@@ -232,7 +231,7 @@ const MapScreen = () => {
           )}
           {currentView === "xView" && (
             <View style={styles.friendsListContainer}>
-              <FriendPost />
+              <UserFeed />
             </View>
           )}
           {currentView === "yView" && (

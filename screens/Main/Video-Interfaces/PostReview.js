@@ -18,7 +18,6 @@ const PostReviewScreen = () => {
       if (user) {
         const userId = user.uid;
   
-        // Upload photo to Firebase Storage
         console.log('user id:', userId)
         console.log('photoURI:', photoURI)
         const downloadURL = await uploadPhoto(userId, photoURI);
@@ -27,9 +26,7 @@ const PostReviewScreen = () => {
         console.log('Download URL:', downloadURL);
   
         if (downloadURL) {
-          // Update daily photo URL in Firestore
           await updateMomnts(userId, downloadURL);
-          // Navigate back after successful upload and update
           navigation.goBack();
         } else {
           console.log('Error uploading photo.');
