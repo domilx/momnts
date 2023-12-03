@@ -3,71 +3,108 @@ import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "@ui-kitten/components";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import * as Haptics from 'expo-haptics';
+import * as Haptics from "expo-haptics";
 import AntIcon from "react-native-vector-icons/AntDesign";
-import UserService from '../../services/UserService';
+import UserService from "../../services/UserService";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
   const [profile, setProfile] = useState({});
 
   const handleSettings = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.navigate("Settings");
   };
 
   const handleEditProfile = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.navigate("EditProfile");
   };
 
   const handleReturn = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
   };
 
   useEffect(() => {
     const loadUserProfile = async () => {
-        const userProfile = await UserService.getUserProfile();
-        if (userProfile) {
-            setProfile(userProfile);
-        }
+      const userProfile = await UserService.getUserProfile();
+      if (userProfile) {
+        setProfile(userProfile);
+      }
     };
 
     loadUserProfile();
   }, []);
-   
+
   return (
     <View style={styles.container}>
-
-      <TouchableOpacity activeOpacity={1} onPress={handleReturn} style={styles.returnIcon}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={handleReturn}
+        style={styles.returnIcon}
+      >
         <AntIcon name="arrowleft" size={25} color="#D6E0D9" />
       </TouchableOpacity>
 
-      <Text style={{fontSize: 20, paddingTop: 15, color: "#D6E0D9", fontWeight: "bold", justifyContent: "center",}}>Profile</Text>
+      <Text
+        style={{
+          fontSize: 20,
+          paddingTop: 15,
+          color: "#D6E0D9",
+          fontWeight: "bold",
+          justifyContent: "center",
+        }}
+      >
+        Profile
+      </Text>
 
-      <TouchableOpacity style={styles.settingsIcon} activeOpacity={0.8} onPress={handleSettings}>
+      <TouchableOpacity
+        style={styles.settingsIcon}
+        activeOpacity={0.8}
+        onPress={handleSettings}
+      >
         <Icon name="dots-horizontal" size={30} color="#D6E0D9" />
       </TouchableOpacity>
 
       <View style={styles.header}>
-      <Image style={styles.avatar} source={{ uri: profile.profileImageUrl }} />
-        <TouchableOpacity activeOpacity={0.8} onPress={handleEditProfile} style={styles.nameContainer}>
+        <Image
+          style={styles.avatar}
+          source={{ uri: profile.profileImageUrl }}
+        />
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={handleEditProfile}
+          style={styles.nameContainer}
+        >
           <View style={styles.namesIcon}>
-          <Text style={styles.displayname}>{profile.fullName}</Text>
+            <Text style={styles.displayname}>{profile.fullName}</Text>
           </View>
           <View style={styles.username}>
-          <Text style={styles.usernameText}>@{profile.username}</Text>
+            <Text style={styles.usernameText}>@{profile.username}</Text>
           </View>
           <View style={styles.username}>
-          <Text style={styles.bioText}>"{profile.bio}"</Text>
+            <Text style={styles.bioText}>"{profile.bio}"</Text>
           </View>
         </TouchableOpacity>
       </View>
 
-    
+      <View style={styles.settingChunk}>
+        <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
+          <View style={styles.twoText}>
+            <Text style={styles.fullName}>Momnts Score:</Text>
+            <Text style={styles.score}>1 023 812</Text>
+          </View>
+          <Icon
+            name="chevron-right"
+            size={25}
+            color="gray"
+            style={styles.arrow}
+          />
+          
+        </TouchableOpacity>
+      </View>
     </View>
-    
   );
 };
 
@@ -77,6 +114,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#000000",
     alignItems: "center",
     paddingTop: 40,
+  },
+  fullName: {
+    fontSize: 14,
+    fontWeight: 500,
+    color: "#D6E0D9",
   },
   settingsIcon: {
     position: "absolute",
@@ -120,10 +162,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  score: {
+    fontSize: 13,
+    color: "#7A807C",
+    fontWeight: 500,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   bioText: {
     fontSize: 16,
     color: "#7A807C",
-    fontStyle: 'italic',
+    fontStyle: "italic",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -134,28 +183,28 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   rowContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   column: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: 10,
   },
   number: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: "#D6E0D9"
+    fontWeight: "bold",
+    color: "#D6E0D9",
   },
   label: {
     fontSize: 14,
-    color: '#7A807C',
-    fontWeight: 'bold',
+    color: "#7A807C",
+    fontWeight: "bold",
   },
   verticaldivider: {
     width: 0.6,
     height: 40,
-    backgroundColor: '#D6E0D9',
+    backgroundColor: "#D6E0D9",
     marginHorizontal: 10,
   },
   nameContainer: {
@@ -164,8 +213,22 @@ const styles = StyleSheet.create({
   usernameText: {
     fontSize: 16,
     color: "#7A807C",
-    fontWeight: '600',  
+    fontWeight: "600",
+  },
 
+  settingChunk: {
+    backgroundColor: "#151517",
+    width: "90%",
+    borderRadius: 10,
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  settingItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    paddingVertical: 11, // Applied consistent padding to the entire settingItem
   },
 });
 

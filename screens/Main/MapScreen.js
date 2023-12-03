@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -23,8 +24,9 @@ import ControlPanel2 from "./Components/ControlPanel2";
 import ControlPanel3 from "./Components/ControlPanel3";
 import BadgeIcon from "./Components/BadgeIcon";
 import UserFeed from "./Dynamic-Content/UserFeed";
-import UserMarker from "./Dynamic-Content/UserMarker";
-import PostMarker from "./Dynamic-Content/PostMarker";
+import UserMarker from "./Dynamic-Content/MapMarkers/UserMarker";
+import PostMarker from "./Dynamic-Content/MapMarkers/PostMarker";
+import TopAlert from "./Dynamic-Content/Alerts/TopAlert";
 import Places from "./Dynamic-Content/Places";
 
 const MapScreen = () => {
@@ -38,6 +40,7 @@ const MapScreen = () => {
   const [isComponentVisible, setIsComponentVisible] = useState(true);
   const [city, setCity] = useState("Montreal");
   const [profile, setProfile] = useState({});
+  const [networkError, setNetworkError] = useState(false);
 
   const testLocation = {
     latitude: 45.577725,
@@ -57,6 +60,14 @@ const MapScreen = () => {
     []
   );
 
+  const handleNetworkError = () => {
+    setNetworkError(true);
+
+    // Simulate network error resolved after some time
+    setTimeout(() => {
+      setNetworkError(false);
+    }, 5000); // Change the duration as needed
+  };
   const fetchCityName = async (latitude, longitude) => {
     try {
       const response = await fetch(
@@ -143,13 +154,19 @@ const MapScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>
+        
         <LinearGradient
           colors={["rgba(21, 21, 23, 0.9)", "rgba(21, 21, 23, 0)"]} // Reversed order of colors
           style={styles.background}
         />
         <ControlPanel2 cityName={city} />
       </View>
-
+      <TopAlert
+          message="Network issue encountered!"
+          icon="router-wireless-off"
+          title="Disconnected"
+          showNotification={networkError}
+        />
       <View style={styles.sideNav}>
         <TouchableOpacity onPress={handleProfile}>
           <Image
@@ -176,16 +193,14 @@ const MapScreen = () => {
           longitudeDelta: 0.4,
         }}
       >
-        
         <Marker coordinate={testLocation}>
-          <PostMarker onPress={() => setModalVisible(true)}/>
+          <PostMarker onPress={() => setModalVisible(true)} />
         </Marker>
 
         <Marker coordinate={testLocation2}>
           <PostMarker />
         </Marker>
-        
-        
+
         {location && (
           <Marker
             key={`${location.latitude}-${location.longitude}`}
@@ -209,7 +224,7 @@ const MapScreen = () => {
               onPress={handleButtonXPress}
               style={styles.navItem}
             >
-            <BadgeIcon iconName="account-group" badgeCount={3} />
+              <BadgeIcon iconName="account-group" badgeCount={3} />
               <Text style={styles.name}>Friends</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -236,6 +251,11 @@ const MapScreen = () => {
           )}
           {currentView === "yView" && (
             <View style={styles.friendsListContainer}>
+              <Button
+                title="Simulate Network Error"
+                onPress={handleNetworkError}
+              />
+
               <Places />
             </View>
           )}
