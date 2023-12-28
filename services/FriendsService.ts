@@ -43,15 +43,17 @@ export const getSentFriendRequests = async (userId) => {
     if (userDocSnap.exists()) {
       // Assuming 'friendRequestsSent' is an array of user IDs stored in the user's document
       const sentRequests = userDocSnap.data().friendRequestsSent;
-      const profiles = await Promise.all(sentRequests.map(async (id) => {
-        const docRef = doc(db, "users", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          console.log("FRIEND SNAP", docSnap.data());
-          return docSnap.data();
-        }
-      }));
-      return profiles.filter(profile => profile);
+      const profiles = await Promise.all(
+        sentRequests.map(async (id) => {
+          const docRef = doc(db, "users", id);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            console.log("FRIEND SNAP", docSnap.data());
+            return docSnap.data();
+          }
+        })
+      );
+      return profiles;
     } else {
       throw new Error("User document does not exist.");
     }
@@ -69,16 +71,18 @@ export const getReceivedFriendRequests = async (userId) => {
     if (userDocSnap.exists()) {
       // Assuming 'friendRequestsReceived' is an array of user IDs stored in the user's document
       const receivedRequests = userDocSnap.data().friendRequestsReceived || [];
-      
-      const profiles = await Promise.all(receivedRequests.map(async (id) => {
-        const docRef = doc(db, "users", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          return docSnap.data();
-        }
-      }));
 
-      return profiles.filter(profile => profile); // Filter out undefined values
+      const profiles = await Promise.all(
+        receivedRequests.map(async (id) => {
+          const docRef = doc(db, "users", id);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            return docSnap.data();
+          }
+        })
+      );
+
+      return profiles;
     } else {
       throw new Error("User document does not exist.");
     }
