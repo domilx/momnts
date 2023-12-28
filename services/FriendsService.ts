@@ -43,15 +43,15 @@ export const getSentFriendRequests = async (userId) => {
     if (userDocSnap.exists()) {
       // Assuming 'friendRequestsSent' is an array of user IDs stored in the user's document
       const sentRequests = userDocSnap.data().friendRequestsSent;
-      const profiles = await sentRequests.map(async (id) => {
+      const profiles = await Promise.all(sentRequests.map(async (id) => {
         const docRef = doc(db, "users", id);
         const docSnap = await getDoc(docRef);
-        if (userDocSnap.exists()) {
+        if (docSnap.exists()) {
           console.log("FRIEND SNAP", docSnap.data());
           return docSnap.data();
         }
-      });
-      return profiles; // This will be an array of user IDs
+      }));
+      return profiles.filter(profile => profile);
     } else {
       throw new Error("User document does not exist.");
     }
