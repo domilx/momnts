@@ -20,7 +20,6 @@ export const sendFriendRequest = async (recipientId) => {
       const senderId = currentUser.uid;
       const senderDocRef = doc(db, "users", senderId);
       const recipientDocRef = doc(db, "users", recipientId);
-
       await updateDoc(senderDocRef, {
         friendRequestsSent: arrayUnion(recipientId),
       });
@@ -40,11 +39,19 @@ export const getSentFriendRequests = async (userId) => {
   try {
     const userDocRef = doc(db, "users", userId);
     const userDocSnap = await getDoc(userDocRef);
-
+    console.log("SNAP", userDocSnap.data());
     if (userDocSnap.exists()) {
       // Assuming 'friendRequestsSent' is an array of user IDs stored in the user's document
       const sentRequests = userDocSnap.data().friendRequestsSent;
-      return sentRequests; // This will be an array of user IDs
+      const profiles = await sentRequests.map(async (id) => {
+        const docRef = doc(db, "users", id);
+        const docSnap = await getDoc(docRef);
+        if (userDocSnap.exists()) {
+          console.log("FRIEND SNAP", docSnap.data());
+          return docSnap.data();
+        }
+      });
+      return profiles; // This will be an array of user IDs
     } else {
       throw new Error("User document does not exist.");
     }
@@ -90,8 +97,6 @@ export const getFriends = async (userId) => {
   }
 };
 
-
-
 export const acceptFriendRequest = async (senderId) => {
   try {
     const currentUser = auth.currentUser;
@@ -113,13 +118,13 @@ export const acceptFriendRequest = async (senderId) => {
         // Update sender's document: remove the recipientId from friendRequestsSent and add to friends
         transaction.update(senderDocRef, {
           friendRequestsSent: arrayRemove(recipientId),
-          friends: arrayUnion(recipientId)
+          friends: arrayUnion(recipientId),
         });
 
         // Update recipient's document: remove the senderId from friendRequestsReceived and add to friends
         transaction.update(recipientDocRef, {
           friendRequestsReceived: arrayRemove(senderId),
-          friends: arrayUnion(senderId)
+          friends: arrayUnion(senderId),
         });
       });
     } else {
@@ -130,4 +135,3 @@ export const acceptFriendRequest = async (senderId) => {
     throw error;
   }
 };
-
