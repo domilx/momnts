@@ -69,7 +69,6 @@ export const getReceivedFriendRequests = async (userId) => {
     const userDocSnap = await getDoc(userDocRef);
 
     if (userDocSnap.exists()) {
-      // Assuming 'friendRequestsReceived' is an array of user IDs stored in the user's document
       const receivedRequests = userDocSnap.data().friendRequestsReceived || [];
 
       const profiles = await Promise.all(
