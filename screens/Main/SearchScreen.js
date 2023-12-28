@@ -48,12 +48,14 @@ const SettingsScreen = () => {
 
   // Define the debounced handleSearch function outside of the useEffect to avoid re-creating it on every render
   const debouncedHandleSearch = debounce((query) => {
-    if (query.trim() === '') {
+    if (query.trim() === "") {
       setSearchResults([]);
     } else {
-      SearchService.searchUsers(query).then(setSearchResults).catch((error) => {
-        console.error("Error searching users:", error);
-      });
+      SearchService.searchUsers(query)
+        .then(setSearchResults)
+        .catch((error) => {
+          console.error("Error searching users:", error);
+        });
     }
   }, 300);
 
@@ -118,7 +120,10 @@ const SettingsScreen = () => {
       <FlatList
         data={searchResults}
         keyExtractor={(item) => item.userId}
-        renderItem={({ item }) => <UserCard user={item} />}
+        renderItem={({ item }) => {
+          console.log("Item:", item);
+          return <UserCard user={item} />;
+        }}
       />
     </View>
   );

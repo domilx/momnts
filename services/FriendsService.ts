@@ -72,6 +72,25 @@ export const getReceivedFriendRequests = async (userId) => {
   }
 };
 
+export const getFriends = async (userId) => {
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      // Assuming 'friends' is an array of user IDs stored in the user's document
+      const friends = userDocSnap.data().friends || [];
+      return friends; // This will be an array of user IDs
+    } else {
+      throw new Error("User document does not exist.");
+    }
+  } catch (error) {
+    console.error("Error getting friends list:", error);
+    throw error;
+  }
+};
+
+
 
 export const acceptFriendRequest = async (senderId) => {
   try {
@@ -112,20 +131,3 @@ export const acceptFriendRequest = async (senderId) => {
   }
 };
 
-export const getFriends = async (userId) => {
-  try {
-    const userDocRef = doc(db, "users", userId);
-    const userDocSnap = await getDoc(userDocRef);
-
-    if (userDocSnap.exists()) {
-      // Assuming 'friends' is an array of user IDs stored in the user's document
-      const friends = userDocSnap.data().friends || [];
-      return friends; // This will be an array of user IDs
-    } else {
-      throw new Error("User document does not exist.");
-    }
-  } catch (error) {
-    console.error("Error getting friends list:", error);
-    throw error;
-  }
-};

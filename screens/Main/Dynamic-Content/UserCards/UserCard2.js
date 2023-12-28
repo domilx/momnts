@@ -5,9 +5,10 @@ import { sendFriendRequest } from "../../../../services/FriendsService"; // Impo
 import * as Haptics from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
 
-const UserCard = ({ user, userCard }) => {
+const UserCard2 = ({ user, userCard }) => {
   const [addIndicator, setaddIndicator] = useState(false);
   const navigation = useNavigation();
+  console.log(user);
 
 
   const handleProfile = async () => {
@@ -80,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserCard;
+export default UserCard2;

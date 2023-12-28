@@ -75,11 +75,20 @@ const FriendsScreen = () => {
     };
 
     fetchData();
-  }, [activeTab, friends, sentRequests, receivedRequests]);
+  }, [activeTab]);
 
   const handleTabChange = (tabName) => {
     setActiveTab(tabName);
     setSearch(""); // Clear search when changing tabs
+
+    // Update filteredData based on the selected tab
+    if (tabName === "friends") {
+      setFilteredData(friends);
+    } else if (tabName === "sent") {
+      setFilteredData(sentRequests);
+    } else if (tabName === "received") {
+      setFilteredData(receivedRequests);
+    }
   };
 
   const acceptRequest = async (senderId) => {
@@ -110,24 +119,45 @@ const FriendsScreen = () => {
       <View style={styles.tabs}>
         <TouchableOpacity onPress={() => handleTabChange("friends")}>
           <View style={styles.tab}>
-            <Text style={activeTab === "friends" ? styles.activeTabText : styles.tabText}>Friends</Text>
+            <Text
+              style={
+                activeTab === "friends" ? styles.activeTabText : styles.tabText
+              }
+            >
+              Friends
+            </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleTabChange("sent")}>
           <View style={styles.tab}>
-            <Text style={activeTab === "sent" ? styles.activeTabText : styles.tabText}>Sent Requests</Text>
+            <Text
+              style={
+                activeTab === "sent" ? styles.activeTabText : styles.tabText
+              }
+            >
+              Sent Requests
+            </Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleTabChange("received")}>
           <View style={styles.tab}>
-            <Text style={activeTab === "received" ? styles.activeTabText : styles.tabText}>Received Requests</Text>
+            <Text
+              style={
+                activeTab === "received" ? styles.activeTabText : styles.tabText
+              }
+            >
+              Received Requests
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.userId}
-        renderItem={({ item }) => <UserCard2 user={item} />}
+        renderItem={({ item }) => {
+          console.log("Item:", item); 
+          return <UserCard2 user={item} />;
+        }}
       />
     </View>
   );
@@ -271,7 +301,7 @@ const styles = StyleSheet.create({
   },
 
   activeTabText: {
-    color: "#7A807C", 
+    color: "#7A807C",
     paddingHorizontal: 7,
   },
 });

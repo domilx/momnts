@@ -92,15 +92,13 @@ const ProfileScreen = () => {
       <View style={styles.settingChunk}>
         <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
           <View style={styles.twoText}>
-            <Text style={styles.fullName}>Momnts Score:</Text>
+            <Text style={styles.fullName}>MOMNTS | SCORE</Text>
             <Text style={styles.score}>1 023 812</Text>
           </View>
-          <Icon
-            name="chevron-right"
-            size={25}
-            color="gray"
-            style={styles.arrow}
-          />
+          <View style={styles.twoText}>
+            <Text style={styles.fullName}>FRIENDS</Text>
+            <Text style={styles.score}>82</Text>
+          </View>
           
         </TouchableOpacity>
       </View>
@@ -148,6 +146,12 @@ const styles = StyleSheet.create({
     borderRadius: 60,
     marginBottom: 10,
     backgroundColor: "#7A807C",
+  },
+  twoText: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
   },
   displayname: {
     fontSize: 24,
@@ -226,7 +230,7 @@ const styles = StyleSheet.create({
   settingItem: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
     paddingHorizontal: 10,
     paddingVertical: 11, // Applied consistent padding to the entire settingItem
   },
