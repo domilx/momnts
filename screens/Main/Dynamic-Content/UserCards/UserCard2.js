@@ -4,26 +4,26 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { sendFriendRequest } from "../../../../services/FriendsService"; // Import the function from your service file
 import * as Haptics from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
+import { acceptFriendRequest } from "../../../../services/FriendsService";
 
 const UserCard2 = ({ user, userCard }) => {
   const [addIndicator, setaddIndicator] = useState(false);
   const navigation = useNavigation();
-  
+
   const handleAdd = async () => {
     await acceptFriendRequest(user.userId);
+    console.log("PRESSED");
     setaddIndicator(true);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
-  }
+  };
 
   const handleProfile = async () => {
-    navigation.navigate("UserProfile", { user })
+    navigation.navigate("UserProfile", { user });
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
   };
   return (
     <View style={styles.settingChunk}>
-      <TouchableOpacity
-        onPress={handleProfile}
-      >
+      <TouchableOpacity onPress={handleProfile}>
         <View style={styles.settingItem} activeOpacity={0.7}>
           <Image source={{ uri: user.profileImageUrl }} style={styles.avatar} />
           <View style={styles.twoText}>
@@ -31,7 +31,7 @@ const UserCard2 = ({ user, userCard }) => {
             <Text style={styles.username}>@{user.username}</Text>
           </View>
 
-          <TouchableOpacity >
+          <TouchableOpacity>
             <Icon
               name={addIndicator ? "account-remove" : "account-plus"}
               size={25}

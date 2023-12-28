@@ -130,12 +130,14 @@ export const acceptFriendRequest = async (senderId) => {
         // Update sender's document: remove the recipientId from friendRequestsSent and add to friends
         transaction.update(senderDocRef, {
           friendRequestsSent: arrayRemove(recipientId),
+          friendRequestsReceived: arrayRemove(recipientId),
           friends: arrayUnion(recipientId),
         });
 
         // Update recipient's document: remove the senderId from friendRequestsReceived and add to friends
         transaction.update(recipientDocRef, {
           friendRequestsReceived: arrayRemove(senderId),
+          friendRequestsSent: arrayRemove(senderId),
           friends: arrayUnion(senderId),
         });
       });
