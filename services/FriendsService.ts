@@ -51,7 +51,7 @@ export const getSentFriendRequests = async (userId) => {
           return docSnap.data();
         }
       }));
-      return profiles.filter(profile => profile);
+      return profiles
     } else {
       throw new Error("User document does not exist.");
     }
@@ -67,7 +67,6 @@ export const getReceivedFriendRequests = async (userId) => {
     const userDocSnap = await getDoc(userDocRef);
 
     if (userDocSnap.exists()) {
-      // Assuming 'friendRequestsReceived' is an array of user IDs stored in the user's document
       const receivedRequests = userDocSnap.data().friendRequestsReceived || [];
       
       const profiles = await Promise.all(receivedRequests.map(async (id) => {
@@ -78,7 +77,7 @@ export const getReceivedFriendRequests = async (userId) => {
         }
       }));
 
-      return profiles.filter(profile => profile); // Filter out undefined values
+      return profiles
     } else {
       throw new Error("User document does not exist.");
     }

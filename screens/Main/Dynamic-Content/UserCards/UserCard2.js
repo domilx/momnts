@@ -8,8 +8,12 @@ import { useNavigation } from "@react-navigation/native";
 const UserCard2 = ({ user, userCard }) => {
   const [addIndicator, setaddIndicator] = useState(false);
   const navigation = useNavigation();
-  console.log(user);
-
+  
+  const handleAdd = async () => {
+    await acceptFriendRequest(user.userId);
+    setaddIndicator(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
+  }
 
   const handleProfile = async () => {
     navigation.navigate("UserProfile", { user })
@@ -33,6 +37,7 @@ const UserCard2 = ({ user, userCard }) => {
               size={25}
               color={addIndicator ? "#7A807C" : "#D6E0D9"}
               style={styles.arrow}
+              onPress={handleAdd}
             />
           </TouchableOpacity>
         </View>
