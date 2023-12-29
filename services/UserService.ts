@@ -1,3 +1,4 @@
+import { getFriends } from './FriendsService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth, db } from "../firebase";
 import { getDoc, doc } from 'firebase/firestore';
@@ -25,6 +26,29 @@ const getUserProfile = async () => {
     return null;  // Return null if there's an error or no profile
 };
 
+
+export const getFriendsCount = async (userId: string): Promise<number> => {
+    try {
+      const userDocRef = doc(db, "users", userId);
+      const userDocSnap = await getDoc(userDocRef);
+  
+      if (userDocSnap.exists()) {
+        const friends = userDocSnap.data()?.friends || [];
+        const friendsCount: number = friends.length;
+        console.log("Friends count:", friendsCount);
+        return friendsCount;
+      } else {
+        console.log("User document does not exist.");
+        throw new Error("User document does not exist.");
+      }
+    } catch (error) {
+      console.error("Error getting friends count:", error);
+      throw error;
+    }
+  };
+  
+
 export default {
-    getUserProfile
+    getUserProfile,
+    getFriendsCount
 };

@@ -118,6 +118,10 @@ export const getFriends = async (userId) => {
   }
 };
 
+
+
+
+
 export const acceptFriendRequest = async (senderId) => {
   try {
     const currentUser = auth.currentUser;

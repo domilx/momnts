@@ -10,6 +10,8 @@ import UserService from "../../services/UserService";
 const ProfileScreen = () => {
   const navigation = useNavigation();
   const [profile, setProfile] = useState({});
+  const [friendsCount, setFriendsCount] = useState(0); // New state for friends count
+
 
   const handleSettings = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -31,11 +33,18 @@ const ProfileScreen = () => {
       const userProfile = await UserService.getUserProfile();
       if (userProfile) {
         setProfile(userProfile);
+        try {
+          const count = await UserService.getFriendsCount(userProfile.userId);
+          setFriendsCount(count);
+        } catch (error) {
+          console.error("Error retrieving friends count:", error);
+        }
       }
     };
 
     loadUserProfile();
   }, []);
+
 
   return (
     <View style={styles.container}>
@@ -97,7 +106,7 @@ const ProfileScreen = () => {
           </View>
           <View style={styles.twoText}>
             <Text style={styles.fullName}>FRIENDS</Text>
-            <Text style={styles.score}>82</Text>
+            <Text style={styles.score}>{friendsCount}</Text>
           </View>
           
         </TouchableOpacity>

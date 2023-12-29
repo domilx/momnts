@@ -48,15 +48,15 @@ const RegisterScreen = () => {
         Alert.alert('Registration failed', 'Please fill in all fields.');
         return;
       }
-
+  
       const response = await fetch(image);
       const blob = await response.blob();
-
+  
       await AuthService.register(email, password, username, name, bio, blob);
-
+  
       console.log('Registration successful');
-      const [modalVisible, setModalVisible] = useState(false);
-
+      setModalVisible(false); 
+  
       navigation.navigate("MapScreen");
     } catch (error) {
       console.error(error);

@@ -88,7 +88,7 @@ const ControlPanel2 = ({ cityName = "Montreal" }) => {
       <View style={styles.detailsContainer}>
         <Icon name={getWeatherIcon()} size={24} color="#D6E0D9" />
         <Text style={styles.detailsText}>
-          {weatherData?.current.temp_c}°C | {format12HourTime(localTime)} // i have no idea why error but it works
+          {weatherData?.current.temp_c}°C | {format12HourTime(localTime)} 
         </Text>
       </View>
     </View>
