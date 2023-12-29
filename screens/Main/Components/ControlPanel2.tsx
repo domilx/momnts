@@ -15,7 +15,7 @@ const ControlPanel2 = ({ cityName = "Montreal" }) => {
     setCity(cityName);
   }, [cityName]);
 
-  const saveWeatherData = async (data) => {
+  const saveWeatherData = async (data: any) => {
     try {
       await AsyncStorage.setItem(`weather_${city}`, JSON.stringify(data));
     } catch (error) {
@@ -62,13 +62,13 @@ const ControlPanel2 = ({ cityName = "Montreal" }) => {
 
   const getWeatherIcon = () => {
     if (!weatherData) return "weather-cloudy";
-    const condition = weatherData.current.condition.text.toLowerCase();
+    const condition = (weatherData as any).current.condition.text.toLowerCase();
     if (condition.includes("rain")) return "weather-rainy";
     if (condition.includes("cloud")) return "weather-cloudy";
     return "weather-sunny";
   };
 
-  const format12HourTime = (timeStr) => {
+  const format12HourTime = (timeStr: any) => {
     if (!timeStr) return "";
     const timeOnly = timeStr.split(" ")[1];
     const [hour, minute] = timeOnly.split(":");
@@ -88,7 +88,7 @@ const ControlPanel2 = ({ cityName = "Montreal" }) => {
       <View style={styles.detailsContainer}>
         <Icon name={getWeatherIcon()} size={24} color="#D6E0D9" />
         <Text style={styles.detailsText}>
-          {weatherData?.current.temp_c}°C | {format12HourTime(localTime)}
+          {weatherData?.current.temp_c}°C | {format12HourTime(localTime)} // i have no idea why error but it works
         </Text>
       </View>
     </View>

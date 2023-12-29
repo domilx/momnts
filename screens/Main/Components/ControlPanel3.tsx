@@ -23,7 +23,7 @@ const ControlPanel = () => {
   const navigation = useNavigation();
 
   const handleSearch = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.navigate("Search");
   };
 
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     borderWidth: 2,
     borderColor: "grey",
-    borderRadius: 50,
   },
   controlPanelTop: {
     position: "absolute",

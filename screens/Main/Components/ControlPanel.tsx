@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Haptics from "expo-haptics";
 
@@ -8,17 +8,17 @@ const ControlPanel = () => {
   const navigation = useNavigation();
 
   const handleSettings = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.navigate("Settings");
   };
 
   const handleArView = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.navigate("CameraView");
   };
 
   const handleFriends = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.light);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.navigate("Friends");
   };
 

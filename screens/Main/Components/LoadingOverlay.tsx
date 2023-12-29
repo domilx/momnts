@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-const OverlayComponent = ({ isVisible, onClose }) => {
+const OverlayComponent = ({ isVisible, onClose }: any) => {
   return (
     <Modal
       animationType="slide"

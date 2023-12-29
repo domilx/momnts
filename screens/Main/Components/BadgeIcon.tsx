@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const BadgeIcon = ({ iconName, badgeCount }) => {
+const BadgeIcon = ({ iconName, badgeCount }: any) => {
   return (
     <View style={styles.container}>
       <Icon name={iconName} size={35} color="#D6E0D9" />
