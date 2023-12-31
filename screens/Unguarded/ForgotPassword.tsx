@@ -40,11 +40,6 @@ const LoginScreen = ({ navigation }) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
-  const handleForgotPassword = () => {
-    navigation.navigate("ForgotPassword");
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  };
-
   // Handles haptic feedback on text input focus
   const handleTextInputFocus = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -71,8 +66,10 @@ const LoginScreen = ({ navigation }) => {
       <View style={styles.container}>
         {/* Title */}
         <View style={styles.titleView}>
-          <Text style={styles.title}>Login</Text>
+          <Text style={styles.title}>Forgot Password</Text>
         </View>
+
+
 
         {/* Input fields */}
         <View style={{ ...styles.inputContainer, width: width - 30 }}>
@@ -88,41 +85,17 @@ const LoginScreen = ({ navigation }) => {
             keyboardAppearance="dark"
             onFocus={handleTextInputFocus}
           />
+          
+        <Text style={styles.forgotPassword}>Please provide us with the email you used to create your account so we can send instructions to reset your password</Text>
 
-          <Text style={styles.label}>Password</Text>
-          <View style={styles.passwordInputContainer}>
-            <TextInput
-              style={{ ...styles.input2, flex: 1, fontSize: 13 }} // Dynamic font size
-              placeholder="Enter your password"
-              placeholderTextColor="#7A807C"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-              secureTextEntry={!showPassword}
-              keyboardAppearance="dark"
-              onFocus={handleTextInputFocus}
-            />
-            <TouchableOpacity
-              style={styles.iconContainer}
-              onPress={toggleShowPassword}
-            >
-              <Icon
-                name={showPassword ? "eye" : "eye-off"}
-                size={24}
-                color="#aaa"
-              />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity onPress={handleForgotPassword}>
-          <Text style={styles.forgotPassword}>Forgot Password?</Text>
-          </TouchableOpacity>
         </View>
 
         <View style={styles.bottomContainer}>
           {/* Register link */}
           <Text style={styles.registerText}>
-            Don't have an account?{" "}
+            Rememeber your password?{" "}
             <Text onPress={handleRegisterPress} style={styles.registerLink}>
-              Create One
+             Return
             </Text>
           </Text>
           {/* Login button */}
@@ -130,7 +103,7 @@ const LoginScreen = ({ navigation }) => {
             style={styles.buttonContainer}
             onPress={() => handleLogin(email, password)}
           >
-            <Text style={styles.buttonText}>Login</Text>
+            <Text style={styles.buttonText}>Send Reset Instructions</Text>
           </TouchableOpacity>
 
           <OverlayComponent

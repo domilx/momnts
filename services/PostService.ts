@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { auth, db, storage } from '../firebase';
-import { query, collection, where, getDocs, limit, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { query, collection, where, getDocs, setDoc, getDoc, limit, doc, updateDoc, arrayUnion, addDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as Location from 'expo-location';
 
@@ -30,10 +30,10 @@ const uploadPhoto = async (userId, imageUri) => {
 };
 
 // This function will update user's document with the Momnt URL and other info(time. location, photoURL)
-const updateMomnts = async (userId, photoURL) => {
+const updateMomnts = async (photoURL) => {
   try {
-    const userDocRef = doc(db, 'users', userId);
-
+    const userId = auth.currentUser.uid; // Fetch the currently logged-in user's ID
+    
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       throw new Error('Permission to access location was denied');
@@ -45,17 +45,21 @@ const updateMomnts = async (userId, photoURL) => {
     const timeStamp = new Date().toISOString();
 
     const dailyMomnts = {
+      userId: userId,
       photoURL: photoURL,
       location: { latitude, longitude },
       timeStamp: timeStamp,
     };
 
-    await updateDoc(userDocRef, {
-      postDataList: arrayUnion(dailyMomnts),
-    });
-    console.log('Post data updated successfully');
+    // Reference the 'moments' collection and the document with the user's ID
+    const momentsDocRef = doc(db, 'moments', userId);
+
+    // Set the document data using the dailyMomnts object
+    await setDoc(momentsDocRef, dailyMomnts);
+
+    console.log('Moment added successfully');
   } catch (error) {
-    console.error('Error updating post data:', error);
+    console.error('Error adding moment:', error);
   }
 };
 

@@ -1,128 +1,144 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, ScrollView, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import MapView, { Marker } from 'react-native-maps';
-import MatIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Card, Avatar } from 'react-native-elements';
-import * as Haptics from 'expo-haptics';
+import MapView, { Marker } from "react-native-maps";
+import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Card, Avatar } from "react-native-elements";
+import * as Haptics from "expo-haptics";
+import { fetchUserFeed } from "../../../services/UserFeedService";
+import { auth, db } from "../../../firebase";
 
-const FriendsList = () => {
-  const navigation = useNavigation();
-  const [showContent, setShowImage] = useState(true);
+const UserFeed = () => {
+  const [showContent, setShowContent] = useState(true);
+  const [userFeed, setUserFeed] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeed = async () => {
+      try {
+        const loggedInUserId = auth.currentUser ? auth.currentUser.uid : null;
+        if (!loggedInUserId) {
+          throw new Error("No user logged in.");
+        }
+        console.log("Logged in user ID:", loggedInUserId);
+        const userFeedData = await fetchUserFeed(loggedInUserId);
+        console.log("Fetched Data:", userFeedData);
+        setUserFeed(userFeedData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching user feed:", error);
+        setLoading(false);
+      }
+    };
+    fetchFeed();
+  }, []);
 
   const toggleContent = () => {
-    setShowImage(!showContent);
+    setShowContent(!showContent);
   };
 
-  const FriendItem = ({ avatarSource, username, emoji, postedImageSource }) => {
+  const FriendItem = ({ username, postedImageSource, profilePicture, userlatitude, userlongitude }) => {
     return (
-      <View style={styles.Container}>
-      <View style={styles.friendContainer}>
-        <View style={styles.settingChunk}>
-          <TouchableOpacity style={styles.settingItem} activeOpacity={0.7} >
-            <Image source={avatarSource} style={styles.avatar} />
-            <View style={styles.twoText}>
-              <Text style={styles.fullName}>{username}</Text>
-              <Text style={styles.username}>last seen 4h ago</Text>
-            </View>
-
-            <TouchableOpacity onPress={toggleContent} >
-            <MatIcon name="map-marker-circle" size={30} color="gray" style={{left: -20}} />
-            </TouchableOpacity>
-          </TouchableOpacity>
-
-          {showContent ? (
-            
-            <Image source={postedImageSource} style={styles.postedImage} />
-          ) : (
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
+      <View style={styles.container}>
+        <View style={styles.friendContainer}>
+          <View style={styles.settingChunk}>
+            <TouchableOpacity
+              style={styles.settingItem}
+              activeOpacity={0.7}
+              onPress={toggleContent}
             >
-              <Marker
-                coordinate={{
-                  latitude: 37.78825,
-                  longitude: -122.4324,
+              <Image source={{ uri: profilePicture }} style={styles.avatar} />
+  
+              <View style={styles.twoText}>
+                <Text style={styles.fullName}>{username}</Text>
+                <Text style={styles.username}>last seen 4h ago</Text>
+              </View>
+            </TouchableOpacity>
+  
+            {showContent ? (
+              <Image source={{ uri: postedImageSource }} style={styles.postedImage} />
+            ) : (
+              <MapView
+                style={styles.map}
+                initialRegion={{
+                  latitude: userlatitude,
+                  longitude: userlongitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
                 }}
-              />
-            </MapView>
-          )}
-          
+              >
+                <Marker
+                  coordinate={{
+                    latitude: userlatitude,
+                    longitude: userlongitude,
+                  }}
+                />
+              </MapView>
+            )}
+          </View>
         </View>
       </View>
-    </View>
     );
   };
-  
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentView}>
-        
-        <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView>
+      {userFeed.map((post, index) => (
         <FriendItem
-          username="Aly Shariff"
-          postedImageSource={require('../Sample/2.jpg')} // Specify the user's posted image source here
+          key={index}
+          username={post.username}
+          profilePicture={{ uri: post.profileImageUrl }}          
+          postedImageSource={post.photoURL}
+          userlatitude={post.latitude}
+          userlongitude={post.longitude}
         />
-          <View style={styles.divider} />
-          <FriendItem
-          postedImageSource={require('../Sample/1.jpg')} // Specify the user's posted image source here
-
-          username="Xin Lei"
-          />
-          <View style={styles.divider} />
-          <FriendItem
-          username="Bill Gates"
-            postedImageSource={require('../Sample/3.jpg')} // Specify the user's posted image source here
-
-          />
-          <View style={styles.divider} />
-          {/* Add more FriendItem components here */}
-        </ScrollView>
-      </View>
-    </View>
+      ))}
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   contentView: {
     marginHorizontal: 20,
   },
   twoText: {
-    justifyContent: 'center',
-    alignItems: 'left',
+    justifyContent: "center",
+    alignItems: "left",
     width: "80%",
 
     marginLeft: 10,
   },
   map: {
-    width: '100%',
+    width: "100%",
     height: 400,
     borderRadius: 10,
   },
   fullName: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#D6E0D9',
+    fontWeight: "bold",
+    color: "#D6E0D9",
   },
   username: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#7A807C',
+    fontWeight: "500",
+    color: "#7A807C",
   },
   friendContainer: {
     flex: 1,
   },
-  arrow: {      
+  arrow: {
     marginRight: 10,
   },
   friendTextContainer: {
@@ -139,24 +155,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 8,
     marginBottom: 20,
-},
-settingItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 11,  
-},
+  },
+  settingItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 11,
+  },
   avatarWithStatusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   avatar: {
     width: 40,
     height: 40,
     borderRadius: 30,
-    resizeMode: 'cover',
+    resizeMode: "cover",
     backgroundColor: "#7A807C",
-
   },
   divider: {
     height: 0.3,
@@ -165,22 +180,22 @@ settingItem: {
   },
   friendUsername: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#D6E0D9',
+    fontWeight: "bold",
+    color: "#D6E0D9",
   },
   friendActivity: {
     fontSize: 10,
-    color: '#7A807C',
+    color: "#7A807C",
   },
   postedImage: {
-    width: '100%',
+    width: "100%",
     height: 400, // Adjust the height as needed
-    resizeMode: 'cover',
+    resizeMode: "cover",
     borderRadius: 10,
   },
   emojiContainer: {
     marginLeft: 5,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     borderRadius: 30,
     borderColor: "#D6E0D9",
     borderWidth: 0.2,
@@ -188,4 +203,4 @@ settingItem: {
   },
 });
 
-export default FriendsList;
+export default UserFeed;
