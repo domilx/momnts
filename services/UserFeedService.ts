@@ -23,14 +23,13 @@ const fetchUserFeed = async (loggedInUserId) => {
 
       if (friendDocSnapshot.exists()) {
         const friendData = friendDocSnapshot.data();
-        console.log('Friend Data:', friendData); // Log friendData to check profileImage field
+        console.log('Friend Data:', friendData); 
         
         const momentsDocRef = doc(db, 'moments', friendId);
         const momentsSnapshot = await getDoc(momentsDocRef);
 
         if (momentsSnapshot.exists()) {
           const post = momentsSnapshot.data();
-          // Combine post data with friend's info
           const postWithUserInfo = {
             ...post,
             username: friendData.username,

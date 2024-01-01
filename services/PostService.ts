@@ -32,7 +32,7 @@ const uploadPhoto = async (userId, imageUri) => {
 // This function will update user's document with the Momnt URL and other info(time. location, photoURL)
 const updateMomnts = async (photoURL) => {
   try {
-    const userId = auth.currentUser.uid; // Fetch the currently logged-in user's ID
+    const userId = auth.currentUser.uid; 
     
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -47,8 +47,9 @@ const updateMomnts = async (photoURL) => {
     const dailyMomnts = {
       userId: userId,
       photoURL: photoURL,
-      location: { latitude, longitude },
       timeStamp: timeStamp,
+      latitude: latitude, 
+      longitude: longitude, 
     };
 
     // Reference the 'moments' collection and the document with the user's ID

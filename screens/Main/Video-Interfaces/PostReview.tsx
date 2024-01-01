@@ -20,14 +20,15 @@ const PostReviewScreen = () => {
   
         console.log('user id:', userId)
         console.log('photoURI:', photoURI)
+        
         const downloadURL = await uploadPhoto(userId, photoURI);
 
         console.log('After uploadPhoto');
         console.log('Download URL:', downloadURL);
   
         if (downloadURL) {
-          await updateMomnts(userId, downloadURL);
-          navigation.goBack();
+          await updateMomnts(downloadURL);
+          navigation.navigate("MapScreen");
         } else {
           console.log('Error uploading photo.');
         }

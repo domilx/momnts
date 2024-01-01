@@ -45,7 +45,7 @@ const UserFeed = () => {
     setShowContent(!showContent);
   };
 
-  const FriendItem = ({ username, postedImageSource, profilePicture, userlatitude, userlongitude }) => {
+  const FriendItem = ({ username, postedImageSource, profilePicture, userlatitude, userlongitude, timeStamp }) => {
     return (
       <View style={styles.container}>
         <View style={styles.friendContainer}>
@@ -59,7 +59,7 @@ const UserFeed = () => {
   
               <View style={styles.twoText}>
                 <Text style={styles.fullName}>{username}</Text>
-                <Text style={styles.username}>last seen 4h ago</Text>
+                <Text style={styles.username}>{timeStamp}</Text>
               </View>
             </TouchableOpacity>
   
@@ -95,10 +95,11 @@ const UserFeed = () => {
         <FriendItem
           key={index}
           username={post.username}
-          profilePicture={{ uri: post.profileImageUrl }}          
+          profilePicture={post.profileImageUrl}
           postedImageSource={post.photoURL}
           userlatitude={post.latitude}
           userlongitude={post.longitude}
+          timeStamp={post.timeStamp}
         />
       ))}
     </ScrollView>
@@ -117,8 +118,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "left",
     width: "80%",
-
-    marginLeft: 10,
+    left: -10
+    
   },
   map: {
     width: "100%",
@@ -189,9 +190,11 @@ const styles = StyleSheet.create({
   },
   postedImage: {
     width: "100%",
-    height: 400, // Adjust the height as needed
+    height: 400, 
     resizeMode: "cover",
     borderRadius: 10,
+    backgroundColor: "#D6E0D9",
+
   },
   emojiContainer: {
     marginLeft: 5,
