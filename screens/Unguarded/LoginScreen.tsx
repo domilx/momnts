@@ -115,6 +115,10 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity onPress={handleForgotPassword}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
+
+          <Text style={styles.forgotPassword}>errors go here</Text>
+
+          
         </View>
 
         <View style={styles.bottomContainer}>
@@ -179,6 +183,14 @@ const styles = StyleSheet.create({
     color: "#7A807C",
     marginTop: 6,
     marginRight: 10,
+  },
+
+  loginError: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#7A807C",
+    marginTop: 6,
+    marginRight: -10,
   },
 
   input: {
