@@ -23,6 +23,8 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isOverlayVisible, setOverlayVisible] = useState(false);
+  const [loginError, setLoginError] = useState(null); // State to hold login error
+
 
   const handleCloseOverlay = () => {
     setOverlayVisible(false);
@@ -50,6 +52,20 @@ const LoginScreen = ({ navigation }) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
+
+  const getFirebaseErrorMessage = (errorCode) => {
+    // Map Firebase error codes to custom messages
+    const firebaseErrorMessages = {
+      "auth/invalid-email": "Invalid email address.",
+      "auth/invalid-credential": "Invalid credentials.",
+      "auth/network-request-failed": "Please check your connection.",
+      // Add more Firebase error codes and corresponding messages as needed
+    };
+
+    // Return custom error message if available, otherwise return a default message
+    return firebaseErrorMessages[errorCode] || "Login failed. Please try again.";
+  };
+
   // Handles login logic
   const handleLogin = async (email, password) => {
     try {
@@ -61,7 +77,16 @@ const LoginScreen = ({ navigation }) => {
       setOverlayVisible(false);
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Error);
       console.error(error);
-      Alert.alert("Login failed", error.message);
+      if (error.code) {
+        const errorMessage = getFirebaseErrorMessage(error.code); // Get custom Firebase error message
+        setLoginError(errorMessage); // Update loginError state with custom error
+        setTimeout(() => {
+          setLoginError(null);
+        }, 5000);
+      } else {
+        // If there's no specific error code, display a generic error message
+        setLoginError("Login failed. Please try again.");
+      }
     }
   };
 
@@ -113,12 +138,12 @@ const LoginScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          <View style={{flexDirection: "row",     justifyContent: "space-between"}}>
+          <View style={{flexDirection: "row", justifyContent: "space-between"}}>
           <TouchableOpacity onPress={handleForgotPassword}>
           <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </TouchableOpacity>
 
-          <Text style={styles.loginError}>errors go here</Text>
+          <Text style={styles.loginError}>{loginError}</Text>
           </View>
           
         </View>
@@ -191,7 +216,7 @@ const styles = StyleSheet.create({
   loginError: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#7A807C",
+    color: "#FF5C5C",
     marginTop: 6,
   },
 

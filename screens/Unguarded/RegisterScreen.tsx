@@ -38,6 +38,11 @@ const RegisterScreen = () => {
     navigation.goBack();
   };
 
+  const handleLoginPress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    navigation.navigate("Login");
+  };
+
   const handleTextInputFocus = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); 
   };
