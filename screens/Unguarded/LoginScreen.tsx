@@ -62,7 +62,6 @@ const LoginScreen = ({ navigation }) => {
       // Add more Firebase error codes and corresponding messages as needed
     };
 
-    // Return custom error message if available, otherwise return a default message
     return firebaseErrorMessages[errorCode] || "Login failed. Please try again.";
   };
 
@@ -79,13 +78,12 @@ const LoginScreen = ({ navigation }) => {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Error);
       console.error(error);
       if (error.code) {
-        const errorMessage = getFirebaseErrorMessage(error.code); // Get custom Firebase error message
-        setLoginError(errorMessage); // Update loginError state with custom error
+        const errorMessage = getFirebaseErrorMessage(error.code); 
+        setLoginError(errorMessage); 
         setTimeout(() => {
           setLoginError(null);
         }, 5000);
       } else {
-        // If there's no specific error code, display a generic error message
         setLoginError("Login failed. Please try again.");
       }
     }
