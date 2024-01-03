@@ -14,6 +14,7 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import * as Haptics from "expo-haptics";
 import UserService from "../../services/UserService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { db, auth, storage } from "../../firebase";
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -22,7 +23,12 @@ const SettingsScreen = () => {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem("userProfile");
-      navigation.navigate("Login");
+      await auth.signOut();
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
     } catch (error) {
       console.error("Error logging out:", error);
     }
