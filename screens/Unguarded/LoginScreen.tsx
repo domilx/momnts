@@ -73,6 +73,7 @@ const LoginScreen = ({ navigation }) => {
       await AuthService.login(email, password);
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Success);
       navigation.navigate("MapScreen");
+      setOverlayVisible(false);
     } catch (error) {
       setOverlayVisible(false);
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Error);
