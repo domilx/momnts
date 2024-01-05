@@ -41,6 +41,8 @@ const MapScreen = () => {
   const [city, setCity] = useState("Montreal");
   const [profile, setProfile] = useState({});
   const [networkError, setNetworkError] = useState(false);
+  const [hasZoomedIn, setHasZoomedIn] = useState(false); // New state variable
+
 
   const testLocation = {
     latitude: 45.577725,
@@ -54,7 +56,8 @@ const MapScreen = () => {
 
   const debouncedFetchCityName = useCallback(
     debounce(async (region) => {
-      const cityName = await fetchCityName(region.latitude, region.longitude);
+      const maxLength = 15; // Set your desired maximum length here
+      const cityName = await fetchCityName(region.latitude, region.longitude, maxLength);
       setCity(cityName);
     }, 2000),
     []
@@ -68,17 +71,22 @@ const MapScreen = () => {
       setNetworkError(false);
     }, 5000); // Change the duration as needed
   };
-  const fetchCityName = async (latitude, longitude) => {
+
+  const fetchCityName = async (latitude, longitude, maxLength) => {
     try {
       const response = await fetch(
         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
       );
       const data = await response.json();
-
+  
       let cityName =
         data.city || data.locality || data.principalSubdivision || "";
       cityName = cityName.split("(")[0].trim();
-
+  
+      if (maxLength && cityName.length > maxLength) {
+        cityName = cityName.substring(0, maxLength - 3) + "...";
+      }
+  
       return cityName;
     } catch (error) {
       console.error("Error fetching city name:", error);
@@ -126,31 +134,51 @@ const MapScreen = () => {
         setProfile(userProfile);
       }
     };
-
-    const getLocation = async () => {
+  
+    const startLocationUpdates = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission denied for location");
+      if (status !== 'granted') {
+        console.log('Permission denied for location');
         return;
       }
-
-      const currentLocation = await Location.getCurrentPositionAsync({});
-      setLocation(currentLocation.coords);
-      setPath([currentLocation.coords]);
-
-      if (mapRef.current) {
-        mapRef.current.animateToRegion({
-          ...currentLocation.coords,
-          latitudeDelta: 0.04,
-          longitudeDelta: 0.04,
-        });
-      }
+  
+      const locationSubscription = await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.High,
+          timeInterval: 1000, // Update every 1 second (adjust as needed)
+          distanceInterval: 1, // Update if the device has moved by 1 meter
+        },
+        (newLocation) => {
+          setLocation(newLocation.coords);
+          setPath((prevPath) => [...prevPath, newLocation.coords]);
+        }
+      );
+  
+      return () => {
+        if (locationSubscription) {
+          locationSubscription.remove();
+        }
+      };
     };
-
+  
     loadUserProfile();
-    getLocation();
-  }, []);
+    startLocationUpdates();
+  }, []); 
+  
+  useEffect(() => {
+    if (location && !hasZoomedIn) {
+      // Focus on the user's location only when available and not already zoomed in
+      mapRef.current?.animateToRegion({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.04,
+        longitudeDelta: 0.04,
+      });
+      setHasZoomedIn(true); // Update state to indicate that zooming has occurred
+    }
+  }, [location, hasZoomedIn]); // Li
 
+  
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>
