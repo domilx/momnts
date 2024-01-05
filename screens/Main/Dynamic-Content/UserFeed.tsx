@@ -14,6 +14,7 @@ import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Card, Avatar } from "react-native-elements";
 import * as Haptics from "expo-haptics";
 import { fetchUserFeed } from "../../../services/UserFeedService";
+import { getTimeAgoString } from "../../../services/PostService"
 import { auth, db } from "../../../firebase";
 
 const UserFeed = () => {
@@ -45,7 +46,9 @@ const UserFeed = () => {
     setShowContent(!showContent);
   };
 
-  const FriendItem = ({ username, postedImageSource, profilePicture, userlatitude, userlongitude, timeStamp }) => {
+  const PostOutline = ({ username, postedImageSource, profilePicture, userlatitude, userlongitude, timeStamp }) => {
+    const timeAgoString = getTimeAgoString(timeStamp);
+
     return (
       <View style={styles.container}>
         <View style={styles.friendContainer}>
@@ -59,7 +62,7 @@ const UserFeed = () => {
   
               <View style={styles.twoText}>
                 <Text style={styles.fullName}>{username}</Text>
-                <Text style={styles.username}>{timeStamp}</Text>
+                <Text style={styles.username}>{timeAgoString}</Text>
               </View>
             </TouchableOpacity>
   
@@ -92,7 +95,7 @@ const UserFeed = () => {
   return (
     <ScrollView>
       {userFeed.map((post, index) => (
-        <FriendItem
+        <PostOutline
           key={index}
           username={post.username}
           profilePicture={post.profileImageUrl}
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
   twoText: {
     justifyContent: "center",
     alignItems: "left",
-    width: "80%",
+    width: "83%",
     left: -10
     
   },

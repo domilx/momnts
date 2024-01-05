@@ -4,6 +4,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, auth, storage } from '../firebase';
 
 
+
 const AuthService = {
     async isLoggedIn(): Promise<boolean> {
         const user = auth.currentUser;

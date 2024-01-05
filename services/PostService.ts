@@ -3,6 +3,28 @@ import { auth, db, storage } from '../firebase';
 import { query, collection, where, getDocs, setDoc, getDoc, limit, doc, updateDoc, arrayUnion, addDoc } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as Location from 'expo-location';
+import { differenceInHours, differenceInMinutes, differenceInSeconds } from 'date-fns';
+
+
+const getTimeAgoString = (timestamp) => {
+  const postedTime = new Date(timestamp);
+  const currentTime = new Date();
+
+  const hoursDiff = differenceInHours(currentTime, postedTime);
+  const minutesDiff = differenceInMinutes(currentTime, postedTime);
+  const secondsDiff = differenceInSeconds(currentTime, postedTime);
+
+  if (hoursDiff >= 24) {
+    const days = Math.floor(hoursDiff / 24);
+    return `posted ${days} day${days > 1 ? 's' : ''} ago`;
+  } else if (hoursDiff > 0) {
+    return `posted ${hoursDiff} hour${hoursDiff > 1 ? 's' : ''} ago`;
+  } else if (minutesDiff > 0) {
+    return `posted ${minutesDiff} minute${minutesDiff > 1 ? 's' : ''} ago`;
+  } else {
+    return `posted ${secondsDiff} second${secondsDiff > 1 ? 's' : ''} ago`;
+  }
+};
 
 // This function will uplaod the photo to firebase storage for use across the app
 const uploadPhoto = async (userId, imageUri) => {
@@ -64,4 +86,4 @@ const updateMomnts = async (photoURL) => {
   }
 };
 
-export { uploadPhoto, updateMomnts };
+export { uploadPhoto, updateMomnts, getTimeAgoString };
