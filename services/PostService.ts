@@ -16,13 +16,13 @@ const getTimeAgoString = (timestamp) => {
 
   if (hoursDiff >= 24) {
     const days = Math.floor(hoursDiff / 24);
-    return `posted ${days} day${days > 1 ? 's' : ''} ago`;
+    return `Posted ${days} Day${days > 1 ? 's' : ''} Ago`;
   } else if (hoursDiff > 0) {
-    return `posted ${hoursDiff} hour${hoursDiff > 1 ? 's' : ''} ago`;
+    return `Posted ${hoursDiff} Hour${hoursDiff > 1 ? 's' : ''} Ago`;
   } else if (minutesDiff > 0) {
-    return `posted ${minutesDiff} minute${minutesDiff > 1 ? 's' : ''} ago`;
+    return `Posted ${minutesDiff} Minute${minutesDiff > 1 ? 's' : ''} Ago`;
   } else {
-    return `posted ${secondsDiff} second${secondsDiff > 1 ? 's' : ''} ago`;
+    return `Posted ${secondsDiff} Second${secondsDiff > 1 ? 's' : ''} Ago`;
   }
 };
 

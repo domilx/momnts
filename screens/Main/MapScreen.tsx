@@ -15,6 +15,7 @@ import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Haptics from "expo-haptics";
 import { debounce } from "lodash";
 import UserService from "../../services/UserService";
+import startLocationTracking from "../../services/LocationService";
 import { LinearGradient } from "expo-linear-gradient";
 
 // comp imports
@@ -41,6 +42,9 @@ const MapScreen = () => {
   const [city, setCity] = useState("Montreal");
   const [profile, setProfile] = useState({});
   const [networkError, setNetworkError] = useState(false);
+  
+  startLocationTracking(); 
+
   const [hasZoomedIn, setHasZoomedIn] = useState(false); // New state variable
 
 
