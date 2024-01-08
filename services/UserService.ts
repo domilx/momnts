@@ -1,7 +1,7 @@
 import { getFriends } from './FriendsService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth, db } from "../firebase";
-import { getDoc, doc } from 'firebase/firestore';
+import { getDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 
 const getUserProfile = async () => {
     try {
@@ -26,6 +26,43 @@ const getUserProfile = async () => {
     return null;  // Return null if there's an error or no profile
 };
 
+export const updateUserProfile = async (userData) => {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      const userId = user.uid;
+      const userDocRef = doc(db, "users", userId);
+      await updateDoc(userDocRef, userData);
+
+      // If necessary, update local storage or retrieve updated user profile data
+    } else {
+      throw new Error("User not authenticated");
+    }
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    throw error;
+  }
+};
+
+
+const uploadImageToFirebaseStorage = async (selectedImage) => {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      const storageRef = storage.ref(`avatars/${user.uid}`);
+      const imageRef = storageRef.child('avatar.jpg');
+
+      await imageRef.putFile(selectedImage);
+
+      const imageUrl = await imageRef.getDownloadURL();
+      return imageUrl;
+    }
+  } catch (error) {
+    console.error("Error uploading image to Firebase Storage:", error);
+    throw error;
+  }
+};
+
 
 export const getFriendsCount = async (userId: string): Promise<number> => {
     try {
@@ -48,7 +85,10 @@ export const getFriendsCount = async (userId: string): Promise<number> => {
   };
   
 
-export default {
+
+  export default {
     getUserProfile,
-    getFriendsCount
-};
+    getFriendsCount,
+    updateUserProfile,
+    uploadImageToFirebaseStorage,
+  };

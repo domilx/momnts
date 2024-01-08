@@ -11,6 +11,11 @@ const PostReviewScreen = () => {
   const route = useRoute();
   const { photoURI } = route.params;
 
+  const handleRetakePhoto = () => {
+    const photoURI = "";
+    navigation.goBack();
+  }
+
   const handleSavePhoto = async () => {
     try {
       console.log('Attempting to save photo');
@@ -50,7 +55,7 @@ const PostReviewScreen = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={handleRetakePhoto}>
           <View style={styles.tab}>
             <Text style={styles.tabText}>Retake Momnt</Text>
           </View>

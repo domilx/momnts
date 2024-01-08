@@ -35,6 +35,8 @@ export default function CameraView() {
     );
   }
 
+  
+
   function toggleCameraType() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setType((current) =>
@@ -49,10 +51,11 @@ export default function CameraView() {
         const { uri } = await cameraRef.takePictureAsync();
         setCapturedPhoto(uri);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-
+  
         setTimeout(() => {
           setIsPreviewing(false);
           navigation.navigate('PostReview', { photoURI: uri });
+          setCapturedPhoto(null); // Reset capturedPhoto to null
         }, 1000); // Adjust the delay duration as needed
       } catch (error) {
         setIsPreviewing(false);

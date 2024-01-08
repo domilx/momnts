@@ -29,6 +29,33 @@ const EditProfileScreen = () => {
   const [email, setEmail] = useState(DEFAULT_EMAIL);
   const [hasChanged, setHasChanged] = useState(false);
 
+  const handleSave = async () => {
+    try {
+      await UserService.updateUserProfile({
+        fullName: name,
+        username: username,
+        bio: bio,
+        email: email,
+        profileImageUrl: image,
+      });
+
+      navigation.goBack();
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
+  const uploadImageToFirebase = async () => {
+    try {
+      if (image) {
+        const imageUrl = await UserService.uploadImageToFirebaseStorage(image);
+        setImage(imageUrl);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
   useEffect(() => {
     const loadUserProfile = async () => {
       const userProfile = await UserService.getUserProfile();
@@ -94,7 +121,7 @@ const EditProfileScreen = () => {
           <Text style={styles.title}>Edit Profile</Text>
           <TouchableOpacity
             activeOpacity={hasChanged ? 0.5 : 1}
-            onPress={hasChanged ? handleReturn : null}
+            onPress={handleSave}
             style={styles.iconContainer}
           >
             <Text
@@ -118,7 +145,10 @@ const EditProfileScreen = () => {
               onPress={pickImage}
               style={styles.avatarClickableArea}
             >
-              <Image source={{  uri: profile.profileImageUrl }} style={styles.avatar} />
+              <Image
+                source={{ uri: profile.profileImageUrl }}
+                style={styles.avatar}
+              />
               <View style={styles.cameraIconOverlay}>
                 <Icon name="camera" size={20} color="#000000" />
               </View>
@@ -130,7 +160,7 @@ const EditProfileScreen = () => {
                 <TextInput
                   style={styles.input}
                   defaultValue={profile.fullName}
-                  onChangeText={(text) => setName(text)}
+                  onChangeText={(text) => setName(text)} // Update 'name' state
                   keyboardAppearance="dark"
                 />
               </TouchableOpacity>
@@ -142,7 +172,7 @@ const EditProfileScreen = () => {
                 <TextInput
                   style={styles.input}
                   defaultValue={profile.username}
-                  onChangeText={(text) => setName(text)}
+                  onChangeText={(text) => setUsername(text)} // Update 'username' state
                   keyboardAppearance="dark"
                 />
               </TouchableOpacity>
