@@ -45,6 +45,7 @@
     "link": "^2.1.0",
     "lodash": "^4.17.21",
     "native-base": "^3.4.28",
+    "ngrok": "^5.0.0-beta.2",
     "react": "18.2.0",
     "react-i18next": "^13.3.0",
     "react-native": "0.72.6",

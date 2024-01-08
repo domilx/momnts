@@ -15,8 +15,10 @@ import MatIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Haptics from "expo-haptics";
 import { debounce } from "lodash";
 import UserService from "../../services/UserService";
-import startLocationTracking from "../../services/LocationService";
 import { LinearGradient } from "expo-linear-gradient";
+import getFriendsLiveLocations from "../../services/LocationService"; 
+import { auth, db } from "../../firebase";
+
 
 // comp imports
 import { BottomSheet } from "./Components/BottomSheet";
@@ -42,10 +44,41 @@ const MapScreen = () => {
   const [city, setCity] = useState("Montreal");
   const [profile, setProfile] = useState({});
   const [networkError, setNetworkError] = useState(false);
-  
-  startLocationTracking(); 
+  const [hasZoomedIn, setHasZoomedIn] = useState(false); 
+  const [friendsLocations, setFriendsLocations] = useState([]);
 
-  const [hasZoomedIn, setHasZoomedIn] = useState(false); // New state variable
+  const handleButtonXPress = () => {
+    setCurrentView("xView");
+    setShow(true);
+    setIsComponentVisible(false);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  };
+
+  const handleButtonYPress = () => {
+    setCurrentView("yView");
+    setIsComponentVisible(false);
+    setShow(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+  };
+
+  const handleCenterButtonClick = () => {
+    navigation.navigate("CameraView");
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+  };
+
+  
+
+  const handleProfile = () => {
+    navigation.navigate("Profile");
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+  };
+
+  const onOuterClick = () => {
+    setShow(false);
+    setIsComponentVisible(true);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    setCurrentView("noview");
+  };
 
 
   const testLocation = {
@@ -98,38 +131,22 @@ const MapScreen = () => {
     }
   };
 
-  const handleButtonXPress = () => {
-    setCurrentView("xView");
-    setShow(true);
-    setIsComponentVisible(false);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-  };
 
-  const handleButtonYPress = () => {
-    setCurrentView("yView");
-    setIsComponentVisible(false);
-    setShow(true);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-  };
+  useEffect(() => {
+    const loggedInUserId = auth.currentUser; // Get the logged-in user's ID
+    // Get the logged-in user's ID
+    const fetchFriendsLocations = async () => {
+      try {
+        const friendsLocations = await getFriendsLiveLocations(loggedInUserId);
+        setFriendsLocations(friendsLocations); // Update the state with friends' locations
+      } catch (error) {
+        console.error('Error fetching friends locations:', error);
+      }
+    };
 
-  const handleCenterButtonClick = () => {
-    navigation.navigate("CameraView");
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-  };
-
+    fetchFriendsLocations();
+  }, []);
   
-
-  const handleProfile = () => {
-    navigation.navigate("Profile");
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-  };
-
-  const onOuterClick = () => {
-    setShow(false);
-    setIsComponentVisible(true);
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    setCurrentView("noview");
-  };
 
   useEffect(() => {
     const loadUserProfile = async () => {
@@ -232,6 +249,20 @@ const MapScreen = () => {
         <Marker coordinate={testLocation2}>
           <PostMarker />
         </Marker>
+
+        {friendsLocations.map((friendLocation, index) => (
+        <Marker
+          key={index}
+          coordinate={{
+            latitude: friendLocation.liveLocation.latitude,
+            longitude: friendLocation.liveLocation.longitude,
+          }}
+          title={`Friend ${index + 1}`}
+          // ... (other marker props)
+        >
+          {/* ... (Your friend marker component) */}
+        </Marker>
+      ))}
 
         {location && (
           <Marker
