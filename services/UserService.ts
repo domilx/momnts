@@ -26,15 +26,53 @@ const getUserProfile = async () => {
     return null;  // Return null if there's an error or no profile
 };
 
+
+//to get the user profile from the database and
+const getUserProfileDB = async () => {
+  userId = auth.currentUser.uid;
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDocSnap = await getDoc(userDocRef);
+
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      return userData;
+    } else {
+      throw new Error("User document does not exist.");
+    }
+  } catch (error) {
+    console.error("Error getting user data:", error);
+    throw error;
+  }
+};
+
+
 export const updateUserProfile = async (userData) => {
   try {
     const user = auth.currentUser;
     if (user) {
       const userId = user.uid;
       const userDocRef = doc(db, "users", userId);
-      await updateDoc(userDocRef, userData);
 
-      // If necessary, update local storage or retrieve updated user profile data
+      // Retrieve the old profile data to get the old image URL
+      const userDocSnap = await getDoc(userDocRef);
+      if (userDocSnap.exists()) {
+        const oldProfileData = userDocSnap.data();
+        const oldImageUrl = oldProfileData.profileImageUrl;
+
+        // If there's an old image, delete it from the storage
+        if (oldImageUrl) {
+          const oldImageRef = storage.refFromURL(oldImageUrl);
+          await oldImageRef.delete();
+        }
+
+        // Update the user profile data in Firestore
+        await updateDoc(userDocRef, userData);
+
+        // Update local storage after updating the user profile in Firebase
+        const updatedProfileData = { ...oldProfileData, ...userData };
+        await AsyncStorage.setItem('userProfile', JSON.stringify(updatedProfileData));
+      }
     } else {
       throw new Error("User not authenticated");
     }
@@ -91,4 +129,5 @@ export const getFriendsCount = async (userId: string): Promise<number> => {
     getFriendsCount,
     updateUserProfile,
     uploadImageToFirebaseStorage,
+    getUserProfileDB
   };

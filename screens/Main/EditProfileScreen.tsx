@@ -17,33 +17,30 @@ import UserService from "../../services/UserService";
 const EditProfileScreen = () => {
   const navigation = useNavigation();
 
-  const DEFAULT_NAME = "John Doe";
-  const DEFAULT_USERNAME = "johndoe";
-  const DEFAULT_BIO = "This is my bio.";
-  const DEFAULT_EMAIL = "johndoe@mail.com";
   const [profile, setProfile] = useState({});
-
-  const [name, setName] = useState(DEFAULT_NAME);
-  const [username, setUsername] = useState(DEFAULT_USERNAME);
-  const [bio, setBio] = useState(DEFAULT_BIO);
-  const [email, setEmail] = useState(DEFAULT_EMAIL);
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
   const [hasChanged, setHasChanged] = useState(false);
+  const [image, setImage] = useState(null);
 
   const handleSave = async () => {
     try {
       await UserService.updateUserProfile({
         fullName: name,
-        username: username,
         bio: bio,
-        email: email,
         profileImageUrl: image,
       });
-
+  
+      // Fetch the updated profile data immediately after updating
+      const updatedProfile = await UserService.getUserProfileDB();
+      setProfile(updatedProfile); // Update local state with the new data
+  
       navigation.goBack();
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
+  
 
   const uploadImageToFirebase = async () => {
     try {
@@ -57,30 +54,26 @@ const EditProfileScreen = () => {
   };
 
   useEffect(() => {
-    const loadUserProfile = async () => {
-      const userProfile = await UserService.getUserProfile();
-      if (userProfile) {
-        setProfile(userProfile);
+    const fetchData = async () => {
+      try {
+        const userData = await UserService.getUserProfileDB(); 
+        setProfile(userData);
+        setBio(userData.bio || ""); 
+        setName(userData.fullName || "");
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
     };
-
-    loadUserProfile();
+    fetchData();
   }, []);
-
+  
   useEffect(() => {
-    if (
-      name !== DEFAULT_NAME ||
-      username !== DEFAULT_USERNAME ||
-      bio !== DEFAULT_BIO ||
-      email !== DEFAULT_EMAIL
-    ) {
+    if (name !== profile.fullName || bio !== profile.bio) {
       setHasChanged(true);
     } else {
       setHasChanged(false);
     }
-  }, [name, username, bio, email]);
-
-  const [image, setImage] = useState(null);
+  }, [name, bio, profile.fullName, profile.bio]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -160,7 +153,7 @@ const EditProfileScreen = () => {
                 <TextInput
                   style={styles.input}
                   defaultValue={profile.fullName}
-                  onChangeText={(text) => setName(text)} // Update 'name' state
+                  onChangeText={(text) => setName(text)}
                   keyboardAppearance="dark"
                 />
               </TouchableOpacity>
@@ -170,9 +163,9 @@ const EditProfileScreen = () => {
               <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
                 <Text style={styles.sectionHeading}>Username:</Text>
                 <TextInput
-                  style={styles.input}
+                  style={styles.inputDisabled}
                   defaultValue={profile.username}
-                  onChangeText={(text) => setUsername(text)} // Update 'username' state
+                  editable={false}
                   keyboardAppearance="dark"
                 />
               </TouchableOpacity>
@@ -195,9 +188,9 @@ const EditProfileScreen = () => {
               <TouchableOpacity style={styles.settingItem} activeOpacity={0.7}>
                 <Text style={styles.sectionHeading}>Email:</Text>
                 <TextInput
-                  style={styles.input}
+                  style={styles.inputDisabled}
                   defaultValue={profile.email}
-                  onChangeText={(text) => setUsername(text)}
+                  editable={false}
                   keyboardAppearance="dark"
                 />
               </TouchableOpacity>
@@ -234,6 +227,13 @@ const styles = StyleSheet.create({
     height: 30,
     width: 220,
     color: "#D6E0D9",
+    backgroundColor: "transparent",
+  },
+
+  inputDisabled: {
+    height: 30,
+    width: 220,
+    color: "gray",
     backgroundColor: "transparent",
   },
   title: {
