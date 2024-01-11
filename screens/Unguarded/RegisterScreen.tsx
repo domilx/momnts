@@ -1,24 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Dimensions, TouchableOpacity, StyleSheet, TextInput, ScrollView, Image, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert, Modal} from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Alert,
+  Modal,
+} from "react-native";
 import * as Haptics from "expo-haptics";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 import AuthService from "../../services/AuthService";
 
 const RegisterScreen = () => {
-    // Register variables
-    const [name, setName] = useState("");
-    const [username, setUsername] = useState("");
-    const [bio, setBio] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [image, setImage] = useState(null);
+  // Register variables
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [image, setImage] = useState(null);
+  const [registerError, setregisterError] = useState(null); // State to hold login error
 
-    // Rando variables
-    const navigation = useNavigation();
-    const [modalVisible, setModalVisible] = useState(false);
-    const { width } = Dimensions.get("window");
+
+  // Rando variables
+  const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const { width } = Dimensions.get("window");
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -33,6 +50,18 @@ const RegisterScreen = () => {
     }
   };
 
+  const getFirebaseErrorMessage = (errorCode) => {
+    // Map Firebase error codes to custom messages
+    const firebaseErrorMessages = {
+      "auth/invalid-email": "Invalid email address.",
+      "auth/invalid-credential": "Invalid credentials.",
+      "auth/network-request-failed": "Please check your connection.",
+      // Add more Firebase error codes and corresponding messages as needed
+    };
+
+    return firebaseErrorMessages[errorCode] || "Login failed. Please try again.";
+  };
+  
   const handleReturn = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     navigation.goBack();
@@ -44,160 +73,180 @@ const RegisterScreen = () => {
   };
 
   const handleTextInputFocus = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light); 
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   const handleRegister = async () => {
     try {
       if (!name || !username || !bio || !email || !password || !image) {
-        Alert.alert('Registration failed', 'Please fill in all fields.');
+        Alert.alert("Registration failed", "Please fill in all fields.");
         return;
       }
-  
+
       const response = await fetch(image);
       const blob = await response.blob();
-  
+
       await AuthService.register(email, password, username, name, bio, blob);
-  
-      console.log('Registration successful');
-      setModalVisible(false); 
-  
+
+      console.log("Registration successful");
+      setModalVisible(false);
+
       navigation.navigate("MapScreen");
     } catch (error) {
+      setOverlayVisible(false);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Error);
       console.error(error);
-      Alert.alert('Registration failed', error.message);
+      if (error.code) {
+        const errorMessage = getFirebaseErrorMessage(error.code); 
+        setregisterError(errorMessage); 
+        setTimeout(() => {
+          setregisterError(null);
+        }, 5000);
+      } else {
+        setregisterError("Login failed. Please try again.");
+      }
     }
   };
 
   return (
-    
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
         {/* Title */}
-         <View style={styles.titleView}>
-            <Text style={styles.title}>Register</Text>
+        <View style={styles.titleView}>
+          <Text style={styles.title}>Register</Text>
         </View>
 
         {/* Input fields */}
-          <View style={{ ...styles.inputContainer, width: width - 30 }}>
-              <Text style={styles.label}>Username</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your username"
-                placeholderTextColor="#7A807C"
-                onChangeText={(text) => setUsername(text)}
-                keyboardType="default"
-                autoCapitalize="none"
-                keyboardAppearance='dark'
-                onFocus={handleTextInputFocus}
-              />
+        <View style={{ ...styles.inputContainer, width: width - 30 }}>
+          <Text style={styles.label}>Username</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your username"
+            placeholderTextColor="#7A807C"
+            onChangeText={(text) => setUsername(text)}
+            keyboardType="default"
+            autoCapitalize="none"
+            keyboardAppearance="dark"
+            onFocus={handleTextInputFocus}
+          />
 
-              <Text style={styles.label}>Email</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter your email"
-                placeholderTextColor="#7A807C"
-                onChangeText={(text) => setEmail(text)}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                keyboardAppearance='dark'
-                onFocus={handleTextInputFocus}
-              />
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your email"
+            placeholderTextColor="#7A807C"
+            onChangeText={(text) => setEmail(text)}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            keyboardAppearance="dark"
+            onFocus={handleTextInputFocus}
+          />
 
-              <Text style={styles.label}>Password</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter super secret password"
-                placeholderTextColor="#7A807C"
-                onChangeText={(text) => setPassword(text)}
-                keyboardType="default"
-                autoCapitalize="none"
-                secureTextEntry={true}
-                keyboardAppearance='dark'
-                onFocus={handleTextInputFocus}
-              />
-            </View>
-
-            {/* Bottom container */}  
-            <View style={styles.bottomContainer}>
-              <Text style={styles.registerText}>
-                 Already have an account?{" "}
-                <Text onPress={handleReturn} style={styles.registerLink}>
-                  Login
-                </Text>
-              </Text>
-              <TouchableOpacity style={styles.buttonContainer} onPress={() => setModalVisible(true)}>
-               <Text style={styles.buttonText}>Register</Text>
-              </TouchableOpacity>
-              <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
-            </View>
-
-            {/* Modal 2nd stage of registration*/}
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
-            >
-
-            <View style={styles.modalContainer}>
-              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View style={styles.modalContent}>
-                  <View style={{padding: 40}}></View>
-                  <TouchableOpacity
-                    onPress={pickImage}
-                    style={styles.avatarClickableArea}
-                  >
-                    <Image
-                      source={{ uri: image }}
-                      style={styles.avatar}
-                    />
-                    <View style={styles.cameraIconOverlay}>
-                      <Icon name="camera" size={20} color="#000000" />
-                    </View>
-                </TouchableOpacity>
-                  <Text style={styles.label}>Full Name</Text>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Full Name:"
-                    placeholderTextColor="#7A807C"
-                    onChangeText={(text) => setName(text)}
-                    keyboardType="default"
-                    autoCapitalize="none"
-                    keyboardAppearance='dark'
-                    onFocus={handleTextInputFocus}
-                  />
-                  <Text style={styles.label}>Bio</Text>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Bio:"
-                    placeholderTextColor="#7A807C"
-                    onChangeText={(text) => setBio(text)}
-                    keyboardType="defaults"
-                    autoCapitalize="none"
-                    keyboardAppearance='dark'
-                    onFocus={handleTextInputFocus}
-                  />
-
-                  
-                  <Text style={styles.registerText}>
-                    Change registration details?{" "}
-                    <Text  onPress={() => setModalVisible(false)} style={styles.registerLink}>
-                       Return
-                    </Text>
-                  </Text>
-
-                  <TouchableOpacity style={styles.buttonContainer} onPress={handleRegister}>
-                    <Text style={styles.buttonText}>Register</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </Modal>
+          <Text style={styles.label}>Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter super secret password"
+            placeholderTextColor="#7A807C"
+            onChangeText={(text) => setPassword(text)}
+            keyboardType="default"
+            autoCapitalize="none"
+            secureTextEntry={true}
+            keyboardAppearance="dark"
+            onFocus={handleTextInputFocus}
+          />
         </View>
-      </TouchableWithoutFeedback>
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <TouchableOpacity >
+            <Text style={styles.forgotPassword}>Forgot Password?</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.loginError}>{registerError}</Text>
+        </View>
+
+        {/* Bottom container */}
+        <View style={styles.bottomContainer}>
+          <Text style={styles.registerText}>
+            Already have an account?{" "}
+            <Text onPress={handleLoginPress} style={styles.registerLink}>
+              Login
+            </Text>
+          </Text>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
+          <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
+        </View>
+
+        {/* Modal 2nd stage of registration*/}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalContainer}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View style={styles.modalContent}>
+                <View style={{ padding: 40 }}></View>
+                <TouchableOpacity
+                  onPress={pickImage}
+                  style={styles.avatarClickableArea}
+                >
+                  <Image source={{ uri: image }} style={styles.avatar} />
+                  <View style={styles.cameraIconOverlay}>
+                    <Icon name="camera" size={20} color="#000000" />
+                  </View>
+                </TouchableOpacity>
+                <Text style={styles.label}>Full Name</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Full Name:"
+                  placeholderTextColor="#7A807C"
+                  onChangeText={(text) => setName(text)}
+                  keyboardType="default"
+                  autoCapitalize="none"
+                  keyboardAppearance="dark"
+                  onFocus={handleTextInputFocus}
+                />
+                <Text style={styles.label}>Bio</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Bio:"
+                  placeholderTextColor="#7A807C"
+                  onChangeText={(text) => setBio(text)}
+                  keyboardType="defaults"
+                  autoCapitalize="none"
+                  keyboardAppearance="dark"
+                  onFocus={handleTextInputFocus}
+                />
+
+                <Text style={styles.registerText}>
+                  Change registration details?{" "}
+                  <Text
+                    onPress={() => setModalVisible(false)}
+                    style={styles.registerLink}
+                  >
+                    Return
+                  </Text>
+                </Text>
+
+                <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={handleRegister}
+                >
+                  <Text style={styles.buttonText}>Register</Text>
+                </TouchableOpacity>
+                <Text style={styles.footerText}>Domi, Nathan, Xin & Aly™</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </Modal>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -206,7 +255,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
     paddingHorizontal: 15,
-    paddingTop: 100,  
+    paddingTop: 100,
   },
 
   bottomContainer: {
@@ -214,7 +263,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginBottom: 50,
   },
- 
+
   title: {
     fontSize: 45,
     fontWeight: "bold",
@@ -283,7 +332,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 20,
-
   },
   buttonText: {
     color: "#000000",
@@ -302,22 +350,22 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: 'black)',
-    justifyContent: 'flex-end',
+    backgroundColor: "black)",
+    justifyContent: "flex-end",
   },
   modalContent: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
   },
   closeButton: {
-    alignSelf: 'center',
+    alignSelf: "center",
     marginVertical: 20,
   },
   closeButtonText: {
-    color: 'blue',
+    color: "blue",
     fontSize: 16,
   },
   footerText: {
