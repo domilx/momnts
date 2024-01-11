@@ -8,7 +8,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
+  Alert,
 } from "react-native";
+
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AuthService from "../../services/AuthService";
 import { useNavigation } from "@react-navigation/native";
@@ -46,17 +48,20 @@ const LoginScreen = ({ navigation }) => {
   };
 
   // Handles login logic
-  const handleLogin = async (email, password) => {
+
+  const handlePasswordReset = async (email) => {
     try {
       setOverlayVisible(true);
-      await AuthService.login(email, password);
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Success);
-      navigation.navigate("MapScreen");
+      await AuthService.sendPasswordResetEmail(email); // Use AuthService.sendPasswordResetEmail
+      setOverlayVisible(false);
+      Alert.alert(
+        "Password Reset Email Sent",
+        "Instructions to reset your password have been sent to your email."
+      );
     } catch (error) {
       setOverlayVisible(false);
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Error);
       console.error(error);
-      Alert.alert("Login failed", error.message);
+      Alert.alert("Password Reset Failed", error.message);
     }
   };
 
@@ -68,8 +73,6 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.titleView}>
           <Text style={styles.title}>Forgot Password</Text>
         </View>
-
-
 
         {/* Input fields */}
         <View style={{ ...styles.inputContainer, width: width - 30 }}>
@@ -85,9 +88,11 @@ const LoginScreen = ({ navigation }) => {
             keyboardAppearance="dark"
             onFocus={handleTextInputFocus}
           />
-          
-        <Text style={styles.forgotPassword}>Please provide us with the email you used to create your account so we can send instructions to reset your password</Text>
 
+          <Text style={styles.forgotPassword}>
+            Please provide us with the email you used to create your account so
+            we can send instructions to reset your password
+          </Text>
         </View>
 
         <View style={styles.bottomContainer}>
@@ -95,13 +100,13 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.registerText}>
             Rememeber your password?{" "}
             <Text onPress={handleRegisterPress} style={styles.registerLink}>
-             Return
+              Return
             </Text>
           </Text>
           {/* Login button */}
           <TouchableOpacity
             style={styles.buttonContainer}
-            onPress={() => handleLogin(email, password)}
+            onPress={() => handlePasswordReset(email)}
           >
             <Text style={styles.buttonText}>Send Reset Instructions</Text>
           </TouchableOpacity>
