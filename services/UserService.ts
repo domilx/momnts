@@ -89,7 +89,7 @@ const uploadImageToFirebaseStorage = async (selectedImage) => {
   try {
     const user = auth.currentUser;
     if (user) {
-      const storageRef = ref(storage, `avatars/${user.uid}/avatar.jpg`);
+      const storageRef = ref(storage, `profileImages/${user.uid}`);
       await uploadBytes(storageRef, selectedImage);
 
       const imageUrl = await getDownloadURL(storageRef);
