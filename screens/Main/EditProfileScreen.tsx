@@ -25,22 +25,25 @@ const EditProfileScreen = () => {
 
   const handleSave = async () => {
     try {
+      if (image) {
+        const imageUrl = await UserService.uploadImageToFirebaseStorage(image);
+        setImage(imageUrl);
+      }
+  
       await UserService.updateUserProfile({
         fullName: name,
         bio: bio,
         profileImageUrl: image,
       });
   
-      // Fetch the updated profile data immediately after updating
       const updatedProfile = await UserService.getUserProfileDB();
-      setProfile(updatedProfile); // Update local state with the new data
+      setProfile(updatedProfile); 
   
       navigation.goBack();
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
-  
 
   const uploadImageToFirebase = async () => {
     try {
@@ -56,9 +59,9 @@ const EditProfileScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userData = await UserService.getUserProfileDB(); 
+        const userData = await UserService.getUserProfileDB();
         setProfile(userData);
-        setBio(userData.bio || ""); 
+        setBio(userData.bio || "");
         setName(userData.fullName || "");
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -66,7 +69,7 @@ const EditProfileScreen = () => {
     };
     fetchData();
   }, []);
-  
+
   useEffect(() => {
     if (name !== profile.fullName || bio !== profile.bio) {
       setHasChanged(true);
@@ -83,10 +86,10 @@ const EditProfileScreen = () => {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(result?.assets[0]?.uri);
+      setHasChanged(true);
+
     }
   };
 
@@ -139,7 +142,7 @@ const EditProfileScreen = () => {
               style={styles.avatarClickableArea}
             >
               <Image
-                source={{ uri: profile.profileImageUrl }}
+                source={{ uri: image || profile.profileImageUrl }}
                 style={styles.avatar}
               />
               <View style={styles.cameraIconOverlay}>
@@ -259,7 +262,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 10,
-    paddingVertical: 11, // Applied consistent padding to the entire settingItem
+    paddingVertical: 11, 
   },
   sectionHeading: {
     flex: 1,

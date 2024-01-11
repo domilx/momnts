@@ -1,7 +1,8 @@
 import { getFriends } from './FriendsService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import { getDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 
 const getUserProfile = async () => {
     try {
@@ -52,18 +53,20 @@ export const updateUserProfile = async (userData) => {
     const user = auth.currentUser;
     if (user) {
       const userId = user.uid;
-      const userDocRef = doc(db, "users", userId);
+      const storage = getStorage();
 
       // Retrieve the old profile data to get the old image URL
+      const userDocRef = doc(db, "users", userId);
       const userDocSnap = await getDoc(userDocRef);
+
       if (userDocSnap.exists()) {
         const oldProfileData = userDocSnap.data();
         const oldImageUrl = oldProfileData.profileImageUrl;
 
         // If there's an old image, delete it from the storage
         if (oldImageUrl) {
-          const oldImageRef = storage.refFromURL(oldImageUrl);
-          await oldImageRef.delete();
+          const storageRef = ref(storage, oldImageUrl);
+          await deleteObject(storageRef);
         }
 
         // Update the user profile data in Firestore
@@ -82,17 +85,14 @@ export const updateUserProfile = async (userData) => {
   }
 };
 
-
 const uploadImageToFirebaseStorage = async (selectedImage) => {
   try {
     const user = auth.currentUser;
     if (user) {
-      const storageRef = storage.ref(`avatars/${user.uid}`);
-      const imageRef = storageRef.child('avatar.jpg');
+      const storageRef = ref(storage, `avatars/${user.uid}/avatar.jpg`);
+      await uploadBytes(storageRef, selectedImage);
 
-      await imageRef.putFile(selectedImage);
-
-      const imageUrl = await imageRef.getDownloadURL();
+      const imageUrl = await getDownloadURL(storageRef);
       return imageUrl;
     }
   } catch (error) {
@@ -100,7 +100,6 @@ const uploadImageToFirebaseStorage = async (selectedImage) => {
     throw error;
   }
 };
-
 
 export const getFriendsCount = async (userId: string): Promise<number> => {
     try {
