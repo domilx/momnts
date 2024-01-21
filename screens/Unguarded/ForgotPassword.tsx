@@ -16,10 +16,11 @@ import AuthService from "../../services/AuthService";
 import { useNavigation } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import OverlayComponent from "../Main/Components/LoadingOverlay";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const { width } = Dimensions.get("window");
 
-const LoginScreen = ({ navigation }) => {
+const ForgotPasswordScreen = ({ navigation }) => {
   // State variables
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,15 +31,10 @@ const LoginScreen = ({ navigation }) => {
     setOverlayVisible(false);
   };
 
-  // Toggles visibility of password
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-  };
 
   // Handles navigation to register screen
-  const handleRegisterPress = () => {
-    navigation.navigate("Register");
+  const handleReturnPress = () => {
+    navigation.goBack();
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
@@ -50,22 +46,20 @@ const LoginScreen = ({ navigation }) => {
   // Handles login logic
 
   const handlePasswordReset = async (email) => {
-    try {
-      setOverlayVisible(true);
-      await AuthService.sendPasswordResetEmail(email); // Use AuthService.sendPasswordResetEmail
-      setOverlayVisible(false);
-      Alert.alert(
-        "Password Reset Email Sent",
-        "Instructions to reset your password have been sent to your email."
-      );
-    } catch (error) {
-      setOverlayVisible(false);
-      console.error(error);
-      Alert.alert("Password Reset Failed", error.message);
-    }
+    setOverlayVisible(true);
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+       setOverlayVisible(false);
+       navigation.goBack();
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   };
 
-  // Renders the login screen
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -99,7 +93,7 @@ const LoginScreen = ({ navigation }) => {
           {/* Register link */}
           <Text style={styles.registerText}>
             Rememeber your password?{" "}
-            <Text onPress={handleRegisterPress} style={styles.registerLink}>
+            <Text onPress={handleReturnPress} style={styles.registerLink}>
               Return
             </Text>
           </Text>
@@ -216,4 +210,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default ForgotPasswordScreen;

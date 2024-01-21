@@ -1,8 +1,9 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail as sendFirebasePasswordResetEmail,
 } from "firebase/auth";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+
 import { doc, setDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, auth, storage } from "../firebase";
@@ -53,16 +54,7 @@ const AuthService = {
     }
   },
 
-  async sendResetPasswordEmail(email: string) {
-    try {
-      await sendPasswordResetEmail(auth, email);
-      console.log("success")
-      return { error : null};
-    } catch (error: any) {
-      console.log(error)
-      return { error}
-    }
-  }
+  
 };
 
 export default AuthService;
